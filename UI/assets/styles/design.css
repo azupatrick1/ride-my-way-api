@@ -14,7 +14,9 @@ body {
 .text-center {
   text-align: center;
 }
-
+.right{
+  float: right;
+}
 .form-input {
   display: block;
   width: 100%;
@@ -114,7 +116,6 @@ body {
   border-top: 2px solid #eceeef;
 }
 
-
 .table-hover tbody tr:hover {
   background-color: rgba(0, 0, 0, .040);
 }
@@ -124,4 +125,59 @@ body {
   width: 100%;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar
+}
+
+.nav {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  margin-top: -15px;
+  margin-left: -20px;
+  margin-right: -20px;
+  background-color: #6ea1f9;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: space-between;
+  -ms-justify-content: space-between;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.nav-item {
+  text-align: center;
+}
+
+.nav li:first-child {
+  margin-right: auto;
+}
+
+.nav-link {
+  display: block;
+  padding: 18px 35px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #fff;
+}
+
+.title {
+  display: block;
+  padding: 15px 35px;
+  text-decoration: none;
+  font-size: 25px;
+  font-weight: bold;
+  color: #fff;
+
+}
+
+.nav-link:focus, .nav-link:hover {
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #ddd;
 }
