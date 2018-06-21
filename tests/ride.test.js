@@ -11,6 +11,7 @@ beforeEach((done) => {
       name: 'ride1234',
       from: 'Abuja',
       to: 'Lagos',
+      driver: 'driver 1',
       time: '7:00 pm',
     },
     {
@@ -18,6 +19,7 @@ beforeEach((done) => {
       name: 'ride1344',
       from: 'Lagos',
       to: 'Aba',
+      driver: 'driver 2',
       time: '6:00 am',
     },
   ];
@@ -51,6 +53,45 @@ describe('Get request for rides', () => {
     request
       .get('/api/v1/ride')
       .expect(404)
+      .end((err) => {
+        done(err);
+      });
+  });
+});
+
+
+describe('Post requests for rides', () => {
+  it('create a new ride', (done) => {
+    request
+      .post('/api/v1/rides')
+      .send({
+        name: 'test ride',
+        from: 'Lagos',
+        to: 'Aba',
+        driver: 'mocha',
+        time: '6:00 am',
+      })
+      .expect(201)
+      .end((err, res) => {
+        expect(res.body).to.eql({
+          id: app.ridesDB.length + 1,
+          name: 'test ride',
+          from: 'Lagos',
+          to: 'Aba',
+          driver: 'mocha',
+          time: '6:00 am',
+        });
+        done(err);
+      });
+  });
+
+  it('should not save new ride and return 400 - bad request', (done) => {
+    request
+      .post('/api/v1/rides')
+      .send({
+        name: 'test 1',
+      })
+      .expect(400)
       .end((err) => {
         done(err);
       });

@@ -10,6 +10,7 @@ exports.ridesDB = [
     name: 'ride1234',
     from: 'Abuja',
     to: 'Lagos',
+    driver: 'driver 1',
     time: '7:00 pm',
   },
   {
@@ -17,6 +18,7 @@ exports.ridesDB = [
     name: 'ride1344',
     from: 'Lagos',
     to: 'Aba',
+    driver: 'driver 2',
     time: '6:00 am',
   },
 ];
