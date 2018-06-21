@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha tests/",
-    "start": "node index.js",
+    "start": "npm run transpile && node index.js",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha tests/",
-    "coveralls": "npm run coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "npm run coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "transpile": "babel -d ./build index.js -s && babel -d ./build ./api -s"
   },
   "keywords": [
     "api",
