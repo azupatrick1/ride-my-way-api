@@ -5,25 +5,6 @@ const { expect } = require('chai');
 const request = supertest(app);
 
 beforeEach((done) => {
-  app.ridesDB = [
-    {
-      id: 1,
-      name: 'ride1234',
-      from: 'Abuja',
-      to: 'Lagos',
-      driver: 'driver 1',
-      time: '7:00 pm',
-    },
-    {
-      id: 2,
-      name: 'ride1344',
-      from: 'Lagos',
-      to: 'Aba',
-      driver: 'driver 2',
-      time: '6:00 am',
-    },
-  ];
-
   app.requestDB = [{
     id: 1,
     rideId: 1,
@@ -37,7 +18,7 @@ beforeEach((done) => {
 });
 
 
-describe('Get request for ride request', () => {
+describe('Get requests', () => {
   it('should return a 200 response and length of array of rides and all request from id ', (done) => {
     request
       .get('/api/v1/rides/1/request')
@@ -49,7 +30,7 @@ describe('Get request for ride request', () => {
 
   it('should return 404 response', (done) => {
     request
-      .get('/api/v1/rides/3/request')
+      .get('/api/v1/rides/3223/request')
       .expect(404)
       .end((err) => {
         done(err);
@@ -58,7 +39,7 @@ describe('Get request for ride request', () => {
 });
 
 
-describe('Post request for ride request', () => {
+describe('Post requests', () => {
   it('save a new requests', (done) => {
     const ride = app.ridesDB.find(c => c.id === 2);
     request

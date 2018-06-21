@@ -13,6 +13,7 @@ module.exports = (app) => {
   // update one ride
   app.put('/api/v1/rides/:rideId', rides.update);
 
+
   // delete one ride
   app.delete('/api/v1/rides/:rideId', rides.delete);
 };

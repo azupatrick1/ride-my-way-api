@@ -71,4 +71,3 @@ exports.delete = (req, res) => {
   return res.send({ message: `ride with id ${req.params.rideId} was deleted successfully` });
 };
 
-

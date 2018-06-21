@@ -37,6 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => res.send('we are live !!!'));
 
 require('./api/v1/routes/ride.route.js')(app);
+require('./api/v1/routes/rideRequest.route.js')(app);
 
 app.listen(port, () => {
   console.log('listening...');

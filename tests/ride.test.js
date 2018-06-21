@@ -24,6 +24,15 @@ beforeEach((done) => {
     },
   ];
 
+  app.requestDB = [{
+    id: 1,
+    rideId: 1,
+    rideName: 'emeka',
+    sender: 'john',
+    status: 'sent',
+  },
+  ];
+
   done();
 });
 
@@ -164,11 +173,11 @@ describe('Put request for rides', () => {
 describe('Delete request for rides', () => {
   it('should delete a ride', (done) => {
     request
-      .delete('/api/v1/rides/1')
+      .delete('/api/v1/rides/3')
       .expect(200)
       .end((err, res) => {
         expect(res.body).to.eql({
-          message: 'ride with id 1 was deleted successfully',
+          message: 'ride with id 3 was deleted successfully',
         });
         done(err);
       });
