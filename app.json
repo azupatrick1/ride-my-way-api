@@ -1,0 +1,7 @@
+{
+    "name":"Ride My Way API",
+    "description":" API for Ride my way frontend app",
+    "repository":"https://github.com/jojitoon/ride-my-way-api",
+    "keywords": ["node", "express", "lint", "transpile", "tdd", "API"],
+    "image":"heroku/nodejs"
+}
