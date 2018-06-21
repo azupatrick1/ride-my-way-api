@@ -97,3 +97,27 @@ describe('Post requests for rides', () => {
       });
   });
 });
+
+
+describe('Test the API to get a ride with a specific id', () => {
+  it('should get 404 error for id not found', (done) => {
+    request
+      .get('/api/v1/rides/101010')
+      .expect(404)
+      .end((err) => {
+        done(err);
+      });
+  });
+
+
+  it('should get 200 and return ride by id', (done) => {
+    const ride = app.ridesDB.find(c => c.id === 1);
+    request
+      .get('/api/v1/rides/1')
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body).to.eql(ride);
+        done(err);
+      });
+  });
+});
