@@ -40,7 +40,7 @@ require('./api/v1/routes/ride.route.js')(app);
 require('./api/v1/routes/rideRequest.route.js')(app);
 
 app.listen(port, () => {
-  console.log('listening...');
+  console.log(`listening on port ${port} ...`);
 });
 
 module.exports = app;
