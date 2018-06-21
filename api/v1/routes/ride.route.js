@@ -9,4 +9,10 @@ module.exports = (app) => {
 
   // find one ride
   app.get('/api/v1/rides/:rideId', rides.findOne);
+
+  // update one ride
+  app.put('/api/v1/rides/:rideId', rides.update);
+
+  // delete one ride
+  app.delete('/api/v1/rides/:rideId', rides.delete);
 };

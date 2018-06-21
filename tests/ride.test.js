@@ -129,7 +129,10 @@ describe('Put request for rides', () => {
       .put('/api/v1/rides/1')
       .send({
         name: 'test updated',
-        location: 'mocha station',
+        from: 'Lagos',
+        to: 'benin',
+        driver: 'mocha',
+        time: '6:00 am',
       })
       .expect(200)
       .end((err, res) => {

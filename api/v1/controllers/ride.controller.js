@@ -46,3 +46,29 @@ exports.findOne = (req, res) => {
   return res.send(ride);
 };
 
+exports.update = (req, res) => {
+  const ride = ridesDB.find(c => c.id === parseInt(req.params.rideId, 10));
+  if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
+
+  const valid = validator(req.body);
+  if (valid.error) return res.status(400).send(valid.error.details[0].message);
+
+  ride.name = req.body.name;
+  ride.from = req.body.from;
+  ride.to = req.body.to;
+  ride.driver = req.body.driver;
+  ride.time = req.body.time;
+  return res.send(ride);
+};
+
+exports.delete = (req, res) => {
+  const ride = ridesDB.find(c => c.id === parseInt(req.params.rideId, 10));
+  if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
+
+  const index = ridesDB.indexOf(ride);
+  ridesDB.splice(index, 1);
+
+  return res.send({ message: `ride with id ${req.params.rideId} was deleted successfully` });
+};
+
+
