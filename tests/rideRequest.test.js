@@ -8,13 +8,19 @@ beforeEach((done) => {
   app.ridesDB = [
     {
       id: 1,
-      name: 'emeka',
-      location: 'aba',
+      name: 'ride1234',
+      from: 'Abuja',
+      to: 'Lagos',
+      driver: 'driver 1',
+      time: '7:00 pm',
     },
     {
       id: 2,
-      name: 'emeka',
-      location: 'abas',
+      name: 'ride1344',
+      from: 'Lagos',
+      to: 'Aba',
+      driver: 'driver 2',
+      time: '6:00 am',
     },
   ];
 
@@ -31,7 +37,7 @@ beforeEach((done) => {
 });
 
 
-describe('Get requests', () => {
+describe('Get request for ride request', () => {
   it('should return a 200 response and length of array of rides and all request from id ', (done) => {
     request
       .get('/api/v1/rides/1/request')
@@ -52,7 +58,7 @@ describe('Get requests', () => {
 });
 
 
-describe('Post requests', () => {
+describe('Post request for ride request', () => {
   it('save a new requests', (done) => {
     const ride = app.ridesDB.find(c => c.id === 2);
     request

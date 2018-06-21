@@ -24,15 +24,6 @@ beforeEach((done) => {
     },
   ];
 
-  app.requestDB = [{
-    id: 1,
-    rideId: 1,
-    rideName: 'emeka',
-    sender: 'john',
-    status: 'sent',
-  },
-  ];
-
   done();
 });
 
