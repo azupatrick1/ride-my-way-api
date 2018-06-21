@@ -121,3 +121,72 @@ describe('Test the API to get a ride with a specific id', () => {
       });
   });
 });
+
+
+describe('Put request for rides', () => {
+  it('should update a ride', (done) => {
+    request
+      .put('/api/v1/rides/1')
+      .send({
+        name: 'test updated',
+        location: 'mocha station',
+      })
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body).to.eql({
+          id: 1,
+          name: 'test updated',
+          from: 'Lagos',
+          to: 'benin',
+          driver: 'mocha',
+          time: '6:00 am',
+        });
+        done(err);
+      });
+  });
+
+  it('should not update ride and return 400 - bad request', (done) => {
+    request
+      .put('/api/v1/rides/1')
+      .send({
+        name: 'test 1',
+      })
+      .expect(400)
+      .end((err) => {
+        done(err);
+      });
+  });
+
+  it('should not update ride and return 404 - Not Found', (done) => {
+    request
+      .put('/api/v1/rides/101010')
+      .expect(404)
+      .end((err) => {
+        done(err);
+      });
+  });
+});
+
+describe('Delete request for rides', () => {
+  it('should delete a ride', (done) => {
+    request
+      .delete('/api/v1/rides/1')
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body).to.eql({
+          message: 'ride with id 1 was deleted successfully',
+        });
+        done(err);
+      });
+  });
+
+  it('should not delete ride and return 404 - Not Found', (done) => {
+    request
+      .delete('/api/v1/rides/101010')
+      .expect(404)
+      .end((err) => {
+        done(err);
+      });
+  });
+});
+
