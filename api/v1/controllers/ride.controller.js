@@ -40,3 +40,9 @@ exports.create = (req, res) => {
   return res.status(201).send(ride);
 };
 
+exports.findOne = (req, res) => {
+  const ride = ridesDB.find(c => c.id === parseInt(req.params.rideId, 10));
+  if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
+  return res.send(ride);
+};
+
