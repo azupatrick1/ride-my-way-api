@@ -4,7 +4,8 @@
   "description": "an simple implementation of a ride management API",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/",
+    // "test": "mocha tests/",
+    "test": "node node_modules/.bin/mocha",
     "start": "node index.js",
     "coverage": "node node_modules/.bin/istanbul cover _mocha -- -R spec",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
