@@ -1,6 +1,7 @@
 const app = require('../index.js');
 const supertest = require('supertest');
 const { expect } = require('chai');
+const { stop } = require('../index.js');
 
 const request = supertest(app);
 
@@ -14,6 +15,11 @@ beforeEach((done) => {
   },
   ];
 
+  done();
+});
+
+after((done) => {
+  stop();
   done();
 });
 

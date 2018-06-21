@@ -39,8 +39,12 @@ app.get('/', (req, res) => res.send('we are live !!!'));
 require('./api/v1/routes/ride.route.js')(app);
 require('./api/v1/routes/rideRequest.route.js')(app);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`listening on port ${port} ...`);
 });
 
+const stop = () => {
+  server.close();
+};
 module.exports = app;
+module.exports.stop = stop;
