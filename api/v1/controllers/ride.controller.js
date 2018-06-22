@@ -13,14 +13,9 @@ const validator = (ride) => {
   return joi.validate(ride, schema);
 };
 
-const getRide = (rideId) => {
-  return ridesDB.find(c => c.id === parseInt(rideId, 10));
-  
-};
+const getRide = rideId => ridesDB.find(c => c.id === parseInt(rideId, 10));
 
-const rideError = (rideId, res) => {
-  return res.status(404).send({ message: `ride with id ${rideId} not found` });
-}; 
+const rideError = (rideId, res) => res.status(404).send({ message: `ride with id ${rideId} not found` });
 
 exports.all = (req, res) => {
   if (!ridesDB) {

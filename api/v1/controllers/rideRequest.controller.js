@@ -1,4 +1,3 @@
-const { ridesDB } = require('../../../index.js');
 const { requestDB } = require('../../../index.js');
 const { getRide } = require('../controllers/ride.controller.js');
 const { rideError } = require('../controllers/ride.controller.js');
