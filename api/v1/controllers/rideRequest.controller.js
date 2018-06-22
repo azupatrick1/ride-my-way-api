@@ -1,6 +1,7 @@
 const { ridesDB } = require('../../../index.js');
 const { requestDB } = require('../../../index.js');
 const { getRide } = require('../controllers/ride.controller.js');
+const { rideError } = require('../controllers/ride.controller.js');
 const joi = require('joi');
 
 
@@ -13,7 +14,7 @@ const validator = (request) => {
 
 exports.all = (req, res) => {
   const ride = getRide(req.params.rideId);
-  // if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
+  if (!ride) return rideError(req.params.rideId, res);
 
   const request = requestDB.find(c => c.rideId === parseInt(ride.id, 10));
 
@@ -27,8 +28,8 @@ exports.all = (req, res) => {
 
 exports.create = (req, res) => {
   const ride = getRide(req.params.rideId);
-  if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
-  
+  if (!ride) return rideError(req.params.rideId, res);
+
   const valid = validator(req.body);
   if (valid.error) return res.status(400).send(valid.error.details[0].message);
 

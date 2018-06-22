@@ -51,14 +51,14 @@ exports.create = (req, res) => {
 
 exports.findOne = (req, res) => {
   const ride = getRide(req.params.rideId);
-  if (!ride) return rideError(req.params.rideId);
+  if (!ride) return rideError(req.params.rideId, res);
 
   return res.send(ride);
 };
 
 exports.update = (req, res) => {
   const ride = getRide(req.params.rideId);
-  if (!ride) return rideError(req.params.rideId);
+  if (!ride) return rideError(req.params.rideId, res);
 
   const valid = validator(req.body);
   if (valid.error) return res.status(400).send(valid.error.details[0].message);
@@ -73,8 +73,8 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   const ride = getRide(req.params.rideId);
-  if (!ride) return rideError(req.params.rideId);
-  
+  if (!ride) return rideError(req.params.rideId, res);
+
   const index = ridesDB.indexOf(ride);
   ridesDB.splice(index, 1);
 
@@ -82,3 +82,4 @@ exports.delete = (req, res) => {
 };
 
 exports.getRide = getRide;
+exports.rideError = rideError;
