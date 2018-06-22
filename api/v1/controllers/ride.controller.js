@@ -13,6 +13,11 @@ const validator = (ride) => {
   return joi.validate(ride, schema);
 };
 
+const getRide = (rideId) => {
+  return ridesDB.find(c => c.id === parseInt(rideId, 10));
+  
+};
+
 exports.all = (req, res) => {
   if (!ridesDB) {
     return res.status(500).send({
@@ -41,13 +46,14 @@ exports.create = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-  const ride = ridesDB.find(c => c.id === parseInt(req.params.rideId, 10));
+  const ride = getRide(req.params.rideId);
   if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
+
   return res.send(ride);
 };
 
 exports.update = (req, res) => {
-  const ride = ridesDB.find(c => c.id === parseInt(req.params.rideId, 10));
+  const ride = getRide(req.params.rideId);
   if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
 
   const valid = validator(req.body);
@@ -62,7 +68,7 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-  const ride = ridesDB.find(c => c.id === parseInt(req.params.rideId, 10));
+  const ride = getRide(req.params.rideId);
   if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
 
   const index = ridesDB.indexOf(ride);
@@ -71,3 +77,4 @@ exports.delete = (req, res) => {
   return res.send({ message: `ride with id ${req.params.rideId} was deleted successfully` });
 };
 
+exports.getRide = getRide;
