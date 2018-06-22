@@ -54,7 +54,7 @@ exports.findOne = (req, res) => {
 
 exports.update = (req, res) => {
   const ride = getRide(req.params.rideId);
-  if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
+  if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} to be updated not found` });
 
   const valid = validator(req.body);
   if (valid.error) return res.status(400).send(valid.error.details[0].message);
@@ -69,7 +69,7 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   const ride = getRide(req.params.rideId);
-  if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
+  if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} to be deleted not found` });
 
   const index = ridesDB.indexOf(ride);
   ridesDB.splice(index, 1);

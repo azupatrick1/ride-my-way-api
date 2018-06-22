@@ -13,7 +13,7 @@ const validator = (request) => {
 
 exports.all = (req, res) => {
   const ride = getRide(req.params.rideId);
-  if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
+  if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found in database` });
 
   const request = requestDB.find(c => c.rideId === parseInt(ride.id, 10));
 
@@ -27,7 +27,7 @@ exports.all = (req, res) => {
 
 exports.create = (req, res) => {
   const ride = getRide(req.params.rideId);
-  if (!ride) return res.status(404).send({ message: `ride with id ${req.params.rideId} not found` });
+  if (!ride) return res.status(404).send({ message: `ride with an id ${req.params.rideId} not found ` });
   
   const valid = validator(req.body);
   if (valid.error) return res.status(400).send(valid.error.details[0].message);
