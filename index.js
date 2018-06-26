@@ -43,9 +43,7 @@ app.use('/', requestroute);
 app.get('/', (req, res) => res.send({ message: 'We are Live!!!' }));
 app.get('*', (req, res) => res.status(404).send({ message: 'wrong endpoint: visit api with api/v1/rides' }));
 
-const server = app.listen(port, () => {
-  // console.log(`listening on port ${port} ...`);
-});
+const server = app.listen(port);
 
 export const stop = () => {
   server.close();
