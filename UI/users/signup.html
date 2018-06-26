@@ -1,42 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title> Sign up ride my way</title>
+  <meta charset="utf-8">
+  <title> Sign up ride my way</title>
 
-    <link rel="stylesheet" href="../assets/styles/design.css">
+  <link rel="stylesheet" href="../assets/styles/design.css">
 </head>
+
 <body>
-    <ul class="nav">
-      <li class="nav-item ">
-        <a class="title" href="../rides/index.html">Ride My Way</a>
-      </li>
+  <ul class="nav">
+    <li>
+      <div class="title">
+        <a class="logo" href="../../index.html"></a>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="#">About</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="../users/signup.html">Sign Up</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="../users/signin.html">Sign In</a>
+    </li>
+  </ul>
+    <div class="back backsign">
+      <h2 class="text-center headtext"> Sign Up</h2>
+  <div class="form-main">
+    <form>
+      <input type="email" name="email" value="" placeholder="enter your email ..." class="form-input" required>
+
+      <input type="password" name="password" value="" placeholder="enter your password ..." class="form-input" minlength="6" required>
+
+      <input type="password" name="password-verification" value="" placeholder="enter your password again ..." class="form-input" minlength="6" required>
+
+      <input type="submit" name="submit" value="Sign Up" onclick="openPage('profile.html')" class="button btn-full btn-green">
 
 
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../users/signup.html">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../users/signin.html">Sign In</a>
-      </li>
-    </ul>
+    </form>
 
-    <h2 class="text-center"> Sign Up</h2>
-    <div class="form-main">
-        <form>
-            <input type="email" name="email" value="" placeholder="enter your email ..." class="form-input">
+     <div class="or-spacer">
+        <div class="mask"></div>
+        <span><i>or</i></span>
+      </div>
+      
 
-            <input type="password" name="password" value="" placeholder="enter your password ..." class="form-input">
-
-            <input type="password" name="password-verification" value="" placeholder="enter your password again ..." class="form-input">
-
-            <input type="submit" name="submit" value="Sign Up" class="button btn-full btn-green">
-
-        </form>
+        <button class="button btn-full btn-blue" type="button" onclick="openPage('signin.html')"> Already have account? Log in </button>
 
     </div>
+  </div>
+
+  <!--js script-->
+  <script src = "../assets/scripts/actions.js"></script
 </body>
+
 </html>
