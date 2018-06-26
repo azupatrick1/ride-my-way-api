@@ -1,8 +1,9 @@
-const { requestDB } = require('../../../index.js');
-const { getRide } = require('../controllers/ride.controller.js');
-const { rideError } = require('../controllers/ride.controller.js');
-const joi = require('joi');
+import joi from 'joi';
+import { requestDB } from '../../../index';
+import ridecon from '../controllers/ride.controller';
 
+const { getRide } = ridecon;
+const { rideError } = ridecon;
 
 const validator = (request) => {
   const schema = {

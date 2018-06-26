@@ -1,10 +1,10 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+import express from 'express';
+import bodyParser from 'body-parser';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-exports.ridesDB = [
+export const ridesDB = [
   {
     id: 1,
     name: 'ride1234',
@@ -23,7 +23,7 @@ exports.ridesDB = [
   },
 ];
 
-exports.requestDB = [{
+export const requestDB = [{
   id: 1,
   rideId: 1,
   rideName: 'emeka',
@@ -40,11 +40,11 @@ require('./api/v1/routes/ride.route.js')(app);
 require('./api/v1/routes/rideRequest.route.js')(app);
 
 const server = app.listen(port, () => {
-  console.log(`listening on port ${port} ...`);
+  // console.log(`listening on port ${port} ...`);
 });
 
-const stop = () => {
+export const stop = () => {
   server.close();
 };
-module.exports = app;
-module.exports.stop = stop;
+export default app;
+

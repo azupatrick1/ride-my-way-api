@@ -1,5 +1,5 @@
-const { ridesDB } = require('../../../index.js');
-const joi = require('joi');
+import joi from 'joi';
+import { ridesDB } from '../../../index';
 
 
 const validator = (ride) => {

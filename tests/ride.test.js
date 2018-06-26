@@ -1,40 +1,29 @@
-const app = require('../index.js');
-const supertest = require('supertest');
-const { expect } = require('chai');
+import supertest from 'supertest';
+import { expect } from 'chai';
+
+import app from '../index';
 
 const request = supertest(app);
 
-beforeEach((done) => {
-  app.ridesDB = [
-    {
-      id: 1,
-      name: 'ride1234',
-      from: 'Abuja',
-      to: 'Lagos',
-      driver: 'driver 1',
-      time: '7:00 pm',
-    },
-    {
-      id: 2,
-      name: 'ride1344',
-      from: 'Lagos',
-      to: 'Aba',
-      driver: 'driver 2',
-      time: '6:00 am',
-    },
-  ];
 
-  app.requestDB = [{
+const ridesDB = [
+  {
     id: 1,
-    rideId: 1,
-    rideName: 'emeka',
-    sender: 'john',
-    status: 'sent',
+    name: 'ride1234',
+    from: 'Abuja',
+    to: 'Lagos',
+    driver: 'driver 1',
+    time: '7:00 pm',
   },
-  ];
-
-  done();
-});
+  {
+    id: 2,
+    name: 'ride1344',
+    from: 'Lagos',
+    to: 'Aba',
+    driver: 'driver 2',
+    time: '6:00 am',
+  },
+];
 
 
 describe('Get request for rides', () => {
@@ -43,8 +32,8 @@ describe('Get request for rides', () => {
       .get('/api/v1/rides')
       .expect(200)
       .end((err, res) => {
-        expect(res.body).to.have.lengthOf(app.ridesDB.length);
-        expect(res.body).to.eql(app.ridesDB);
+        expect(res.body).to.have.lengthOf(ridesDB.length);
+        expect(res.body).to.eql(ridesDB);
         done(err);
       });
   });
@@ -74,7 +63,7 @@ describe('Post requests for rides', () => {
       .expect(201)
       .end((err, res) => {
         expect(res.body).to.eql({
-          id: app.ridesDB.length + 1,
+          id: ridesDB.length + 1,
           name: 'test ride',
           from: 'Lagos',
           to: 'Aba',
@@ -111,7 +100,7 @@ describe('Test the API to get a ride with a specific id', () => {
 
 
   it('should get 200 and return ride by id', (done) => {
-    const ride = app.ridesDB.find(c => c.id === 1);
+    const ride = ridesDB.find(c => c.id === 1);
     request
       .get('/api/v1/rides/1')
       .expect(200)

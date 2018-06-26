@@ -1,28 +1,25 @@
-const app = require('../index.js');
-const supertest = require('supertest');
-const { expect } = require('chai');
-const { stop } = require('../index.js');
+import supertest from 'supertest';
+import { expect } from 'chai';
+import * as lib from '../index';
+
+const app = lib.default;
 
 const request = supertest(app);
 
-beforeEach((done) => {
-  app.requestDB = [{
-    id: 1,
-    rideId: 1,
-    rideName: 'emeka',
-    sender: 'john',
-    status: 'sent',
-  },
-  ];
+const requestDB = [{
+  id: 1,
+  rideId: 1,
+  rideName: 'emeka',
+  sender: 'john',
+  status: 'sent',
+},
+];
 
-  done();
-});
 
 after((done) => {
-  stop();
+  lib.stop();
   done();
 });
-
 
 describe('Get requests', () => {
   it('should return a 200 response and length of array of rides and all request from id ', (done) => {
@@ -47,7 +44,7 @@ describe('Get requests', () => {
 
 describe('Post requests', () => {
   it('save a new requests', (done) => {
-    const ride = app.ridesDB.find(c => c.id === 2);
+    const ride = lib.ridesDB.find(c => c.id === 2);
     request
       .post('/api/v1/rides/2/request')
       .send({
@@ -56,7 +53,7 @@ describe('Post requests', () => {
       .expect(201)
       .end((err, res) => {
         expect(res.body).to.eql({
-          id: app.requestDB.length + 1,
+          id: requestDB.length + 1,
           rideId: ride.id,
           rideName: ride.name,
           sender: 'mocha test',
