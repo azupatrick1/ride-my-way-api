@@ -1,9 +1,10 @@
-const request = require('../controllers/rideRequest.controller.js');
+import express from 'express';
+import request from '../controllers/rideRequest.controller';
 
-module.exports = (app) => {
+const route = express.Router();
 // all request
-  app.get('/api/v1/rides/:rideId/request', request.all);
+route.get('/api/v1/rides/:rideId/request', request.all);
+// create a request
+route.post('/api/v1/rides/:rideId/request', request.create);
 
-  // create a request
-  app.post('/api/v1/rides/:rideId/request', request.create);
-};
+export default route;

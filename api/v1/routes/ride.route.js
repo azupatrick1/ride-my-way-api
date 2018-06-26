@@ -1,19 +1,22 @@
-const rides = require('../controllers/ride.controller.js');
+import express from 'express';
+import rides from '../controllers/ride.controller';
 
-module.exports = (app) => {
+const route = express.Router();
+
 //   all ride
-  app.get('/api/v1/rides', rides.all);
+route.get('/api/v1/rides', rides.all);
 
-  //   create new ride
-  app.post('/api/v1/rides', rides.create);
+//   create new ride
+route.post('/api/v1/rides', rides.create);
 
-  // find one ride
-  app.get('/api/v1/rides/:rideId', rides.findOne);
+// find one ride
+route.get('/api/v1/rides/:rideId', rides.findOne);
 
-  // update one ride
-  app.put('/api/v1/rides/:rideId', rides.update);
+// update one ride
+route.put('/api/v1/rides/:rideId', rides.update);
 
 
-  // delete one ride
-  app.delete('/api/v1/rides/:rideId', rides.delete);
-};
+// delete one ride
+route.delete('/api/v1/rides/:rideId', rides.delete);
+
+export default route;

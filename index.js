@@ -1,6 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
+
+import rideroute from './api/v1/routes/ride.route';
+import requestroute from './api/v1/routes/rideRequest.route';
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -33,11 +37,11 @@ export const requestDB = [{
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/', rideroute);
+app.use('/', requestroute);
 
-app.get('/', (req, res) => res.send('we are live !!!'));
-
-require('./api/v1/routes/ride.route.js')(app);
-require('./api/v1/routes/rideRequest.route.js')(app);
+app.get('/', (req, res) => res.send({ message: 'We are Live!!!' }));
+app.get('*', (req, res) => res.status(404).send({ message: 'wrong endpoint: visit api with api/v1/rides' }));
 
 const server = app.listen(port, () => {
   // console.log(`listening on port ${port} ...`);
