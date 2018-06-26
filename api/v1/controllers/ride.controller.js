@@ -2,26 +2,25 @@ import { ridesDB } from '../../../index';
 
 
 const validator = (ride) => {
-  const { name } = ride;
-  const { from } = ride;
-  const { to } = ride;
-  const { driver } = ride;
-  const { time } = ride;
+  const {
+    name, from, to, driver, time,
+  } = ride;
 
-  if (!name) return 'name is required!';
-  else if (name.length < 3) return 'name must be at least 3 letters long!';
-  if (!ride) return 'ride is required!';
-  else if (ride.length < 3) return 'ride must be at least 3 letters long!';
-  if (!from) return 'from is required!';
-  else if (from.length < 3) return 'from must be at least 3 letters long!';
-  if (!to) return 'to is required!';
-  else if (to.length < 3) return 'to must be at least 3 letters long!';
-  if (!driver) return 'driver is required!';
-  else if (driver.length < 3) return 'driver must be at least 3 letters long!';
-  if (!time) return 'time is required!';
-  else if (time.length < 3) return 'time must be at least 3 letters long!';
+  let valid = false;
+  if (!name) valid = 'name is required!';
+  else if (name.length < 3) valid = 'name must be at least 3 letters long!';
+  if (!ride) valid = 'ride is required!';
+  else if (ride.length < 3) valid = 'ride must be at least 3 letters long!';
+  if (!from) valid = 'from is required!';
+  else if (from.length < 3) valid = 'from must be at least 3 letters long!';
+  if (!to) valid = 'to is required!';
+  else if (to.length < 3) valid = 'to must be at least 3 letters long!';
+  if (!driver) valid = 'driver is required!';
+  else if (driver.length < 3) valid = 'driver must be at least 3 letters long!';
+  if (!time) valid = 'time is required!';
+  else if (time.length < 3) valid = 'time must be at least 3 letters long!';
 
-  return false;
+  return valid;
 };
 
 const getRide = rideId => ridesDB.find(c => c.id === parseInt(rideId, 10));
