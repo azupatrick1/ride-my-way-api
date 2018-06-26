@@ -1,4 +1,3 @@
-import joi from 'joi';
 import { requestDB } from '../../../index';
 import ridecon from '../controllers/ride.controller';
 
@@ -6,10 +5,11 @@ const { getRide } = ridecon;
 const { rideError } = ridecon;
 
 const validator = (request) => {
-  const schema = {
-    sender: joi.string().min(3).required(),
-  };
-  return joi.validate(request, schema);
+  const { sender } = request;
+  if (!sender) return 'name is required!';
+  else if (sender.length < 3) return 'name must be at least 3 letters long!';
+
+  return false;
 };
 
 exports.all = (req, res) => {
@@ -31,7 +31,8 @@ exports.create = (req, res) => {
   if (!ride) return rideError(req.params.rideId, res);
 
   const valid = validator(req.body);
-  if (valid.error) return res.status(400).send(valid.error.details[0].message);
+
+  if (valid) return res.status(400).send({ message: valid });
 
   const request = {
     id: requestDB.length + 1,

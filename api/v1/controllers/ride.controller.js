@@ -1,16 +1,27 @@
-import joi from 'joi';
 import { ridesDB } from '../../../index';
 
 
 const validator = (ride) => {
-  const schema = {
-    name: joi.string().min(3).required(),
-    from: joi.string().min(3).required(),
-    to: joi.string().min(3).required(),
-    driver: joi.string().min(3).required(),
-    time: joi.string().min(6).required(),
-  };
-  return joi.validate(ride, schema);
+  const { name } = ride;
+  const { from } = ride;
+  const { to } = ride;
+  const { driver } = ride;
+  const { time } = ride;
+
+  if (!name) return 'name is required!';
+  else if (name.length < 3) return 'name must be at least 3 letters long!';
+  if (!ride) return 'ride is required!';
+  else if (ride.length < 3) return 'ride must be at least 3 letters long!';
+  if (!from) return 'from is required!';
+  else if (from.length < 3) return 'from must be at least 3 letters long!';
+  if (!to) return 'to is required!';
+  else if (to.length < 3) return 'to must be at least 3 letters long!';
+  if (!driver) return 'driver is required!';
+  else if (driver.length < 3) return 'driver must be at least 3 letters long!';
+  if (!time) return 'time is required!';
+  else if (time.length < 3) return 'time must be at least 3 letters long!';
+
+  return false;
 };
 
 const getRide = rideId => ridesDB.find(c => c.id === parseInt(rideId, 10));
@@ -29,7 +40,7 @@ exports.all = (req, res) => {
 exports.create = (req, res) => {
   const valid = validator(req.body);
 
-  if (valid.error) return res.status(400).send(valid.error.details[0].message);
+  if (valid) return res.status(400).send({ message: valid });
 
   const ride = {
     id: ridesDB.length + 1,
@@ -56,7 +67,8 @@ exports.update = (req, res) => {
   if (!ride) return rideError(req.params.rideId, res);
 
   const valid = validator(req.body);
-  if (valid.error) return res.status(400).send(valid.error.details[0].message);
+
+  if (valid) return res.status(400).send({ message: valid });
 
   ride.name = req.body.name;
   ride.from = req.body.from;
