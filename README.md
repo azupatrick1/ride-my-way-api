@@ -9,7 +9,7 @@ Service allows to create and manipulate rides, send ride requests and also view 
 By default API server will be started on this URL: http://localhost:3000/
 
 You can view the deployed version on this URL : https://ride-my-way-api.herokuapp.com
-
+ 
 See the API endpoints below.
 
 # API Endpoints
@@ -34,3 +34,10 @@ Lists all ride requests under a specific ride.
 
 ##### POST api/v1/rides/:rideId/request
 create a new ride request under a specific ride.
+
+
+# Instructions
+## Local development 
+- clone repository with `git clone https://github.com/jojitoon/ride-my-way-api.git`
+- `cd ride-my-way-api`
+- run `npm install`
