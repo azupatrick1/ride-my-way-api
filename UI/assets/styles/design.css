@@ -4,11 +4,50 @@ body {
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+.content{
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 .form-main {
   width: 500px;
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+.front-title{
+  font-size: 9rem;
+  color: #ddd;
+}
+.btn-front {
+  text-decoration: none;
+  font-weight: 500;
+  line-height: 1.25;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  padding-top: 20px;
+  font-size: 20px;
+  border-radius: 5px;
+  -webkit-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+  height: 50px;
+  width: 200px; 
+  color: #fff;
+  border: 1px solid #ddd;
+  background-color: transparent;
+  margin-top: -100px;
+}
+
+.btn-front:hover {
+  background-color: rgba(221, 221, 221, 0.486);
+  border: 1px solid #ffffffd0;
+  padding-bottom: 10px;
+  padding-top: 30px;  
 }
 
 .text-center {
@@ -221,12 +260,15 @@ body {
 .nav-link:hover {
   text-decoration: none;
   background-color: rgba(0, 0, 0, 0.05);
-  color: #ddd;
-}
+  color: #fff;
+  }
 
 .back {
-  height: 500px;
-  padding: 10rem;
+  height: max-content ;
+  padding-right: 10rem;
+  padding-left: 10rem;
+  padding-top: 5rem;
+  padding-bottom: 100rem; 
   position: relative;
   background: rgba(0, 0, 0, 0.3);
 }
@@ -241,10 +283,12 @@ body {
   opacity: 0.3;
 }
 
+
 .backindex:after {
   background: url(../images/sign.jpg) no-repeat;
   background-size: cover;
   display: block;
+  padding-bottom: 100rem;
 }
 .backsign:after {
   background: url(../images/pic.jpg) no-repeat;

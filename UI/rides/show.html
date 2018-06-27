@@ -8,20 +8,26 @@
 </head>
 <body>
     <ul class="nav">
-      <li class="nav-item ">
-        <a class="title" href="./index.html">Ride My Way</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" href="./offers.html">Ride Requests</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../users/profile.html">profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Sign Out</a>
-      </li>
-
-    </ul>
+        <li>
+          <div class="title">
+            <a class="logo" href="../../index.html"></a>
+          </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./index.html">All Rides</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./offers.html">Ride Requests</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./about.html">About</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="../../index.html">Sign Out</a>
+          </li>
+        </ul> 
+      
+      <div class="content ">
 
     <h2> Ride Detail</h2>
     <table class="table">
@@ -46,10 +52,13 @@
               <td><b>Driver:</b> </td>
               <td>James Watt</td>
           </tr>
-      </tbody>
+      </tbody>      
     </table>
 
-    <a href="#" class="button btn-green"> Join this ride</a>
+    <a href="#" id="join"class="button btn-green" onclick="join()"> Join this ride</a>
+</div>
 
+<!--js script-->
+<script src = "../assets/scripts/actions.js"></script>
 </body>
 </html>
