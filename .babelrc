@@ -7,8 +7,6 @@
           "regenerator": true,
           "moduleName": "babel-runtime"
         }]
-      ],
-      "env": {
-        "nyc": { "plugins": ["istanbul"] }
-      }
+      ]
+      
 }
