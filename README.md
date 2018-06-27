@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/node.svg)](https://badge.fury.io/js/node) [![Build Status](https://travis-ci.org/jojitoon/ride-my-way-api.svg?branch=version1)](https://travis-ci.org/jojitoon/ride-my-way-api) [![Coverage Status](https://coveralls.io/repos/github/jojitoon/ride-my-way-api/badge.svg?branch=version1)](https://coveralls.io/github/jojitoon/ride-my-way-api?branch=version1) [![Maintainability](https://api.codeclimate.com/v1/badges/655570f8071f01f4a04b/maintainability)](https://codeclimate.com/github/jojitoon/ride-my-way-api/maintainability)
+[![npm version](https://badge.fury.io/js/node.svg)](https://badge.fury.io/js/node)  [![Build Status](https://travis-ci.org/jojitoon/ride-my-way-api.svg?branch=version1)](https://travis-ci.org/jojitoon/ride-my-way-api) [![Coverage Status](https://coveralls.io/repos/github/jojitoon/ride-my-way-api/badge.svg?branch=version1)](https://coveralls.io/github/jojitoon/ride-my-way-api?branch=version1) [![Maintainability](https://api.codeclimate.com/v1/badges/655570f8071f01f4a04b/maintainability)](https://codeclimate.com/github/jojitoon/ride-my-way-api/maintainability)
 
 # Ride My Way Project
 
@@ -41,3 +41,7 @@ create a new ride request under a specific ride.
 - clone repository with `git clone https://github.com/jojitoon/ride-my-way-api.git`
 - `cd ride-my-way-api`
 - run `npm install`
+- run `npm start` 
+- go to http://localhost:3000
+- Hurray! you are live..
+
