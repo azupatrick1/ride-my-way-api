@@ -38,13 +38,13 @@ body {
   height: 50px;
   width: 200px; 
   color: #fff;
-  border: 1px solid #ddd;
-  background-color: transparent;
+  border: 1px solid #fff;
+  background-color: rgba(25, 116, 236, 0.932);
   margin-top: -100px;
 }
 
 .btn-front:hover {
-  background-color: rgba(221, 221, 221, 0.486);
+  background-color:  rgba(25, 116, 236, 0.5);
   border: 1px solid #ffffffd0;
   padding-bottom: 10px;
   padding-top: 30px;  
@@ -116,10 +116,10 @@ body {
   -webkit-transition: all .3s ease-in-out;
   -o-transition: all .3s ease-in-out;
   transition: all .3s ease-in-out;
-  height: 50px;
+  /* height: 50px; */
   border-bottom-color: rgba(0, 0, 0, 0.2);
   border-bottom-width: thick!important;
-  margin-bottom: 10px;
+ 
 }
 
 .btn-full {
@@ -207,7 +207,7 @@ body {
   width: 100%;
   overflow-x: auto;
   -ms-overflow-style: -ms-autohiding-scrollbar;
-}
+}   
 
 .nav {
   display: -webkit-box;
@@ -364,6 +364,7 @@ body {
 
 .boxes .box {
   margin: 0 1em 2em 1em;
+  height: 250px;
   width: 30%;
 }
 
@@ -395,4 +396,8 @@ body {
   .box > :last-child > :last-child,
   .box > :last-child > :last-child > :last-child {
     margin-bottom: 0;
+  }
+  
+  .down{
+    padding-top: 200px;
   }
