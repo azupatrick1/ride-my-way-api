@@ -268,7 +268,7 @@ body {
   padding-right: 10rem;
   padding-left: 10rem;
   padding-top: 5rem;
-  padding-bottom: 100rem; 
+  padding-bottom: 15rem; 
   position: relative;
   background: rgba(0, 0, 0, 0.3);
 }
@@ -288,7 +288,7 @@ body {
   background: url(../images/sign.jpg) no-repeat;
   background-size: cover;
   display: block;
-  padding-bottom: 100rem;
+  
 }
 .backsign:after {
   background: url(../images/pic.jpg) no-repeat;
@@ -343,3 +343,56 @@ body {
     color:#999;
   }
 
+.boxes{
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -moz-align-items: stretch;
+  -webkit-align-items: stretch;
+  -ms-align-items: stretch;
+  align-items: stretch;
+  -moz-justify-content: center;
+  -webkit-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -moz-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.boxes .box {
+  margin: 0 1em 2em 1em;
+  width: 30%;
+}
+
+  @media screen and (max-width: 1280px) {
+
+    .boxes .box {
+      width: 45%;
+    }
+
+  }
+
+  @media screen and (max-width: 736px) {
+
+    .boxes .box {
+      width: 100%;
+    }
+
+  }
+
+  .box{
+    border-radius: 4px;
+		margin-bottom: 2em;
+		background: #2c2c32;
+    text-align: center;
+    padding-bottom: 20px;
+  }
+
+  .box > :last-child,
+  .box > :last-child > :last-child,
+  .box > :last-child > :last-child > :last-child {
+    margin-bottom: 0;
+  }
