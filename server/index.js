@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-
 import rideroute from './api/v1/routes/ride.route';
 import requestroute from './api/v1/routes/rideRequest.route';
 
