@@ -1,5 +1,7 @@
+import { Client } from 'pg';
 import { ridesDB } from '../../../index';
 
+const connectionString = 'postgres://bmeqtfwa:Q_gd2GtV5OQxnlmzHGSq_881mCb6GXSb@tantor.db.elephantsql.com:5432/bmeqtfwa';
 
 const validator = (ride) => {
   const {
@@ -28,12 +30,21 @@ const getRide = rideId => ridesDB.find(c => c.id === parseInt(rideId, 10));
 const rideError = (rideId, res) => res.status(404).send({ message: `ride with id ${rideId} not found` });
 
 exports.all = (req, res) => {
-  if (!ridesDB) {
-    return res.status(500).send({
-      message: 'no rides',
+  const client = new Client(connectionString);
+  let rides;
+  client.connect()
+    .then(() => {
+      const sql = 'SELECT * FROM rides';
+      return client.query(sql);
+    }).then((result) => {
+      rides = result.rows;
+      if (!rides) {
+        return res.status(500).send({
+          message: 'no rides',
+        });
+      }
+      return res.send(rides);
     });
-  }
-  return res.send(ridesDB);
 };
 
 exports.create = (req, res) => {
