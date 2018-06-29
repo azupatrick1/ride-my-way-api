@@ -7,33 +7,42 @@
     <link rel="stylesheet" href="../assets/styles/design.css">
 </head>
 <body>
-    <ul class="nav">
-        <li class="nav-item ">
-          <a class="title" href="./index.html">Ride My Way</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./offers.html">Ride Requests</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../users/profile.html">profile</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sign Out</a>
-        </li>
-
-    </ul>
-    <h2 class="text-center"> Offer A Ride</h2>
+        <header id="header">
+                <h1>
+                  <strong>
+                    <a href="../../index.html">Ride </a>
+                  </strong>my way</h1>
+                <nav id="nav">
+            
+                  <ul>
+                    <li>
+                      <a href="./index.html">All rides</a>
+                    </li>
+                    <li>
+                      <a href="./offers.html">ride request</a>
+                    </li>
+                    <li>
+                      <a href="../../index.html">Sign out</a>
+                    </li>
+                  </ul>
+                </nav>
+            
+              </header>
+              <div class="backimage more-15">
+    <h2 class="text-center text-white"> Offer A Ride</h2>
     <div class="form-main">
         <form>
             <input type="text" name="location" value="" placeholder="Enter where you are moving from ..." class="form-input">
 
             <input type="text" name="destination" value="" placeholder="enter the Destination ..." class="form-input">
-            <input type="datetime" name="time" value="" placeholder="enter the departure time ..." class="form-input">
+            <input type="time" name="time" value="" placeholder="enter the departure time ..." class="form-input">
+            <input type="number" name="slot" value="" placeholder="Available seat ..." class="form-input">
 
             <input type="submit" name="submit" value="Create Ride" class="button btn-green btn-full">
 
         </form>
 
+    </div>
     </div>
 </body>
 </html>
