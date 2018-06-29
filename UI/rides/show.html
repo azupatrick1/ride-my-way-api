@@ -1,64 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title> Ride detail .Ride a way</title>
 
     <link rel="stylesheet" href="../assets/styles/design.css">
 </head>
+
 <body>
-    <ul class="nav">
-        <li>
-          <div class="title">
-            <a class="logo" href="../../index.html"></a>
-          </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./index.html">All Rides</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./offers.html">Ride Requests</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./about.html">About</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="../../index.html">Sign Out</a>
-          </li>
-        </ul> 
-      
-      <div class="content ">
+    <header id="header">
+        <h1>
+            <strong>
+                <a href="../../index.html">Ride </a>
+            </strong>my way</h1>
+        <nav id="nav">
 
-    <h2> Ride Detail</h2>
-    <table class="table">
-      <tbody>
-          <tr>
-              <td><b>Name:</b> </td>
-              <td>Ride 1234</td>
-          </tr>
-          <tr>
-              <td><b>From:</b> </td>
-              <td>Abuja</td>
-          </tr>
-          <tr>
-              <td><b>To:</b> </td>
-              <td>Lagos</td>
-          </tr>
-          <tr>
-              <td><b>By:</b> </td>
-              <td>7:00am</td>
-          </tr>
-          <tr>
-              <td><b>Driver:</b> </td>
-              <td>James Watt</td>
-          </tr>
-      </tbody>      
-    </table>
+            <ul>
+                <li>
+                    <a href="./index.html">All rides</a>
+                </li>
+                <li>
+                    <a href="./offers.html">ride request</a>
+                </li>
+                <li>
+                    <a href="../../index.html">Sign out</a>
+                </li>
+            </ul>
+        </nav>
 
-    <a href="#" id="join"class="button btn-green" onclick="join()"> Join this ride</a>
+    </header>
+    <div class="backimage more-15" id="show"> 
+        <div class="content ">
+<!-- 
+            <h2> Ride Detail</h2> -->
+<div class="single-box"> 
+    <h2> Ride Expresso</h2>
+   <h4>Departure Location : <small>Lekki</small></h4>
+   <h4>Destination : <small>Lekki</small></h4>
+   <h4>Departure Time : <small>7 :00 pm</small></h4>
+   <h4>Avalaible slot : <small>5</small></h4>
+   <h4>Vehicle brand: <small>Sienna</small></h4>
+   <h4>Vehicle type: <small>Bus</small></h4>
+   <h4>Vehicle License: <small>La-234834</small></h4>
+    
+    
+    
+
 </div>
 
-<!--js script-->
-<script src = "../assets/scripts/actions.js"></script>
+
+          
+
+            <a href="#" id="join" class="button btn-green" onclick="join()"> Join this ride</a>
+        </div>
+    </div>
+    <!--js script-->
+    <script src="../assets/scripts/actions.js"></script>
 </body>
+
 </html>
