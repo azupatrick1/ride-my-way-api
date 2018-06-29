@@ -370,34 +370,24 @@ span i {
   flex-wrap: wrap;
   
 }
-
-
-.boxes.left {
-  display: -moz-flex;
-  display: -webkit-flex;
-  display: -ms-flex;
-  display: flex;
-  -moz-align-items: stretch;
-  -webkit-align-items: stretch;
-  -ms-align-items: stretch;
-  align-items: stretch;
-  -moz-justify-content: center;
-  -webkit-justify-content: center;
-  -ms-justify-content: center;
-  justify-content: center;
-  -moz-flex-wrap: wrap;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -moz-flex-direction: column;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
+.boc{
+  -moz-flex-flow: column;
+  -webkit-flex-flow: column;
+  -ms-flex-flow: column;
+  flex-flow: column;
+  
 }
 .boxes .box {
   margin: 0 1em 2em 1em;
   height: fit-content;
-  width: 30%;
+  width: 40%;
+}
+
+.box .boxc{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+
 }
 .search{
   width: 50%;
@@ -661,6 +651,7 @@ body.is-touch #banner {
 .dropdown-content #drop li{
   margin: 0px;
   padding: 0px;
+  display: block;
 }
 .dropdown:hover .dropdown-content{
   display: block;
@@ -744,6 +735,9 @@ body.is-touch #banner {
 .text-white {
   color: #fff!important;
 } 
+.text-blue{
+  color: #097abb;
+}
 
 .text-left{
   text-align: left;
@@ -752,6 +746,17 @@ body.is-touch #banner {
   margin-top: 10px;
 }
 
+.pad-left-more{
+  margin-left: 120px;
+}
+
+@media screen and (max-width: 1280px){
+ 
+  .pad-left-more{
+    margin-left: 60px;
+  }
+
+}
 /* help from Jarek Ostrowski */
 
 
