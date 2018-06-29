@@ -368,12 +368,41 @@ span i {
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  
 }
 
+
+.boxes.left {
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -moz-align-items: stretch;
+  -webkit-align-items: stretch;
+  -ms-align-items: stretch;
+  align-items: stretch;
+  -moz-justify-content: center;
+  -webkit-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -moz-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -moz-flex-direction: column;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
 .boxes .box {
   margin: 0 1em 2em 1em;
   height: fit-content;
   width: 30%;
+}
+.search{
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media screen and (max-width: 1280px) {
@@ -394,6 +423,22 @@ span i {
   background: #2c2c32;
   text-align: center;
   padding-bottom: 20px;
+}
+
+.about {
+  border-radius: 4px;
+  margin-bottom: 2em;
+  background: #dedeee;
+  text-align: center;
+  padding-bottom: 20px;
+  padding: 10px;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+.box.space{
+margin-bottom: 10px
 }
 
 .box > :last-child,
@@ -567,7 +612,7 @@ body.is-touch #banner {
   background-attachment: scroll;
 }
 #banner {
-  padding: 20em 0 13em 0;
+  padding: 20em 0 20em 0;
   background-attachment: fixed;
   background-image: url("../images/overlay.png"), url("../images/pic.jpg");
   background-position: center top;
@@ -591,6 +636,35 @@ body.is-touch #banner {
 .backimage#show{
   background-image: url("../images/overlay.png"), url("../images/road.jpg");
 }
+
+.navimage{
+  vertical-align: middle;
+  border-radius: 50%;
+}
+.image{
+  margin-top: 20px;
+  border-radius: 50%;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  margin-left: -100px;
+  background-color: #e2e2e2;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 10px;
+  align-content: center;
+  text-align: center;
+}
+.dropdown-content #drop li{
+  margin: 0px;
+  padding: 0px;
+}
+.dropdown:hover .dropdown-content{
+  display: block;
+}
 .backimage .headtext{
   color: #fff;
 }
@@ -602,6 +676,9 @@ body.is-touch #banner {
 }
 .backimage.more-20{
   padding: 3em 0 20em 0;
+}
+.backimage.more-30{
+  padding: 3em 0 30em 0;
 }
 #banner h2 {
   color: #ffffff;
@@ -620,7 +697,7 @@ body.is-touch #banner {
 
 @media screen and (max-width: 1280px) {
   #banner {
-    padding: 14em 0 11em 0;
+    padding: 20em 0 24em 0;
   }
 
   #banner h2 {
@@ -687,7 +764,7 @@ body.is-touch #banner {
 	border-radius: 6px;
 	overflow: hidden;
 	user-select: none;
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .inner-container {

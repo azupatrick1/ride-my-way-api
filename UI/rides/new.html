@@ -22,8 +22,17 @@
                       <a href="./offers.html">ride request</a>
                     </li>
                     <li>
-                      <a href="../../index.html">Sign out</a>
-                    </li>
+                        <div href="#" class="dropdown">
+                          <img src="../assets/images/img.png" alt="" class="navimage"  height="50" width="50">
+                          <div class="dropdown-content">
+                              <ul id="drop">
+                                  <li><a href="../users/profile.html">profile</a> </li>
+                                  <li><a href="../../index.html">sign out</a> </li>
+                              </ul>
+                            </div>
+                          </div>
+                        
+                      </li>
                   </ul>
                 </nav>
             
@@ -31,14 +40,14 @@
               <div class="backimage more-15">
     <h2 class="text-center text-white"> Offer A Ride</h2>
     <div class="form-main">
-        <form>
-            <input type="text" name="location" value="" placeholder="Enter where you are moving from ..." class="form-input">
+        <form action="../users/profile.html">
+            <input type="text" name="location" value="" placeholder="Enter where you are moving from ..." class="form-input" required>
 
-            <input type="text" name="destination" value="" placeholder="enter the Destination ..." class="form-input">
+            <input type="text" name="destination" value="" placeholder="enter the Destination ..." class="form-input" required>
             <input type="time" name="time" value="" placeholder="enter the departure time ..." class="form-input">
-            <input type="number" name="slot" value="" placeholder="Available seat ..." class="form-input">
+            <input type="number" name="slot" value="" placeholder="Available seat ..." class="form-input" required>
 
-            <input type="submit" name="submit" value="Create Ride" class="button btn-green btn-full">
+            <input type="submit" name="submit" value="Create Ride" class="button btn-green btn-full" required>
 
         </form>
 
