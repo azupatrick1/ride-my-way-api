@@ -1,6 +1,7 @@
 import supertest from 'supertest';
 import { expect } from 'chai';
 import * as lib from '../index';
+import ridesDB from '../api/v1/models/ride.model';
 
 const app = lib.default;
 
@@ -26,7 +27,8 @@ describe('Get requests', () => {
     request
       .get('/api/v1/rides/1/request')
       .expect(200)
-      .end((err) => {
+      .end((err, res) => {
+        expect(res.body.status).to.eql('success');
         done(err);
       });
   });
@@ -35,7 +37,8 @@ describe('Get requests', () => {
     request
       .get('/api/v1/rides/3223/request')
       .expect(404)
-      .end((err) => {
+      .end((err, res) => {
+        expect(res.body.status).to.eql('fail');
         done(err);
       });
   });
@@ -44,7 +47,7 @@ describe('Get requests', () => {
 
 describe('Post requests', () => {
   it('save a new requests', (done) => {
-    const ride = lib.ridesDB.find(c => c.id === 2);
+    const ride = ridesDB.find(c => c.id === 2);
     request
       .post('/api/v1/rides/2/request')
       .send({
@@ -52,12 +55,14 @@ describe('Post requests', () => {
       })
       .expect(201)
       .end((err, res) => {
-        expect(res.body).to.eql({
-          id: requestDB.length + 1,
-          rideId: ride.id,
-          rideName: ride.name,
-          sender: 'mocha test',
-          status: 'sent',
+        expect(res.body.data).to.eql({
+          'ride request': {
+            id: requestDB.length + 1,
+            rideId: ride.id,
+            rideName: ride.name,
+            sender: 'mocha test',
+            status: 'sent',
+          },
         });
         done(err);
       });
@@ -70,7 +75,8 @@ describe('Post requests', () => {
         sender: 'te',
       })
       .expect(400)
-      .end((err) => {
+      .end((err, res) => {
+        expect(res.body.status).to.eql('fail');
         done(err);
       });
   });
