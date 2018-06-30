@@ -1,39 +1,25 @@
-import { requestDB } from '../../../index';
-import ridecon from '../controllers/ride.controller';
+import requestDB from '../models/rideRequest.model';
 
-const { getRide } = ridecon;
-const { rideError } = ridecon;
-
-const validator = (request) => {
-  const { sender } = request;
-  if (!sender) return 'name is required!';
-  else if (sender.length < 3) return 'name must be at least 3 letters long!';
-
-  return false;
-};
-
-exports.all = (req, res) => {
-  const ride = getRide(req.params.rideId);
-  if (!ride) return rideError(req.params.rideId, res);
-
-  const request = requestDB.find(c => c.rideId === parseInt(ride.id, 10));
-
-  if (!request) {
-    return res.status(500).send({
-      message: 'no request',
+export function all(req, res) {
+  const { ride } = req;
+  function filterRequest(request) {
+    return request.rideId === Number(ride.id);
+  }
+  const request = requestDB.filter(filterRequest);
+  if (!request || request.length < 1 || request === undefined || request === null) {
+    return res.status(404).send({
+      status: 'fail',
+      data: { message: 'There is no request for this ride ' },
     });
   }
-  return res.send(request);
-};
+  return res.send({
+    status: 'success',
+    data: { 'ride requests': request },
+  });
+}
 
-exports.create = (req, res) => {
-  const ride = getRide(req.params.rideId);
-  if (!ride) return rideError(req.params.rideId, res);
-
-  const valid = validator(req.body);
-
-  if (valid) return res.status(400).send({ message: valid });
-
+export function create(req, res) {
+  const { ride } = req;
   const request = {
     id: requestDB.length + 1,
     rideId: ride.id,
@@ -41,8 +27,9 @@ exports.create = (req, res) => {
     sender: req.body.sender,
     status: 'sent',
   };
-
   requestDB.push(request);
-
-  return res.status(201).send(request);
-};
+  return res.status(201).send({
+    status: 'success',
+    data: { 'ride request': request },
+  });
+}

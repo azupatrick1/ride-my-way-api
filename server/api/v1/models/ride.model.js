@@ -1,17 +1,20 @@
-import { Pool } from 'pg';
+const ridesDB = [
+  {
+    id: 1,
+    name: 'ride1234',
+    from: 'Abuja',
+    to: 'Lagos',
+    driver: 'driver 1',
+    time: '7:00 pm',
+  },
+  {
+    id: 2,
+    name: 'ride1344',
+    from: 'Lagos',
+    to: 'Aba',
+    driver: 'driver 2',
+    time: '6:00 am',
+  },
+];
 
-const connectionString = 'postgres://bmeqtfwa:Q_gd2GtV5OQxnlmzHGSq_881mCb6GXSb@tantor.db.elephantsql.com:5432/bmeqtfwa';
-
-const pool = new Pool({
-  connectionString,
-});
-// const client = new Client({
-//   connectionString,
-// });
-// client.connect();
-
-
-pool.query('SELECT * FROM rides', (err, res) => {
-  console.log(err, res);
-  pool.end();
-});
+export default ridesDB;

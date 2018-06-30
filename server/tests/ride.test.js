@@ -32,8 +32,11 @@ describe('Get request for rides', () => {
       .get('/api/v1/rides')
       .expect(200)
       .end((err, res) => {
-        expect(res.body).to.have.lengthOf(ridesDB.length);
-        expect(res.body).to.eql(ridesDB);
+        expect(res.body.status).to.eql('success');
+        expect(res.body.data.rides).to.have.lengthOf(ridesDB.length);
+        expect(res.body.data).to.eql({
+          rides: ridesDB,
+        });
         done(err);
       });
   });
@@ -42,7 +45,8 @@ describe('Get request for rides', () => {
     request
       .get('/api/v1/ride')
       .expect(404)
-      .end((err) => {
+      .end((err, res) => {
+        expect(res.body.status).to.eql('fail');
         done(err);
       });
   });
@@ -62,13 +66,16 @@ describe('Post requests for rides', () => {
       })
       .expect(201)
       .end((err, res) => {
-        expect(res.body).to.eql({
-          id: ridesDB.length + 1,
-          name: 'test ride',
-          from: 'Lagos',
-          to: 'Aba',
-          driver: 'mocha',
-          time: '6:00 am',
+        expect(res.body.status).to.eql('success');
+        expect(res.body.data).to.eql({
+          ride: {
+            id: ridesDB.length + 1,
+            name: 'test ride',
+            from: 'Lagos',
+            to: 'Aba',
+            driver: 'mocha',
+            time: '6:00 am',
+          },
         });
         done(err);
       });
@@ -81,7 +88,8 @@ describe('Post requests for rides', () => {
         name: 'test 1',
       })
       .expect(400)
-      .end((err) => {
+      .end((err, res) => {
+        expect(res.body.status).to.eql('fail');
         done(err);
       });
   });
@@ -93,7 +101,8 @@ describe('Test the API to get a ride with a specific id', () => {
     request
       .get('/api/v1/rides/101010')
       .expect(404)
-      .end((err) => {
+      .end((err, res) => {
+        expect(res.body.status).to.eql('fail');
         done(err);
       });
   });
@@ -105,7 +114,8 @@ describe('Test the API to get a ride with a specific id', () => {
       .get('/api/v1/rides/1')
       .expect(200)
       .end((err, res) => {
-        expect(res.body).to.eql(ride);
+        expect(res.body.status).to.eql('success');
+        expect(res.body.data).to.eql({ ride });
         done(err);
       });
   });
@@ -125,13 +135,16 @@ describe('Put request for rides', () => {
       })
       .expect(200)
       .end((err, res) => {
-        expect(res.body).to.eql({
-          id: 1,
-          name: 'test updated',
-          from: 'Lagos',
-          to: 'benin',
-          driver: 'mocha',
-          time: '6:00 am',
+        expect(res.body.status).to.eql('success');
+        expect(res.body.data).to.eql({
+          ride: {
+            id: 1,
+            name: 'test updated',
+            from: 'Lagos',
+            to: 'benin',
+            driver: 'mocha',
+            time: '6:00 am',
+          },
         });
         done(err);
       });
@@ -144,7 +157,8 @@ describe('Put request for rides', () => {
         name: 'test 1',
       })
       .expect(400)
-      .end((err) => {
+      .end((err, res) => {
+        expect(res.body.status).to.eql('fail');
         done(err);
       });
   });
@@ -153,7 +167,8 @@ describe('Put request for rides', () => {
     request
       .put('/api/v1/rides/101010')
       .expect(404)
-      .end((err) => {
+      .end((err, res) => {
+        expect(res.body.status).to.eql('fail');
         done(err);
       });
   });
@@ -165,9 +180,8 @@ describe('Delete request for rides', () => {
       .delete('/api/v1/rides/3')
       .expect(200)
       .end((err, res) => {
-        expect(res.body).to.eql({
-          message: 'ride with id 3 was deleted successfully',
-        });
+        expect(res.body.status).to.eql('success');
+        expect(res.body.data).to.eql(null);
         done(err);
       });
   });
@@ -176,9 +190,9 @@ describe('Delete request for rides', () => {
     request
       .delete('/api/v1/rides/101010')
       .expect(404)
-      .end((err) => {
+      .end((err, res) => {
+        expect(res.body.status).to.eql('fail');
         done(err);
       });
   });
 });
-
