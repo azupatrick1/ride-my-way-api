@@ -1,80 +1,33 @@
+function sayError(valid, res) {
+  return res.status(400).send({ status: 'fail', data: { message: valid } });
+}
+function checkbody(item, text, res) {
+  if (!item || item === undefined || item === null) { return sayError(`${text} parameter is required`, res); } else if (typeof item !== 'string') {
+    return sayError(`${text} must be a string`, res);
+  } else if (/^\s*$/.test(item)) {
+    return sayError(`${text} can not be empty`, res);
+  } else if (item.length < 3) { return sayError(`${text} must be at least 3 character long `, res); }
+  return true;
+}
+
 export const validateRide = (req, res, next) => {
   const {
     name, from, to, driver, time,
   } = req.body;
-  function sayError(valid) {
-    return res.status(400).send({
-      status: 'fail',
-      data: { message: valid },
-    });
-  }
-
-
-  if (!name || name === undefined || name === null) {
-    sayError(' name parameter is required');
-  } else if (typeof name !== 'string') {
-    sayError('name must be a string');
-  } else if (/^\s*$/.test(name)) {
-    sayError('name can not be empty');
-  } else if (name.length < 3) {
-    sayError('name must be at least 3 character long ');
-  } else if (!from || from === undefined || from === null) {
-    sayError(' from parameter is required');
-  } else if (typeof from !== 'string') {
-    sayError('from must be a string');
-  } else if (/^\s*$/.test(from)) {
-    sayError('from can not be empty');
-  } else if (from.length < 3) {
-    sayError('from must be at least 3 character long ');
-  } else if (!to || to === undefined || to === null) {
-    sayError('to parameter is required');
-  } else if (typeof to !== 'string') {
-    sayError('to must be a string');
-  } else if (/^\s*$/.test(to)) {
-    sayError('to can not be empty');
-  } else if (name.length < 3) {
-    sayError('to must be at least 3 character long ');
-  } else if (!driver || driver === undefined || driver === null) {
-    sayError('driver parameter is required');
-  } else if (typeof driver !== 'string') {
-    sayError('driver must be a string');
-  } else if (/^\s*$/.test(driver)) {
-    sayError('driver can not be empty');
-  } else if (driver.length < 3) {
-    sayError('driver must be at least 3 character long ');
-  } else if (!time || time === undefined || time === null) {
-    sayError('time parameter is required');
-  } else if (typeof name !== 'string') {
-    sayError('time must be a string');
-  } else if (/^\s*$/.test(time)) {
-    sayError('time can not be empty');
-  } else if (time.length < 3) {
-    sayError('time must be at least 3 character long ');
-  } else {
-    next();
+  if (checkbody(name, 'name', res) === true) {
+    if (checkbody(from, 'from', res) === true) {
+      if (checkbody(to, 'to', res) === true) {
+        if (checkbody(driver, 'driver', res) === true) {
+          if (checkbody(time, 'time', res) === true) {
+            next();
+          }
+        }
+      }
+    }
   }
 };
-
 export const validateRequest = (req, res, next) => {
   const { sender } = req.body;
-  function sayError(valid) {
-    return res.status(400).send({
-      status: 'fail',
-      data: { message: valid },
-    });
-  }
-
-
-  if (!sender || sender === undefined || sender === null) {
-    sayError(' sender parameter is required');
-  } else if (typeof sender !== 'string') {
-    sayError('sender must be a string');
-  } else if (/^\s*$/.test(sender)) {
-    sayError('sender can not be empty');
-  } else if (sender.length < 3) {
-    sayError('sender must be at least 3 character long ');
-  } else {
-    next();
-  }
+  if (checkbody(sender, 'sender', res) === true) { next(); }
 };
 
