@@ -3,12 +3,16 @@ import bodyParser from 'body-parser';
 
 import rideroute from './api/v1/routes/ride.route';
 import requestroute from './api/v1/routes/rideRequest.route';
+import authroute from './api/v1/routes/auth.route';
+
+process.env.NODE_ENV = 'development';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/', authroute);
 app.use('/', rideroute);
 app.use('/', requestroute);
 
