@@ -51,3 +51,34 @@ export function verifyUser(req, res) {
     });
   });
 }
+
+export function signin(req, res) {
+  const sql = 'SELECT * FROM users WHERE username = $1';
+  let user = '';
+  const userdata = [req.body.username];
+  pool((err, client, done) => {
+    if (err) return res.status(500).send({ status: 'error', error: err });
+
+    return client.query(sql, userdata, (error, result) => {
+      done();
+      if (error) return res.status(500).send({ status: 'error', error: error.stack });
+
+      if (!result) return res.status(404).send({ status: 'fail', message: 'user not registered' });
+
+      user = result.rows;
+      bcrypt.compare(req.body.password, user[0].password, (errs) => {
+        if (errs) return res.status(404).send({ status: 'fail', message: 'password not correct' });
+
+        // create a token
+        const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY, {
+          expiresIn: 86400, // expires in 24 hours
+        });
+
+        return res.status(200).send({
+          status: 'success',
+          data: { token },
+        });
+      });
+    });
+  });
+}
