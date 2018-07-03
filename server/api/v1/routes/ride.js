@@ -17,10 +17,10 @@ route.post('/api/v1/users/rides', jwtverify, validateRide, Ride.create);
 route.get('/api/v1/rides/:rideId', jwtverify, getRide, Ride.findOne);
 
 // update one ride
-route.put('/api/v1/rides/:rideId', getRide, validateRide, Ride.update);
+route.put('/api/v1/rides/:rideId', jwtverify, getRide, validateRide, Ride.update);
 
 
 // delete one ride
-route.delete('/api/v1/rides/:rideId', getRide, Ride.deleteRide);
+route.delete('/api/v1/rides/:rideId', jwtverify, getRide, Ride.deleteRide);
 
 export default route;

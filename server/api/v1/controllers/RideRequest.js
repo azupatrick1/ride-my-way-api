@@ -1,4 +1,4 @@
-import requestDB from '../models/rideRequest.model';
+import requestDB from '../models/rideRequest';
 
 class RideRequest {
   static all(req, res) {

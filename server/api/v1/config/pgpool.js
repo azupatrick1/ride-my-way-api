@@ -12,6 +12,6 @@ if (process.env.NODE_ENV === 'test') {
 
 
 const pool = pg.Pool({ connectionString });
-export default function (callback) {
+export default (callback) => {
   pool.connect((err, client, done) => callback(err, client, done));
-}
+};

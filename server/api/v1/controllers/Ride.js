@@ -1,4 +1,4 @@
-import ridesDB from '../models/ride.model';
+import ridesDB from '../models/ride';
 import pool from '../config/pgpool';
 
 class Ride {

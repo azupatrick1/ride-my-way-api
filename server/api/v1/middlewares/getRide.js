@@ -27,7 +27,9 @@ const getRide = (req, res, next) => {
       if (!result || result === undefined || result === null) {
         return res.status(404).send({ status: 'fail', message: `rides with id ${req.params.rideId} was not found` });
       }
+
       req.ride = result.rows[0];
+
       return next();
     });
   });
