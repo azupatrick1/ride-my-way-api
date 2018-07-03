@@ -1,22 +1,21 @@
-function sayError(valid, res) {
-  return res.status(400).send({ status: 'fail', data: { message: valid } });
-}
-function checkbody(item, text, res) {
+const sayError = (valid, res) => res.status(400).send({ status: 'fail', data: { message: valid } });
+
+const checkbody = (item, text, res) => {
   if (!item || item === undefined || item === null) { return sayError(`${text} parameter is required`, res); } else if (typeof item !== 'string') {
     return sayError(`${text} must be a string`, res);
   } else if (/^\s*$/.test(item)) {
     return sayError(`${text} can not be empty`, res);
   } else if (item.length < 3) { return sayError(`${text} must be at least 3 character long `, res); }
   return true;
-}
-function checknum(item, text, res) {
+};
+const checknum = (item, text, res) => {
   if (!item || item === undefined || item === null) { return sayError(`${text} parameter is required`, res); } else if (typeof item !== 'number') {
     return sayError(`${text} must be a number`, res);
   } else if (item < 1) {
     return sayError(`${text} can not be less than one (1)`, res);
   }
   return true;
-}
+};
 
 export const validateRide = (req, res, next) => {
   const {

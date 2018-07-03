@@ -15,7 +15,6 @@
     "create-dbU": "babel-node ./server/api/v1/config/DB-user.js && babel-node ./server/api/v1/config/DB-user.test.js",
     "create-dbR": "babel-node ./server/api/v1/config/DB-ride.js && babel-node ./server/api/v1/config/DB-ride.test.js",
     "create-dbRR": "babel-node ./server/api/v1/config/DB-req.js && babel-node ./server/api/v1/config/DB-req.test.js"
-  
   },
   "keywords": [
     "api",

@@ -1,12 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import rideroute from './api/v1/routes/ride.route';
-import requestroute from './api/v1/routes/rideRequest.route';
-import authroute from './api/v1/routes/auth.route';
+import rideroute from './api/v1/routes/ride';
+import requestroute from './api/v1/routes/rideRequest';
+import authroute from './api/v1/routes/auth';
 
-
-process.env.NODE_ENV = 'development';
 
 const app = express();
 const port = process.env.PORT || 3000;
