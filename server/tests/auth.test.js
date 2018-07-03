@@ -3,8 +3,6 @@ import { expect } from 'chai';
 
 import app from '../index';
 
-process.env.NODE_ENV = 'test';
-
 
 const request = supertest(app);
 
@@ -17,7 +15,6 @@ const userCredentials2 = {
   username: 'mochatester',
   password: 'chaiexpect',
 };
-
 
 describe('testing signups', () => {
   it('should return token and success status', (done) => {
