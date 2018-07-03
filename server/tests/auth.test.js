@@ -19,8 +19,8 @@ const userCredentials2 = {
 describe('testing signups', () => {
   it('should return token and success status', (done) => {
     request
-      .post('/auth/signin')
-      .send(userCredentials2)
+      .post('/auth/signup')
+      .send(userCredentials)
       .expect(200)
       .end((err, res) => {
         expect(res.body.status).to.eql('success');
@@ -34,7 +34,7 @@ describe('testing signins', () => {
   it('should return token and success status', (done) => {
     request
       .post('/auth/signin')
-      .send(userCredentials)
+      .send(userCredentials2)
       .expect(200)
       .end((err, res) => {
         expect(res.body.status).to.eql('success');
@@ -43,3 +43,4 @@ describe('testing signins', () => {
     done();
   });
 });
+

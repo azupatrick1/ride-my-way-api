@@ -15,7 +15,7 @@ const jwtverify = (req, res, next) => {
 
   if (!tokengen) return res.status(401).send({ status: 'fail', data: { token: 'no token provided' } });
 
-  jwt.verify(tokengen, process.env.SECRET_KEY, (err, result) => {
+  return jwt.verify(tokengen, process.env.SECRET_KEY, (err, result) => {
     if (err) return res.status(500).send({ status: 'error', message: 'Failed to authenticate token' });
 
     req.decoded = result;
