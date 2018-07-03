@@ -14,7 +14,7 @@ route.get('/api/v1/rides', jwtverify, all);
 route.post('/api/v1/users/rides', jwtverify, validateRide, create);
 
 // find one ride
-route.get('/api/v1/rides/:rideId', getRide, findOne);
+route.get('/api/v1/rides/:rideId', jwtverify, getRide, findOne);
 
 // update one ride
 route.put('/api/v1/rides/:rideId', getRide, validateRide, update);

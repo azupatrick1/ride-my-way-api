@@ -76,21 +76,20 @@ export function signin(req, res) {
       if (!result || result === undefined || result === null) return res.status(404).send({ status: 'fail', message: 'user not registered' });
 
       user = result.rows;
-      if (user) {
-        return bcrypt.compare(req.body.password, user[0].password, (errs, re) => {
-          if (!re) return res.status(404).send({ status: 'fail', message: 'password not correct' });
 
-          // create a token
-          const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY, {
-            expiresIn: 86400, // expires in 24 hours
-          });
+      return bcrypt.compare(req.body.password, user[0].password, (errs, re) => {
+        if (!re) return res.status(404).send({ status: 'fail', message: 'password not correct' });
 
-          return res.status(200).send({
-            status: 'success',
-            data: { token },
-          });
+        // create a token
+        const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY, {
+          expiresIn: 86400, // expires in 24 hours
         });
-      }
+
+        return res.status(200).send({
+          status: 'success',
+          data: { token },
+        });
+      });
     });
   });
 }
