@@ -2,6 +2,8 @@ import express from 'express';
 import { validateRide } from '../middlewares/validate';
 import getRide from '../middlewares/getRide';
 import { all, create, findOne, update, deleteRide } from '../controllers/ride.controller';
+import jwtverify from '../middlewares/jwtverify';
+
 
 const route = express.Router();
 
@@ -9,7 +11,7 @@ const route = express.Router();
 route.get('/api/v1/rides', all);
 
 //   create new ride
-route.post('/api/v1/rides', validateRide, create);
+route.post('/api/v1/users/rides', jwtverify, validateRide, create);
 
 // find one ride
 route.get('/api/v1/rides/:rideId', getRide, findOne);

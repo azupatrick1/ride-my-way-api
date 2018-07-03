@@ -3,7 +3,24 @@ import { expect } from 'chai';
 
 import app from '../index';
 
-const request = supertest(app);
+const request = supertest.agent(app);
+
+
+let toke;
+
+before((done) => {
+  request
+    .post('/auth/signup')
+    .send({
+      username: 'mochatester',
+      email: 'mochatester@gmail.com',
+      password: 'chaiexpect',
+    })
+    .end((err, response) => {
+      toke = response.body.data.token; // save the token!
+      done();
+    });
+});
 
 
 const ridesDB = [
@@ -56,34 +73,26 @@ describe('Get request for rides', () => {
 describe('Post requests for rides', () => {
   it('create a new ride', (done) => {
     request
-      .post('/api/v1/rides')
+      .set('Authorization', `Bearer ${toke}`)
+      .post('/users/rides')
       .send({
         name: 'test ride',
-        from: 'Lagos',
-        to: 'Aba',
-        driver: 'mocha',
+        location: 'Lagos',
+        destination: 'Aba',
+        slot: 4,
         time: '6:00 am',
       })
       .expect(201)
       .end((err, res) => {
         expect(res.body.status).to.eql('success');
-        expect(res.body.data).to.eql({
-          ride: {
-            id: ridesDB.length + 1,
-            name: 'test ride',
-            from: 'Lagos',
-            to: 'Aba',
-            driver: 'mocha',
-            time: '6:00 am',
-          },
-        });
+        expect(res.body.data).have.property('ride');
         done(err);
       });
   });
 
   it('should not save new ride and return 400 - bad request', (done) => {
     request
-      .post('/api/v1/rides')
+      .post('/users/rides')
       .send({
         name: 'test 1',
       })
@@ -196,3 +205,4 @@ describe('Delete request for rides', () => {
       });
   });
 });
+

@@ -1,4 +1,6 @@
 import ridesDB from '../models/ride.model';
+import pool from '../config/pgpool';
+
 
 export function all(req, res) {
   if (!ridesDB || ridesDB === null || ridesDB === undefined) {
@@ -14,18 +16,24 @@ export function all(req, res) {
 }
 
 export function create(req, res) {
-  const ride = {
-    id: ridesDB.length + 1,
-    name: req.body.name,
-    from: req.body.from,
-    to: req.body.to,
-    driver: req.body.driver,
-    time: req.body.time,
-  };
-  ridesDB.push(ride);
-  return res.status(201).send({
-    status: 'success',
-    data: { ride },
+  const data = [req.body.name, req.body.location, req.body.destination,
+    req.body.slot, req.body.time, req.decoded.id];
+
+  const sql = 'INSERT INTO rides(name, location, destination, slot, time, user_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
+
+
+  pool((err, client, done) => {
+    if (err) return res.status(500).send({ error: err });
+
+    return client.query(sql, data, (error, ride) => {
+      done();
+      if (error) return res.status(500).send({ status: 'error', error: error.stack });
+
+      return res.status(201).send({
+        status: 'success',
+        data: { ride: ride.rows[0] },
+      });
+    });
   });
 }
 

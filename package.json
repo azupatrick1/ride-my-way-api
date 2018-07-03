@@ -4,16 +4,17 @@
   "description": "an simple implementation of a ride management API",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require babel-register ./server/tests/",
-    "server": "nodemon ./server/index.js --exec babel-node",
+    "test": "cross-env NODE_ENV=test mocha --require babel-register ./server/tests/",
+    "server": "cross-env NODE_ENV=development nodemon ./server/index.js --exec babel-node",
     "clean": "rm -rf build && mkdir build",
     "coverage": "babel-node babel-istanbul cover _mocha --require ./server/tests/ -- --recursive --check-coverage ",
     "coveralls": "npm run coverage --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "build-babel": "babel -d ./build ./server -s ",
     "build": "npm run clean && npm run build-babel",
     "start": "npm run build && node ./build/index.js",
-    "create-dbU": "babel-node ./server/api/v1/config/db.js",
-    "create-dbR": "babel-node ./server/api/v1/config/db2.js"
+    "create-dbU": "babel-node ./server/api/v1/config/DB-user.js && babel-node ./server/api/v1/config/DB-user.test.js",
+    "create-dbR": "babel-node ./server/api/v1/config/DB-ride.js && babel-node ./server/api/v1/config/DB-ride.test.js"
+  
   },
   "keywords": [
     "api",
@@ -44,6 +45,7 @@
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "coveralls": "^3.0.1",
+    "cross-env": "^5.2.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-babel": "^5.1.0",
