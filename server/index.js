@@ -6,8 +6,6 @@ import requestroute from './api/v1/routes/rideRequest.route';
 import authroute from './api/v1/routes/auth.route';
 
 
-process.env.NODE_ENV = 'development';
-
 const app = express();
 const port = process.env.PORT || 3000;
 
