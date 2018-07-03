@@ -3,17 +3,35 @@ import pool from '../config/pgpool';
 
 
 export function all(req, res) {
-  if (!ridesDB || ridesDB === null || ridesDB === undefined) {
-    return res.status(500).send({
-      status: 'error',
-      message: 'there was a problem retrieving rides from server',
+  // if (!ridesDB || ridesDB === null || ridesDB === undefined) {
+  //   return res.status(500).send({
+  //     status: 'error',
+  //     message: 'there was a problem retrieving rides from server',
+  //   });
+  // }
+  // return res.send({
+  //   status: 'success',
+  //   data: { rides: ridesDB },
+  // });
+
+  const sql = 'SELECT * FROM rides';
+  pool((err, client, done) => {
+    if (err) return res.status(500).send({ status: 'error', error: err });
+
+    return client.query(sql, (error, result) => {
+      done();
+      if (error) return res.status(500).send({ status: 'error', error: error.stack });
+
+      if (!result) return res.status(404).send({ status: 'fail', message: 'no rides in the database' });
+
+      return res.status(200).send({
+        status: 'success',
+        data: { rides: result.rows },
+      });
     });
-  }
-  return res.send({
-    status: 'success',
-    data: { rides: ridesDB },
   });
 }
+
 
 export function create(req, res) {
   const data = [req.body.name, req.body.location, req.body.destination,

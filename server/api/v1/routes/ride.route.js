@@ -8,7 +8,7 @@ import jwtverify from '../middlewares/jwtverify';
 const route = express.Router();
 
 //   all ride
-route.get('/api/v1/rides', all);
+route.get('/api/v1/rides', jwtverify, all);
 
 //   create new ride
 route.post('/api/v1/users/rides', jwtverify, validateRide, create);
