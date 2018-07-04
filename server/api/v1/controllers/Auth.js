@@ -46,7 +46,7 @@ class Auth {
         done();
         if (error) return res.jsend.error({ error: error.stack });
 
-        if (!result || result === undefined || result === null) return res.jsend.fail({ message: 'user not registered' });
+        if (!result.rows[0] || result.rows[0] === undefined || result.rows[0] === null) return res.jsend.fail({ message: 'user not registered' });
 
         user = result.rows;
 

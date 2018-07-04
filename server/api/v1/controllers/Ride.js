@@ -54,10 +54,19 @@ class Ride {
   }
 
   static deleteRide(req, res) {
-    const { ride } = req;
-    const index = ridesDB.indexOf(ride);
-    ridesDB.splice(index, 1);
-    return res.jsend.success({ });
+    const sql = 'DELETE FROM rides WHERE id = $1';
+    if (req.currentUser.id !== req.ride.user_id) return res.jsend.fail({ message: 'you can not destroy someone else ride' });
+
+    pool((err, client, done) => {
+      if (err) return res.jsend.error({ message: 'error connecting to database' });
+
+      return client.query(sql, [req.ride.id], (error) => {
+        done();
+        if (error) return res.jsend.error({ message: 'error while trying to delete ride' });
+
+        return res.jsend.success({ });
+      });
+    });
   }
 }
 export default Ride;

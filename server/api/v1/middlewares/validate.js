@@ -16,7 +16,12 @@ const checknum = (item, text, res) => {
   }
   return true;
 };
-
+const checkbool = (item, text, res) => {
+  if (!item || item === undefined || item === null) { return sayError(`${text} parameter is required`, res); } else if (typeof item !== 'boolean') {
+    return sayError(`${text} must be boolean either true or false`, res);
+  }
+  return true;
+};
 const validateRide = (req, res, next) => {
   const {
     name, location, destination, slot, time,
@@ -34,4 +39,11 @@ const validateRide = (req, res, next) => {
   }
 };
 
-export default validateRide;
+const validateReq = (req, res, next) => {
+  const { accept } = req.body;
+  if (checkbool(accept, 'accept', res) === true) {
+    next();
+  }
+};
+
+export { validateRide, validateReq };

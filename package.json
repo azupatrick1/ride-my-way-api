@@ -4,7 +4,7 @@
   "description": "an simple implementation of a ride management API",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test&& create-table-test mocha --require babel-register ./server/tests/",
+    "test": "cross-env NODE_ENV=test mocha --require babel-register ./server/tests/",
     "server": "cross-env NODE_ENV=development nodemon ./server/index.js --exec babel-node",
     "clean": "rm -rf build && mkdir build",
     "coverage": "babel-node babel-istanbul cover _mocha --require ./server/tests/ -- --recursive --check-coverage ",
