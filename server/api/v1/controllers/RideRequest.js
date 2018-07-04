@@ -1,56 +1,52 @@
-import requestDB from '../models/rideRequest';
+// import requestDB from '../models/rideRequest';
 import pool from '../config/pgpool';
 
 class RideRequest {
   static all(req, res) {
     const { ride } = req;
-    function filterRequest(request) {
-      return request.rideId === Number(ride.id);
-    }
-    const request = requestDB.filter(filterRequest);
-    if (!request || request.length < 1 || request === undefined || request === null) {
-      return res.status(404).send({
-        status: 'fail',
-        data: { message: 'There is no request for this ride ' },
+
+    if (ride.user_id !== req.currentUser.id) {
+      const sql = 'SELECT * FROM requests WHERE user_id = $1 AND ride_id = $2';
+      pool((err, client, done) => {
+        if (err) return res.jsend.error({ message: 'error connecting to database' });
+
+        return client.query(sql, [req.currentUser.id, ride.id], (error, result) => {
+          done();
+          if (error) return res.jsend.error({ error: error.stack });
+          if (!result || result === undefined) return res.jsend.fail({ message: 'you have sent no request to this ride' });
+          return res.jsend.success({ request: result.rows[0] });
+        });
       });
     }
-    return res.send({
-      status: 'success',
-      data: { 'ride requests': request },
+
+    const sql = 'SELECT * FROM requests WHERE ride_id = $1';
+    pool((err, client, done) => {
+      if (err) return res.jsend.error({ message: 'error connecting to database' });
+
+      return client.query(sql, [ride.id], (error, result) => {
+        done();
+        if (error) return res.jsend.error({ error: error.stack });
+        if (!result || result === undefined || result.rows.length === 0) return res.jsend.fail({ status: 'fail', message: 'you have no request to this ride' });
+        return res.jsend.success({ request: result.rows });
+      });
     });
   }
 
   static create(req, res) {
     const { ride } = req;
-    //   const request = {
-    //     id: requestDB.length + 1,
-    //     rideId: ride.id,
-    //     rideName: ride.name,
-    //     sender: req.body.sender,
-    //     status: 'sent',
-    //   };
-    //   requestDB.push(request);
-    //   return res.status(201).send({
-    //     status: 'success',
-    //     data: { 'ride request': request },
-    //   });
-    // }
-    const data = [req.decoded.id, ride.id];
+    const data = [req.currentUser.username, req.currentUser.id, ride.id];
 
-    const sql = 'INSERT INTO requests(user_id, ride_id) VALUES($1, $2) RETURNING *';
+    const sql = 'INSERT INTO requests(rider, user_id, ride_id) VALUES($1, $2, $3) RETURNING *';
+    if (ride.user_id === req.currentUser.id) return res.jsend.fail({ message: 'you can not request your own ride' });
 
-
-    pool((err, client, done) => {
-      if (err) return res.status(500).send({ error: err });
+    return pool((err, client, done) => {
+      if (err) return res.jsend.error({ error: err });
 
       return client.query(sql, data, (error, request) => {
         done();
-        if (error) return res.status(500).send({ status: 'error', error: error.stack });
+        if (error) return res.jsend.error({ error: error.stack });
 
-        return res.status(201).send({
-          status: 'success',
-          data: { request: request.rows[0] },
-        });
+        return res.jsend.success({ request: request.rows[0] });
       });
     });
   }
