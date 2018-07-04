@@ -13,7 +13,7 @@ const sqlrequest = `
 CREATE TABLE requests(id SERIAL PRIMARY KEY, rider VARCHAR(255) NOT NULL, status VARCHAR(40) NOT NULL, user_id UUID REFERENCES users(id) , ride_id INTEGER REFERENCES rides(id), created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ);
 ALTER TABLE requests ALTER COLUMN status SET DEFAULT 'sent';
 `;
-pool((err, client, done) => {
+const pooler = pool((err, client, done) => {
   if (err) return console.error('error connecting to database');
 
   return client.query(sqluser, (error, result) => {
@@ -32,8 +32,7 @@ pool((err, client, done) => {
             done();
             if (error2) return console.error(error.stack);
             if (resultreq) {
-              client.end();
-              return console.log('table for request created');
+              console.log('table for request created');
             }
           });
         }
@@ -41,3 +40,5 @@ pool((err, client, done) => {
     }
   });
 });
+
+setTimeout(() => pooler, 200);

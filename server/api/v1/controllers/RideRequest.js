@@ -50,6 +50,44 @@ class RideRequest {
       });
     });
   }
+
+  static decide(req, res) {
+    if (req.currentUser.id === req.ride.user_id) {
+      const deleteRequest = () => {
+        const sql = 'DELETE FROM requests WHERE id = $1';
+
+        pool((err, client, done) => {
+          if (err) return res.jsend.error({ message: 'error connecting to database' });
+
+          return client.query(sql, [req.request.id], (error) => {
+            done();
+            if (error) return res.jsend.error({ message: error.stack });
+            return res.jsend.success({ message: 'request deleted' });
+          });
+        });
+      };
+
+      if (req.body.accept === true) {
+        const sql = 'UPDATE rides SET riders = array_append( riders, $1 ) WHERE id = $2';
+        pool((err, client, done) => {
+          if (err) return res.jsend.error({ message: 'error connecting to database' });
+
+          return client.query(sql, [req.request.rider, req.ride.id], (error, result) => {
+            done();
+            if (error) return res.jsend.error({ message: error.stack });
+            if (!result || result === undefined) return res.jsend.fail({ message: 'you have sent no request to this ride' });
+            res.jsend.success({ message: 'you have accepted this request' });
+            return deleteRequest();
+          });
+        });
+      } else {
+        res.jsend.success({ message: 'you have rejected this request' });
+        return deleteRequest();
+      }
+    } else {
+      return res.jsend.fail({ message: 'you don\'t have the priviledge to access this endpoint' });
+    }
+  }
 }
 export default RideRequest;
 
