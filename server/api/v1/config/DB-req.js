@@ -3,7 +3,7 @@ import { Client } from 'pg';
 
 const sql = `
 DROP TABLE IF EXISTS requests;
-CREATE TABLE requests(id SERIAL PRIMARY KEY, sender VARCHAR(255) NOT NULL, status VARCHAR(40) NOT NULL, user_id UUID REFERENCES users(id) , ride_id INTEGER REFERENCES rides(id), created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL);
+CREATE TABLE requests(id SERIAL PRIMARY KEY, status VARCHAR(40) NOT NULL, user_id UUID REFERENCES users(id) , ride_id INTEGER REFERENCES rides(id), created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ);
 ALTER TABLE requests ALTER COLUMN status SET DEFAULT 'sent';
 `;
 
