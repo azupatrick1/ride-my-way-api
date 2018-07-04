@@ -1,6 +1,7 @@
 language: node_js
 node_js:
  - "node"
-
+env:
+  - COVERALLS_REPO_TOKEN=nV02p7HmeGiNBM8s3EdDqTlHhq5PKaXTo
 after_success:
 - npm run coveralls

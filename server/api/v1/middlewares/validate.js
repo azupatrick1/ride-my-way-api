@@ -1,3 +1,4 @@
+const emailRegex = /^(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
 const sayError = (valid, res) => res.jsend({ message: valid });
 
 const checkbody = (item, text, res) => {
@@ -6,6 +7,14 @@ const checkbody = (item, text, res) => {
   } else if (/^\s*$/.test(item)) {
     return sayError(`${text} can not be empty`, res);
   } else if (item.length < 3) { return sayError(`${text} must be at least 3 character long `, res); }
+  return true;
+};
+const checkpass = (item, text, res) => {
+  if (!item || item === undefined || item === null) { return sayError(`${text} parameter is required`, res); } else if (typeof item !== 'string') {
+    return sayError(`${text} must be a string`, res);
+  } else if (/^\s*$/.test(item)) {
+    return sayError(`${text} can not be empty`, res);
+  } else if (item.length < 6) { return sayError(`${text} must be at least 3 character long `, res); }
   return true;
 };
 const checknum = (item, text, res) => {
@@ -22,6 +31,18 @@ const checkbool = (item, text, res) => {
   }
   return true;
 };
+
+const checkemail = (item, text, res) => {
+  if (!item || item === undefined || item === null) { return sayError(`${text} parameter is required`, res); } else if (typeof item !== 'string') {
+    return sayError(`${text} must be a string`, res);
+  } else if (/^\s*$/.test(item)) {
+    return sayError(`${text} can not be empty`, res);
+  } else if (!emailRegex.test(item)) {
+    return sayError(`${text} is an email or is in a wrong format`, res);
+  }
+  return true;
+};
+
 const validateRide = (req, res, next) => {
   const {
     name, location, destination, slot, time,
@@ -46,4 +67,24 @@ const validateReq = (req, res, next) => {
   }
 };
 
-export { validateRide, validateReq };
+const validateUser = (req, res, next) => {
+  const { username, email, password } = req.body;
+  if (checkbody(username, 'username', res) === true) {
+    if (checkemail(email, 'email', res) === true) {
+      if (checkpass(password, 'password', res) === true) {
+        next();
+      }
+    }
+  }
+};
+
+const validateUsersign = (req, res, next) => {
+  const { username, password } = req.body;
+  if (checkbody(username, 'username', res) === true) {
+    if (checkpass(password, 'password', res) === true) {
+      next();
+    }
+  }
+};
+
+export { validateRide, validateReq, validateUser, validateUsersign };
