@@ -1,4 +1,4 @@
-const sayError = (valid, res) => res.status(400).send({ status: 'fail', data: { message: valid } });
+const sayError = (valid, res) => res.jsend({ message: valid });
 
 const checkbody = (item, text, res) => {
   if (!item || item === undefined || item === null) { return sayError(`${text} parameter is required`, res); } else if (typeof item !== 'string') {
@@ -17,7 +17,7 @@ const checknum = (item, text, res) => {
   return true;
 };
 
-export const validateRide = (req, res, next) => {
+const validateRide = (req, res, next) => {
   const {
     name, location, destination, slot, time,
   } = req.body;
@@ -33,8 +33,5 @@ export const validateRide = (req, res, next) => {
     }
   }
 };
-export const validateRequest = (req, res, next) => {
-  const { sender } = req.body;
-  if (checkbody(sender, 'sender', res) === true) { next(); }
-};
 
+export default validateRide;

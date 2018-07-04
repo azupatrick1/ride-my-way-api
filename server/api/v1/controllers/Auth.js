@@ -13,53 +13,26 @@ class Auth {
     const data = [uuid(), req.body.username, hash, req.body.email];
 
     pool((err, client, done) => {
-      if (err) return res.status(500).send({ error: err });
+      if (err) return res.jsend.error({ error: err });
 
       return client.query(sql, data, (error, result) => {
         done();
-        if (error) return res.status(500).send({ status: 'error', error: error.stack });
-
-        // if (error) {
-        //   if (JSON.stringify(error).indexOf('d') > -1) {
-        //     if (JSON.stringify(error).indexOf('q') > -1) {
-        //       return res.status(500).send({ status: 'error', error: 'User name already exist' });
-        //     }
-        //     return res.status(500).send({ status: 'error', error: 'email already exist' });
-        //   }
-        //   return res.status(500).send({ status: 'error', error: error.stack });
-        // }
+        if (error) return res.jsend.error({ message: 'username and email taken' });
 
         // create a token
         const token = jwt.sign({ id: result.rows[0].id }, process.env.SECRET_KEY, {
           expiresIn: 86400, // expires in 24 hours
         });
 
-        return res.status(200).send({
-          status: 'success',
-          data: { token },
-        });
+        return res.jsend.success({ message: 'user is signed up successfully', token });
       });
     });
   }
 
   static verifyUser(req, res) {
-    const sql = 'SELECT * FROM users WHERE id = $1';
-    const userid = req.decoded.id;
-    pool((err, client, done) => {
-      if (err) return res.status(500).send({ status: 'error', error: err });
+    const user = req.currentUser;
 
-      return client.query(sql, [userid], (error, result) => {
-        done();
-        if (error) return res.status(500).send({ status: 'error', error: error.stack });
-
-        if (!result) return res.status(404).send({ status: 'fail', message: 'user not found for the token' });
-
-        return res.status(200).send({
-          status: 'success',
-          data: { user: result.rows[0] },
-        });
-      });
-    });
+    return res.jsend.success({ user });
   }
 
   static signin(req, res) {
@@ -67,28 +40,25 @@ class Auth {
     let user = '';
     const userdata = [req.body.username];
     pool((err, client, done) => {
-      if (err) return res.status(500).send({ status: 'error', error: err });
+      if (err) return res.jsend.error({ error: err });
 
       return client.query(sql, userdata, (error, result) => {
         done();
-        if (error) return res.status(500).send({ status: 'error', error: error.stack });
+        if (error) return res.jsend.error({ error: error.stack });
 
-        if (!result || result === undefined || result === null) return res.status(404).send({ status: 'fail', message: 'user not registered' });
+        if (!result || result === undefined || result === null) return res.jsend.fail({ message: 'user not registered' });
 
         user = result.rows;
 
         return bcrypt.compare(req.body.password, user[0].password, (errs, re) => {
-          if (!re) return res.status(404).send({ status: 'fail', message: 'password not correct' });
+          if (!re) return res.status(404).jsend.fail({ message: 'password not correct' });
 
           // create a token
           const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY, {
             expiresIn: 86400, // expires in 24 hours
           });
 
-          return res.status(200).send({
-            status: 'success',
-            data: { token },
-          });
+          return res.jsend.success({ message: 'user is signed in successfully', token });
         });
       });
     });

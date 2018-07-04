@@ -1,5 +1,5 @@
 import express from 'express';
-import { validateRide } from '../middlewares/validate';
+import validateRide from '../middlewares/validate';
 import getRide from '../middlewares/getRide';
 import { Ride } from '../controllers/index';
 import jwtverify from '../middlewares/jwtverify';
