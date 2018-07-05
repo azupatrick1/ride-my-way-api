@@ -7,20 +7,13 @@ import jwtverify from '../middlewares/jwtverify';
 
 const route = express.Router();
 
-//   all ride
-route.get('/api/v1/rides', jwtverify, Ride.all);
+route.get('/api/v1/rides', jwtverify, Ride.getAllRide);
 
-//   create new ride
-route.post('/api/v1/users/rides', jwtverify, validateRide, Ride.create);
+route.post('/api/v1/users/rides', jwtverify, validateRide, Ride.createRide);
 
-// find one ride
-route.get('/api/v1/rides/:rideId', jwtverify, getRide, Ride.findOne);
-
-// update one ride
-route.put('/api/v1/rides/:rideId', jwtverify, getRide, validateRide, Ride.update);
+route.get('/api/v1/rides/:rideId', jwtverify, getRide, Ride.findOneRide);
 
 
-// delete one ride
 route.delete('/api/v1/rides/:rideId', jwtverify, getRide, Ride.deleteRide);
 
 export default route;

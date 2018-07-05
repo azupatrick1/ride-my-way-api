@@ -18,10 +18,8 @@ app.use('/', rideroute);
 app.use('/', requestroute);
 
 app.get('/', (req, res) => res.jsend.success({ message: 'We are Live!!!' }));
-app.get('*', (req, res) => res.jsend.fail({ message: 'wrong endpoint: visit api with api/v1/rides' }));
-app.post('*', (req, res) => res.status(404).jsend.fail({ message: 'wrong endpoint: visit api with api/v1/rides' }));
-app.put('*', (req, res) => res.status(404).jsend.fail({ message: 'wrong endpoint: visit api with api/v1/rides' }));
-app.delete('*', (req, res) => res.status(404).jsend.fail({ message: 'wrong endpoint: visit api with api/v1/rides' }));
+app.all('*', (req, res) => res.status(404).jsend.fail({ message: 'wrong endpoint: visit api with api/v1/rides' }));
+
 
 const server = app.listen(port);
 

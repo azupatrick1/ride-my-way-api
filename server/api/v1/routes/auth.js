@@ -8,6 +8,6 @@ const route = express.Router();
 
 route.post('/auth/signup', validateUser, Auth.signup);
 route.post('/auth/signin', validateUsersign, Auth.signin);
-route.get('/auth/me', jwtverify, Auth.verifyUser);
+route.get('/auth/profile', jwtverify, Auth.verifyUser);
 
 export default route;

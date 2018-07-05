@@ -9,9 +9,9 @@ import jwtverify from '../middlewares/jwtverify';
 
 const route = express.Router();
 // all request
-route.get('/api/v1/rides/:rideId/requests', jwtverify, getRide, RideRequest.all);
+route.get('/api/v1/rides/:rideId/requests', jwtverify, getRide, RideRequest.getAllRequest);
 // create a request
-route.post('/api/v1/rides/:rideId/requests', jwtverify, getRide, getReqUser, RideRequest.create);
-route.put('/api/v1/rides/:rideId/requests/:requestId', jwtverify, getRide, getRequest, validateReq, RideRequest.decide);
+route.post('/api/v1/rides/:rideId/requests', jwtverify, getRide, getReqUser, RideRequest.createRequest);
+route.put('/api/v1/rides/:rideId/requests/:requestId', jwtverify, getRide, getRequest, validateReq, RideRequest.decideRequestOption);
 
 export default route;
