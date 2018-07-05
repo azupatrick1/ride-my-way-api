@@ -4,7 +4,7 @@
   "description": "an simple implementation of a ride management API",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test mocha --require babel-register ./server/tests/",
+    "test": "npm run create-table-test && npm run insert-table-test && cross-env NODE_ENV=test mocha --require babel-register ./server/tests/",
     "server": "cross-env NODE_ENV=development nodemon ./server/index.js --exec babel-node",
     "clean": "rm -rf build && mkdir build",
     "coverage": "babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/.bin/_mocha --require ./server/tests/ -- --recursive --check-coverage --exit",
@@ -13,7 +13,8 @@
     "build": "npm run clean && npm run build-babel",
     "start": "npm run build && node ./build/index.js",
     "create-table-dev": "cross-env NODE_ENV=development babel-node ./server/api/v1/config/table.js --exit",
-    "create-table-test": "cross-env NODE_ENV=test babel-node ./server/api/v1/config/table.js -- --exit"
+    "create-table-test": "cross-env NODE_ENV=test babel-node ./server/api/v1/config/table.js -- --exit",
+    "insert-table-test": "cross-env NODE_ENV=test babel-node ./server/tests/dbinsert.js -- --exit"
   },
   "keywords": [
     "api",
