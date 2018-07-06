@@ -37,21 +37,40 @@ class RideRequest {
   static createRequest(req, res) {
     const { ride } = req;
     const data = [req.currentUser.username, req.currentUser.id, ride.id];
-
+    const { slot } = req.ride;
     const sql = 'INSERT INTO requests(rider, user_id, ride_id) VALUES($1, $2, $3) RETURNING *';
-    if (ride.user_id === req.currentUser.id) { res.status(403).jsend.fail({ message: 'you can not request your own ride' }); } else {
+
+    const alterRide = (lot) => {
+      const sqlr = 'UPDATE rides SET slot = $1 WHERE id = $2';
+
+      pool((err, client, done) => {
+        if (err) res.jsend.error({ message: 'error connecting to database' });
+
+        client.query(sqlr, [lot, req.ride.id], (error) => {
+          done();
+          if (error) res.jsend.error({ message: error.stack });
+        });
+      });
+    };
+
+    if (slot <= 0) {
+      res.jsend.fail({ message: 'you are denied: slot is filled up' });
+    } else if (ride.user_id === req.currentUser.id) {
+      res.status(403).jsend.fail({ message: 'you can not request your own ride' });
+    } else {
       pool((err, client, done) => {
         if (err) res.jsend.error({ error: err });
 
         client.query(sql, data, (error, request) => {
           done();
           if (error) res.jsend.error({ error: error.stack });
-
+          alterRide(slot - 1);
           res.jsend.success({ request: request.rows[0] });
         });
       });
     }
   }
+
 
   static decideRequestOption(req, res) {
     if (req.currentUser.id === req.ride.user_id) {

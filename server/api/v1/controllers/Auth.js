@@ -8,22 +8,35 @@ config();
 class Auth {
   static signup(req, res) {
     const sql = 'INSERT INTO users(id, username, password, email) VALUES($1, $2, $3, $4) RETURNING *';
-
-    const hash = bcrypt.hashSync(req.body.password.trim(), 10);
-    const data = [uuid(), req.body.username.trim(), hash, req.body.email];
-
+    let token;
+    const hash = bcrypt.hashSync(req.body.password, 10);
+    const data = [uuid(), req.body.username, hash, req.body.email];
+    let user;
     pool((err, client, done) => {
-      if (err) res.jsend.error({ error: err });
+      if (err) return res.jsend.error({ error: err });
 
       client.query(sql, data, (error, result) => {
         done();
-        if (error) res.jsend.error({ message: 'username and email taken' });
+        if (error && error.message.search('users_username_key') !== -1) {
+          return res.jsend.error({ message: 'username already taken by another user' });
+        }
+        if (error && error.message.search('users_email_key') !== 1) {
+          return res.jsend.error({ message: 'email already taken by another user' });
+        }
 
-        // create a token
-        const token = jwt.sign({ id: result.rows[0].id }, process.env.SECRET_KEY, {
-          expiresIn: 86400, // expires in 24 hours
-        });
-
+        if (result) {
+          if (!result.rows[0] || result.rows[0] === undefined || result.rows[0] === null || result.rows[0] < 1) {
+            res.jsend.fail({ message: 'error signing up' });
+          } else {
+            user = result.rows;
+          }
+        }
+        if (user) {
+          token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY, {
+            expiresIn: 86400, // expires in 24 hours
+          });
+        }
+        console.log(req.body, token, err, result, error);
         res.jsend.success({ message: 'user is signed up successfully', token });
       });
     });
@@ -58,7 +71,7 @@ class Auth {
           user = result.rows;
 
           bcrypt.compare(req.body.password, user[0].password, (errs, re) => {
-            if (!re) res.status(404).jsend.fail({ message: 'username or password not correct' });
+            if (!re) return res.status(404).jsend.fail({ message: 'username or password not correct' });
 
             // create a token
             const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY, {

@@ -20,23 +20,26 @@ class Ride {
 
 
   static createRide(req, res) {
-    const data = [req.body.name.trim(), req.body.location.trim(), req.body.destination.trim(),
-      req.body.slot, req.body.time, req.currentUser.id];
+    const data = [req.body.name, req.body.location, req.body.destination,
+      Number(req.body.slot), req.body.time, req.currentUser.id];
+    if (req.checkRide) {
+      res.jsend.fail({ message: 'you are denied: you still have a pending ride' });
+    } else {
+      const sql = 'INSERT INTO rides(name, location, destination, slot, time, user_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
 
-    const sql = 'INSERT INTO rides(name, location, destination, slot, time, user_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
+      pool((err, client, done) => {
+        if (err) res.jsend.error({ message: err });
 
+        return client.query(sql, data, (error, ride) => {
+          done();
+          if (error) res.jsend.error({ message: error.stack });
 
-    pool((err, client, done) => {
-      if (err) res.jsend.error({ message: err });
-
-      return client.query(sql, data, (error, ride) => {
-        done();
-        if (error) res.jsend.error({ message: error.stack });
-
-        res.jsend.success({ ride: ride.rows[0] });
+          res.jsend.success({ ride: ride.rows[0] });
+        });
       });
-    });
+    }
   }
+
 
   static findOneRide(req, res) {
     const { ride } = req;
