@@ -1,208 +1,294 @@
-// import supertest from 'supertest';
-// import { expect } from 'chai';
+import supertest from 'supertest';
+import { expect } from 'chai';
 
-// import app from '../index';
+import jwt from 'jsonwebtoken';
 
-// const request = supertest.agent(app);
-
-
-// // let toke;
-
-// // before((done) => {
-// //   request
-// //     .post('/auth/signup')
-// //     .send({
-// //       username: 'mochatester',
-// //       email: 'mochatester@gmail.com',
-// //       password: 'chaiexpect',
-// //     })
-// //     .end((err, response) => {
-// //       toke = response.body.data.token; // save the token!
-// //       done();
-// //     });
-// // });
+import app from '../index';
 
 
-// const ridesDB = [
-//   {
-//     id: 1,
-//     name: 'ride1234',
-//     from: 'Abuja',
-//     to: 'Lagos',
-//     driver: 'driver 1',
-//     time: '7:00 pm',
-//   },
-//   {
-//     id: 2,
-//     name: 'ride1344',
-//     from: 'Lagos',
-//     to: 'Aba',
-//     driver: 'driver 2',
-//     time: '6:00 am',
-//   },
-// ];
+const request = supertest(app);
+const userCredentials = {
+  username: 'mochatester',
+  email: 'mocha@tester.com',
+  password: 'chaiexpect',
+};
+const userCredentials2 = {
+  username: 'mochatester',
+  password: 'chaiexpect',
+};
+
+const token1 = jwt.sign({ id: '0a758700-91a2-41bf-842f-eaca177243a4' }, 'this is a secret key', {
+  expiresIn: 86400, // expires in 24 hours
+});
+
+const token2 = jwt.sign({ id: '568cd57e-00de-4c62-ab13-257c08348491' }, 'this is a secret key', {
+  expiresIn: 86400, // expires in 24 hours
+});
+describe('testing signups', () => {
+  it('should return token and success status', (done) => {
+    request
+      .post('/api/v1/auth/signup')
+      .send(userCredentials)
+      .expect(200)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('success');
+        expect(res.body.data).have.property('message');
+        done();
+      });
+  });
+});
+
+describe('testing signins', () => {
+  it('should return token and success status', (done) => {
+    request
+      .post('/api/v1/auth/signin')
+      .send(userCredentials2)
+      .expect(200)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('success');
+        expect(res.body.data).have.property('token');
+        done();
+      });
+  });
+});
+
+describe('Testing to get current user', () => {
+  it('should return user and success status', (done) => {
+    request
+      .get('/api/v1/auth/profile')
+      .set('x-token-access', token1)
+      .expect(200)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('success');
+        expect(res.body.data).have.property('user');
+        expect(res.body.data.user.username).to.eql('supertest');
+        done();
+      });
+  });
+});
+
+describe('Get request for rides', () => {
+  it('should return 200 OK response', (done) => {
+    request
+      .get('/api/v1/rides')
+      .set('x-token-access', token1)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.equal('success');
+        expect(res.body.data.rides).to.be.a('array');
+        expect(res.body.data).to.have.property('rides');
+        done();
+      });
+  });
+
+  it('should return 404 response', (done) => {
+    request
+      .get('/api/v1/ride')
+      .expect(404)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('fail');
+        done(err);
+      });
+  });
+});
 
 
-// describe('Get request for rides', () => {
-//   it('should return 200 OK response and all rides', (done) => {
-//     request
-//       .get('/api/v1/rides')
-//       .expect(200)
-//       .end((err, res) => {
-//         expect(res.body.status).to.eql('success');
-//         expect(res.body.data.rides).to.have.lengthOf(ridesDB.length);
-//         expect(res.body.data).to.eql({
-//           rides: ridesDB,
-//         });
-//         done(err);
-//       });
-//   });
+describe('Post requests for rides', () => {
+  it('create a new ride', (done) => {
+    request
+      .post('/api/v1/users/rides')
+      .set('x-token-access', token1)
+      .send({
+        name: 'ride123',
+        destination: 'lagos',
+        location: 'abuja',
+        slot: 3,
+        time: '4:00',
+      })
+      .expect(200)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('success');
+        expect(res.body.data).have.property('ride');
+        done();
+      });
+  });
 
-//   it('should return 404 response', (done) => {
-//     request
-//       .get('/api/v1/ride')
-//       .expect(404)
-//       .end((err, res) => {
-//         expect(res.body.status).to.eql('fail');
-//         done(err);
-//       });
-//   });
-// });
-
-
-// // describe('Post requests for rides', () => {
-// //   it('create a new ride', (done) => {
-// //     request
-// //       .set('Authorization', `Bearer ${toke}`)
-// //       .post('/users/rides')
-// //       .send({
-// //         name: 'test ride',
-// //         location: 'Lagos',
-// //         destination: 'Aba',
-// //         slot: 4,
-// //         time: '6:00 am',
-// //       })
-// //       .expect(201)
-// //       .end((err, res) => {
-// //         expect(res.body.status).to.eql('success');
-// //         expect(res.body.data).have.property('ride');
-// //         done(err);
-// //       });
-// //   });
-
-// //   it('should not save new ride and return 400 - bad request', (done) => {
-// //     request
-// //       .post('/users/rides')
-// //       .send({
-// //         name: 'test 1',
-// //       })
-// //       .expect(400)
-// //       .end((err, res) => {
-// //         expect(res.body.status).to.eql('fail');
-// //         done(err);
-// //       });
-// //   });
-// // });
+  it('should not save new ride and return 400 - bad request', (done) => {
+    request
+      .post('/api/v1/users/rides')
+      .set('x-token-access', token1)
+      .send({
+        name: 'test1',
+      })
+      .expect(400)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('fail');
+        done(err);
+      });
+  });
+});
 
 
-// describe('Test the API to get a ride with a specific id', () => {
-//   it('should get 404 error for id not found', (done) => {
-//     request
-//       .get('/api/v1/rides/101010')
-//       .expect(404)
-//       .end((err, res) => {
-//         expect(res.body.status).to.eql('fail');
-//         done(err);
-//       });
-//   });
+describe('Test the API to get a ride with a specific id', () => {
+  it('should get 404 error for id not found', (done) => {
+    request
+      .get('/api/v1/rides/101010')
+      .set('x-token-access', token1)
+      .expect(404)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('fail');
+        done(err);
+      });
+  });
 
 
-//   it('should get 200 and return ride by id', (done) => {
-//     const ride = ridesDB.find(c => c.id === 1);
-//     request
-//       .get('/api/v1/rides/1')
-//       .expect(200)
-//       .end((err, res) => {
-//         expect(res.body.status).to.eql('success');
-//         expect(res.body.data).to.eql({ ride });
-//         done(err);
-//       });
-//   });
-// });
+  it('should get 200 and return ride by id', (done) => {
+    request
+      .get('/api/v1/rides/1')
+      .set('x-token-access', token1)
+      .expect(200)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('success');
+        done(err);
+      });
+  });
+});
 
+describe('Post requests for rides request', () => {
+  it('it should fail to create a new ride request', (done) => {
+    request
+      .post('/api/v1/rides/1/requests')
+      .set('x-token-access', token1)
+      .expect(403)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('fail');
+        // expect(res.body.data).have.property('ride');
+        done();
+      });
+  });
 
-// describe('Put request for rides', () => {
-//   it('should update a ride', (done) => {
-//     request
-//       .put('/api/v1/rides/1')
-//       .send({
-//         name: 'test updated',
-//         from: 'Lagos',
-//         to: 'benin',
-//         driver: 'mocha',
-//         time: '6:00 am',
-//       })
-//       .expect(200)
-//       .end((err, res) => {
-//         expect(res.body.status).to.eql('success');
-//         expect(res.body.data).to.eql({
-//           ride: {
-//             id: 1,
-//             name: 'test updated',
-//             from: 'Lagos',
-//             to: 'benin',
-//             driver: 'mocha',
-//             time: '6:00 am',
-//           },
-//         });
-//         done(err);
-//       });
-//   });
+  it('should create a new request', (done) => {
+    request
+      .post('/api/v1/rides/1/requests')
+      .set('x-token-access', token2)
+      .expect(200)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('success');
+        done(err);
+      });
+  });
+});
 
-//   it('should not update ride and return 400 - bad request', (done) => {
-//     request
-//       .put('/api/v1/rides/1')
-//       .send({
-//         name: 'test 1',
-//       })
-//       .expect(400)
-//       .end((err, res) => {
-//         expect(res.body.status).to.eql('fail');
-//         done(err);
-//       });
-//   });
+describe('Get request for all rides request', () => {
+  it('should return 200 OK response', (done) => {
+    request
+      .get('/api/v1/rides/1/requests')
+      .set('x-token-access', token1)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.equal('success');
+        expect(res.body.data).to.have.property('requests');
+        done();
+      });
+  });
 
-//   it('should not update ride and return 404 - Not Found', (done) => {
-//     request
-//       .put('/api/v1/rides/101010')
-//       .expect(404)
-//       .end((err, res) => {
-//         expect(res.body.status).to.eql('fail');
-//         done(err);
-//       });
-//   });
-// });
+  it('should get one request when non owner try access to request', (done) => {
+    request
+      .get('/api/v1/rides/1/requests')
+      .set('x-token-access', token2)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.equal('success');
+        expect(res.body.data).to.have.property('request');
+        done();
+      });
+  });
 
-// describe('Delete request for rides', () => {
-//   it('should delete a ride', (done) => {
-//     request
-//       .delete('/api/v1/rides/3')
-//       .expect(200)
-//       .end((err, res) => {
-//         expect(res.body.status).to.eql('success');
-//         expect(res.body.data).to.eql(null);
-//         done(err);
-//       });
-//   });
+  it('should return 404 response', (done) => {
+    request
+      .get('/api/v1/rides/1/req')
+      .expect(404)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('fail');
+        done(err);
+      });
+  });
+});
 
-//   it('should not delete ride and return 404 - Not Found', (done) => {
-//     request
-//       .delete('/api/v1/rides/101010')
-//       .expect(404)
-//       .end((err, res) => {
-//         expect(res.body.status).to.eql('fail');
-//         done(err);
-//       });
-//   });
-// });
+describe('Put request for all rides request', () => {
+  it('should return 200 OK response', (done) => {
+    request
+      .put('/api/v1/rides/1/requests/1')
+      .set('x-token-access', token2)
+      .send({ accept: true })
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.equal('fail');
+        done();
+      });
+  });
+
+  it('should return 200 OK response', (done) => {
+    request
+      .put('/api/v1/rides/1/requests/1')
+      .set('x-token-access', token2)
+      .send({ accept: false })
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.equal('fail');
+        done();
+      });
+  });
+
+  it('should return response', (done) => {
+    request
+      .put('/api/v1/rides/1/requests/1')
+      .set('x-token-access', token1)
+      .send({ accept: true })
+      .expect(200)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('success');
+        done(err);
+      });
+  });
+});
+
+describe('Delete request for rides', () => {
+  it('should cancel a ride', (done) => {
+    request
+      .delete('/api/v1/rides/1')
+      .set('x-token-access', token1)
+      .expect(200)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.equal('success');
+        expect(res.body.data.message).to.eql('The ride has been cancelled');
+        done(err);
+      });
+  });
+
+  it('should not delete ride and return 404 - Not Found', (done) => {
+    request
+      .delete('/api/v1/rides/101010')
+      .set('x-token-access', token1)
+      .expect(404)
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res.body.status).to.eql('fail');
+        done(err);
+      });
+  });
+});
 

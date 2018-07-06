@@ -5,7 +5,8 @@ import pool from '../config/pgpool';
 const jwtverify = (req, res, next) => {
   let tokengen = null;
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-    tokengen = req.headers.authorization.split(' ')[1];
+    const head = req.headers.authorization.split(' ')[1];
+    tokengen = head;
   } else if (req.query && req.query.token) {
     tokengen = req.query.token;
   } else if (req.headers['x-token-access']) {
@@ -15,27 +16,28 @@ const jwtverify = (req, res, next) => {
   }
 
 
-  if (!tokengen) return res.jsend.fail({ token: 'no token provided' });
+  if (!tokengen) { res.jsend.fail({ token: 'no token provided' }); } else {
+    jwt.verify(tokengen, process.env.SECRET_KEY, (err, result) => {
+      if (err) res.jsend.error({ message: 'Failed to authenticate token' });
 
-  return jwt.verify(tokengen, process.env.SECRET_KEY, (err, result) => {
-    if (err) return res.jsend.error({ message: 'Failed to authenticate token' });
+      pool((errors, client, done) => {
+        const sql = 'SELECT * FROM users WHERE id = $1';
 
-    pool((errors, client, done) => {
-      const sql = 'SELECT * FROM users WHERE id = $1';
+        if (errors) res.jsend.error({ message: errors });
 
-      if (errors) return res.jsend.error({ errors });
+        client.query(sql, [result.id], (error, results) => {
+          done();
+          if (error) res.jsend.error({ message: error.stack });
 
-      client.query(sql, [result.id], (error, results) => {
-        done();
-        if (error) return res.jsend.error({ error: error.stack });
-
-        if (!result) return res.jsend.fail({ message: 'user not found for the token' });
-
-        req.currentUser = results.rows[0];
-        next();
+          if (results.rows === null || results.rows.length < 1 || results.rows === undefined) { res.jsend.fail({ message: 'user not found for the token' }); } else {
+            const user = results.rows[0];
+            req.currentUser = user;
+            next();
+          }
+        });
       });
     });
-  });
+  }
 };
 
 

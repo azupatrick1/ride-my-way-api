@@ -1,11 +1,14 @@
 import pg from 'pg';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 let connectionString = '';
 
 if (process.env.NODE_ENV === 'test') {
-  connectionString = 'postgres://lcsauapj:Lh95iZltuu7Yh_N5k_IoLcOROLJKsbq-@tantor.db.elephantsql.com:5432/lcsauapj';
+  connectionString = process.env.DATABASE_TEST;
 } else if (process.env.NODE_ENV === 'development') {
-  connectionString = 'postgres://bmeqtfwa:MFlj5qwf8RuKB-sCaUxyanr9NPfnw0zY@tantor.db.elephantsql.com:5432/bmeqtfwa';
+  connectionString = process.env.DATABASE_DEV;
 } else {
   connectionString = process.env.DATABASE_URL;
 }

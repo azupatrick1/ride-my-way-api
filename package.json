@@ -4,16 +4,17 @@
   "description": "an simple implementation of a ride management API",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test mocha --require babel-register ./server/tests/",
+    "test": "npm run create-table-test && npm run insert-table-test && cross-env NODE_ENV=test mocha --require babel-register ./server/tests/ride.test.js --timeout 3000 --exit",
     "server": "cross-env NODE_ENV=development nodemon ./server/index.js --exec babel-node",
     "clean": "rm -rf build && mkdir build",
-    "coverage": "babel-node babel-istanbul cover _mocha --require ./server/tests/ -- --recursive --check-coverage ",
-    "coveralls": "npm run coverage --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "coverage": "npm run create-table-test && npm run insert-table-test && cross-env NODE_ENV=test babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/.bin/_mocha --require --timeout 3000 ./server/tests/ride.test.js -- --recursive --check-coverage --exit",
+    "coveralls": "npm run coverage --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build-babel": "babel -d ./build ./server -s ",
     "build": "npm run clean && npm run build-babel",
     "start": "npm run build && node ./build/index.js",
-    "create-table-dev": "cross-env NODE_ENV=development babel-node ./server/api/v1/config/table.js ",
-    "create-table-test": "cross-env NODE_ENV=test babel-node ./server/api/v1/config/table.js "
+    "create-table-dev": "cross-env NODE_ENV=development babel-node ./server/api/v1/config/table.js --exit",
+    "create-table-test": "cross-env NODE_ENV=test babel-node ./server/api/v1/config/table.js -- --exit",
+    "insert-table-test": "cross-env NODE_ENV=test babel-node ./server/tests/dbinsert.js -- --exit"
   },
   "keywords": [
     "api",
@@ -63,6 +64,7 @@
     "express": "^4.16.3",
     "jsend": "^1.0.2",
     "jsonwebtoken": "^8.3.0",
+    "morgan": "^1.9.0",
     "npm": "^6.1.0",
     "pg": "^7.4.3",
     "uuid": "^3.3.2"
