@@ -18,11 +18,11 @@ const userCredentials2 = {
 };
 
 const token1 = jwt.sign({ id: '0a758700-91a2-41bf-842f-eaca177243a4' }, 'this is a secret key', {
-  expiresIn: 86400, // expires in 24 hours
+  expiresIn: 86400,
 });
 
 const token2 = jwt.sign({ id: '568cd57e-00de-4c62-ab13-257c08348491' }, 'this is a secret key', {
-  expiresIn: 86400, // expires in 24 hours
+  expiresIn: 86400,
 });
 describe('testing signups', () => {
   it('should return token and success status', (done) => {
@@ -31,7 +31,6 @@ describe('testing signups', () => {
       .send(userCredentials)
       .expect(200)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('success');
         expect(res.body.data).have.property('message');
         done();
@@ -46,7 +45,6 @@ describe('testing signins', () => {
       .send(userCredentials2)
       .expect(200)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('success');
         expect(res.body.data).have.property('token');
         done();
@@ -61,7 +59,6 @@ describe('Testing to get current user', () => {
       .set('x-token-access', token1)
       .expect(200)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('success');
         expect(res.body.data).have.property('user');
         expect(res.body.data.user.username).to.eql('supertest');
@@ -76,7 +73,6 @@ describe('Get request for rides', () => {
       .get('/api/v1/rides')
       .set('x-token-access', token1)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.equal('success');
         expect(res.body.data.rides).to.be.a('array');
         expect(res.body.data).to.have.property('rides');
@@ -89,7 +85,6 @@ describe('Get request for rides', () => {
       .get('/api/v1/ride')
       .expect(404)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('fail');
         done(err);
       });
@@ -111,7 +106,6 @@ describe('Post requests for rides', () => {
       })
       .expect(200)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('success');
         expect(res.body.data).have.property('ride');
         done();
@@ -127,7 +121,6 @@ describe('Post requests for rides', () => {
       })
       .expect(400)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('fail');
         done(err);
       });
@@ -142,7 +135,6 @@ describe('Test the API to get a ride with a specific id', () => {
       .set('x-token-access', token1)
       .expect(404)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('fail');
         done(err);
       });
@@ -155,7 +147,6 @@ describe('Test the API to get a ride with a specific id', () => {
       .set('x-token-access', token1)
       .expect(200)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('success');
         done(err);
       });
@@ -169,9 +160,7 @@ describe('Post requests for rides request', () => {
       .set('x-token-access', token1)
       .expect(403)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('fail');
-        // expect(res.body.data).have.property('ride');
         done();
       });
   });
@@ -182,7 +171,6 @@ describe('Post requests for rides request', () => {
       .set('x-token-access', token2)
       .expect(200)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('success');
         done(err);
       });
@@ -195,7 +183,6 @@ describe('Get request for all rides request', () => {
       .get('/api/v1/rides/1/requests')
       .set('x-token-access', token1)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.equal('success');
         expect(res.body.data).to.have.property('requests');
         done();
@@ -207,7 +194,6 @@ describe('Get request for all rides request', () => {
       .get('/api/v1/rides/1/requests')
       .set('x-token-access', token2)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.equal('success');
         expect(res.body.data).to.have.property('request');
         done();
@@ -219,7 +205,6 @@ describe('Get request for all rides request', () => {
       .get('/api/v1/rides/1/req')
       .expect(404)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('fail');
         done(err);
       });
@@ -233,7 +218,6 @@ describe('Put request for all rides request', () => {
       .set('x-token-access', token2)
       .send({ accept: true })
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.equal('fail');
         done();
       });
@@ -245,7 +229,6 @@ describe('Put request for all rides request', () => {
       .set('x-token-access', token2)
       .send({ accept: false })
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.equal('fail');
         done();
       });
@@ -258,7 +241,6 @@ describe('Put request for all rides request', () => {
       .send({ accept: true })
       .expect(200)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('success');
         done(err);
       });
@@ -272,7 +254,6 @@ describe('Delete request for rides', () => {
       .set('x-token-access', token1)
       .expect(200)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.equal('success');
         expect(res.body.data.message).to.eql('The ride has been cancelled');
         done(err);
@@ -285,7 +266,6 @@ describe('Delete request for rides', () => {
       .set('x-token-access', token1)
       .expect(404)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.body.status).to.eql('fail');
         done(err);
       });

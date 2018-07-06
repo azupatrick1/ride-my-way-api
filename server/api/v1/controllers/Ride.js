@@ -48,18 +48,22 @@ class Ride {
 
   static deleteRide(req, res) {
     const sql = 'UPDATE rides SET status = $1 WHERE id = $2';
-    if (req.currentUser.id !== req.ride.user_id) res.jsend.fail({ message: 'you can not cancel someone else ride' });
+    if (req.currentUser.id !== req.ride.user_id) {
+      res.jsend.fail({ message: 'you can not cancel someone else ride' });
+    } else if (req.ride.status === 'cancelled') {
+      res.jsend.fail({ message: 'ride is already cancelled' });
+    } else {
+      pool((err, client, done) => {
+        if (err) res.jsend.error({ message: 'error connecting to database' });
 
-    pool((err, client, done) => {
-      if (err) res.jsend.error({ message: 'error connecting to database' });
+        client.query(sql, ['cancelled', req.params.rideId], (error) => {
+          done();
+          if (error) res.jsend.error({ message: 'error while trying to cancel ride' });
 
-      client.query(sql, ['cancelled', req.params.rideId], (error) => {
-        done();
-        if (error) res.jsend.error({ message: 'error while trying to cancel ride' });
-
-        res.jsend.success({ message: 'The ride has been cancelled' });
+          res.jsend.success({ message: 'The ride has been cancelled' });
+        });
       });
-    });
+    }
   }
 }
 export default Ride;
