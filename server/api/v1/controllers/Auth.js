@@ -33,10 +33,9 @@ class Auth {
         }
         if (user) {
           token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY, {
-            expiresIn: 86400, // expires in 24 hours
+            expiresIn: 86400,
           });
         }
-        console.log(req.body, token, err, result, error);
         res.jsend.success({ message: 'user is signed up successfully', token });
       });
     });
@@ -57,7 +56,7 @@ class Auth {
       userdata = [req.body.username.trim()];
     } else if (req.body.email) {
       sql = 'SELECT * FROM users WHERE email = $1';
-      userdata = [req.body.username.trim()];
+      userdata = [req.body.email.trim()];
     }
 
     pool((err, client, done) => {
@@ -73,9 +72,9 @@ class Auth {
           bcrypt.compare(req.body.password, user[0].password, (errs, re) => {
             if (!re) return res.status(404).jsend.fail({ message: 'username or password not correct' });
 
-            // create a token
+            
             const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY, {
-              expiresIn: 86400, // expires in 24 hours
+              expiresIn: 86400, 
             });
 
             res.jsend.success({ message: 'user is signed in successfully', token });

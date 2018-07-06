@@ -73,7 +73,9 @@ class RideRequest {
 
 
   static decideRequestOption(req, res) {
-    if (req.currentUser.id === req.ride.user_id) {
+    if (req.request.status === 'Accepted' || req.request.status === 'Rejected') {
+      res.jsend.fail({ message: 'ride request is already accepted or rejected' });
+    } else if (req.currentUser.id === req.ride.user_id) {
       const alterRequest = (status) => {
         const sql = 'UPDATE requests SET status = $1 WHERE id = $2';
 

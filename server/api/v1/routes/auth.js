@@ -1,5 +1,5 @@
 import express from 'express';
-import { Auth } from '../controllers//index';
+import { Auth } from '../controllers/index';
 import jwtverify from '../middlewares/jwtverify';
 import validateUser from '../middlewares/validateUser';
 import validateUsersign from '../middlewares/validateUsersign';
