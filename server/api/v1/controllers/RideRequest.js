@@ -8,12 +8,12 @@ class RideRequest {
     if (ride.user_id !== req.currentUser.id) {
       const sql = 'SELECT * FROM requests WHERE user_id = $1 AND ride_id = $2';
       pool((err, client, done) => {
-        if (err) res.jsend.error({ message: 'error connecting to database' });
+        if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
 
         client.query(sql, [req.currentUser.id, ride.id], (error, result) => {
           done();
-          if (error) res.jsend.error({ error: error.stack });
-          if (!result || result === undefined) { res.jsend.fail({ message: 'you have sent no request to this ride' }); } else {
+          if (error) return res.status(400).jsend.error({ error: 'error getting request' });
+          if (!result || result === undefined) { res.status(404).jsend.fail({ message: 'you have sent no request to this ride' }); } else {
             res.jsend.success({ request: result.rows[0] });
           }
         });
@@ -21,12 +21,12 @@ class RideRequest {
     } else {
       const sql = 'SELECT * FROM requests WHERE ride_id = $1';
       pool((err, client, done) => {
-        if (err) res.jsend.error({ message: 'error connecting to database' });
+        if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
 
         client.query(sql, [ride.id], (error, result) => {
           done();
-          if (error) res.jsend.error({ error: error.stack });
-          if (!result || result === undefined || result.rows.length === 0) { res.jsend.fail({ status: 'fail', message: 'you have no request to this ride' }); } else {
+          if (error) return res.status(400).jsend.error({ error: 'error getting request' });
+          if (!result || result === undefined || result.rows.length === 0) { res.status(404).jsend.fail({ status: 'fail', message: 'you have no request to this ride' }); } else {
             res.jsend.success({ requests: result.rows });
           }
         });
@@ -44,26 +44,27 @@ class RideRequest {
       const sqlr = 'UPDATE rides SET slot = $1 WHERE id = $2';
 
       pool((err, client, done) => {
-        if (err) res.jsend.error({ message: 'error connecting to database' });
+        if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
 
         client.query(sqlr, [lot, req.ride.id], (error) => {
           done();
-          if (error) res.jsend.error({ message: error.stack });
+          if (error) res.status(400).jsend.error({ message: 'error creating request' });
         });
       });
     };
-
-    if (slot <= 0) {
-      res.jsend.fail({ message: 'you are denied: slot is filled up' });
+    if (ride.status === 'cancelled') {
+      res.status(400).jsend.fail({ message: 'you are can not make request to a cancelled ride' });
+    } else if (slot <= 0) {
+      res.status(400).jsend.fail({ message: 'you are denied: slot is filled up' });
     } else if (ride.user_id === req.currentUser.id) {
       res.status(403).jsend.fail({ message: 'you can not request your own ride' });
     } else {
       pool((err, client, done) => {
-        if (err) res.jsend.error({ error: err });
+        if (err) res.status(500).jsend.error({ error: 'error connecting to database' });
 
         client.query(sql, data, (error, request) => {
           done();
-          if (error) res.jsend.error({ error: error.stack });
+          if (error) res.status(400).jsend.error({ error: 'error creating request' });
           alterRide(slot - 1);
           res.jsend.success({ request: request.rows[0] });
         });
@@ -74,43 +75,52 @@ class RideRequest {
 
   static decideRequestOption(req, res) {
     if (req.request.status === 'Accepted' || req.request.status === 'Rejected') {
-      res.jsend.fail({ message: 'ride request is already accepted or rejected' });
-    } else if (req.currentUser.id === req.ride.user_id) {
-      const alterRequest = (status) => {
-        const sql = 'UPDATE requests SET status = $1 WHERE id = $2';
+      return res.jsend.fail({ message: 'ride request is already accepted or rejected' });
+    }
+    if (req.currentUser.id !== req.ride.user_id) {
+      return res.status(403).jsend.fail({ message: 'you don\'t have the priviledge to access this endpoint ' });
+    }
 
-        pool((err, client, done) => {
-          if (err) res.jsend.error({ message: 'error connecting to database' });
+    const alterRequest = (status) => {
+      const sql = 'UPDATE requests SET status = $1 WHERE id = $2';
 
-          client.query(sql, [status, req.request.id], (error) => {
-            done();
-            if (error) res.jsend.error({ message: error.stack });
-          });
+      pool((err, client, done) => {
+        if (err) res.jsend.error({ message: 'error connecting to database' });
+
+        client.query(sql, [status, req.request.id], (error) => {
+          done();
+          if (error) res.jsend.error({ message: 'could not access request' });
         });
-      };
+      });
+    };
 
-      if (req.body.accept === true) {
-        const sql = 'UPDATE rides SET riders = array_append( riders, $1 ) WHERE id = $2';
-        pool((err, client, done) => {
-          if (err) res.jsend.error({ message: 'error connecting to database' });
+    if (req.body.accept === true) {
+      const sql = 'UPDATE rides SET riders = array_append( riders, $1 ) WHERE id = $2';
+      pool((err, client, done) => {
+        if (err) res.jsend.error({ message: 'error connecting to database' });
 
-          client.query(sql, [req.request.rider, req.ride.id], (error, result) => {
-            done();
-            if (error) res.jsend.error({ message: error.stack });
-            if (!result || result === undefined) { res.status(404).jsend.fail({ message: 'you have  no request to this ride' }); } else {
-              res.jsend.success({ message: 'you have accepted this request' });
-              alterRequest('Accepted');
-            }
-          });
+        client.query(sql, [req.request.rider, req.ride.id], (error, result) => {
+          done();
+          if (error) res.jsend.error({ message: error.stack });
+          if (!result || result === undefined) { res.status(404).jsend.fail({ message: 'you have  no request to this ride' }); } else {
+            res.jsend.success({ message: 'you have accepted this request' });
+            alterRequest('Accepted');
+          }
         });
-      } else {
-        res.jsend.success({ message: 'you have rejected this request' });
-        alterRequest('Rejected');
-      }
+      });
     } else {
-      res.status(403).jsend.fail({ message: 'you don\'t have the priviledge to access this endpoint ' });
+      const sql = 'UPDATE rides SET slot = $1 WHERE id = $2';
+      pool((err, client, done) => {
+        if (err) return res.jsend.error({ message: 'error connecting to database' });
+        client.query(sql, [req.ride.slot + 1, req.ride.id], (error) => {
+          done();
+          if (error) res.statssusend.error({ message: error.stack });
+          res.jsend.success({ message: 'you have rejected this request' });
+          alterRequest('Rejected');
+        });
+      });
     }
   }
 }
-export default RideRequest;
 
+export default RideRequest;
