@@ -3,52 +3,67 @@
 
 <head>
   <meta charset="utf-8">
-  <title> Sign up ride my way</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title> Log in to Ride my way</title>
 
   <link rel="stylesheet" href="../assets/styles/design.css">
+  <link rel="stylesheet" href="../assets/styles/component.css">
+  <link rel="stylesheet" href="../assets/styles/normalize.css">
+  <script src="../assets/scripts/modernizr.custom.25376.js"></script>
 </head>
 
 <body>
-  <header id="header">
-    <h1> <strong> <a href="../../index.html">Ride </a></strong>my way</h1>
-    <nav id="nav">
+    <div id="perspective" class="perspective effect-laydown">
+      <div class="container">
+				<div class="wrapper">
+					<div class="top clearfix nav-other">
+            <span id="head"> Ride MY Way</span>
+						<span class="right">
+							<div class="hamburger" id="showMenu">
+								<span class="line"></span>
+								<span class="line"></span>
+								<span class="line"></span>
+							</div>
+          </div>
+         <div class="main-other clearfix">
+            
+          <h2 class="text-center"> Sign Up</h2>
+          <div class="form-main">
+            <form  action="profile.html">
+              <input type="email" name="email" value="" placeholder="enter your email ..." class="form-input" required>
+        
+              <input type="password" name="password" value="" placeholder="enter your password ..." class="form-input" minlength="6" required>
+        
+              <input type="password" name="password-verification" value="" placeholder="enter your password again ..." class="form-input" minlength="6" required>
+              
+              <input type="submit" name="submit" value="Sign Up" class="button btn-full btn-action">
+        
+        
+            </form>
 
-      <ul>
-        <li><a href="../rides/about.html">About</a></li>
-        <li><a href="./signup.html">Sign up</a></li>
-        <li><a href="./signin.html">Sign in</a></li>
-      </ul>
-    </nav>
+            
+         </div>
+         <div class="sign-other">
+            <a href="signin.html" class="also">Already have account? Log in!</a>
+          </div>
+        </div>
 
-  </header>
-    <div class="backimage">
-      <h2 class="text-center headtext"> Sign Up</h2>
-  <div class="form-main">
-    <form  action="profile.html">
-      <input type="email" name="email" value="" placeholder="enter your email ..." class="form-input" required>
-
-      <input type="password" name="password" value="" placeholder="enter your password ..." class="form-input" minlength="6" required>
-
-      <input type="password" name="password-verification" value="" placeholder="enter your password again ..." class="form-input" minlength="6" required>
-
-      <input type="submit" name="submit" value="Sign Up" class="button btn-full btn-green">
-
-
-    </form>
-
-     <div class="or-spacer">
-        <div class="mask"></div>
-        <span><i>or</i></span>
+        </div>
       </div>
-      
 
-        <button class="button btn-full btn-blue" type="button" onclick="openPage('signin.html')"> Already have account? Log in </button>
+    <nav class="outer-nav top horizontal">
+    <a href="../../index.html" class="">Home</a>
+    <a href="../signup.html" class="">Sign up</a>
+    <a href="../signin.html" class="">Sign in</a>
+  </nav>
+</div>
 
-    </div>
-  </div>
 
-  <!--js script-->
-  <script src = "../assets/scripts/actions.js"></script>
+<script src="../assets/scripts/classie.js"></script>
+<script src="../assets/scripts/menu.js"></script>
+<script src="../assets/scripts/action.js"></script>
+<script src = "../assets/scripts/actions.js"></script>
 </body>
 
 </html>
