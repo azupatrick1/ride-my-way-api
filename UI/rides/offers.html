@@ -3,209 +3,119 @@
 
 <head>
   <meta charset="utf-8">
-  <title> Ride Riquests . Ride my way</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title> All rides | Ride my way</title>
 
   <link rel="stylesheet" href="../assets/styles/design.css">
+  <link rel="stylesheet" href="../assets/styles/component.css">
+  <link rel="stylesheet" href="../assets/styles/normalize.css">
+  <script src="../assets/scripts/modernizr.custom.25376.js"></script>
 </head>
 
 <body>
-  <header id="header">
-    <h1>
-      <strong>
-        <a href="../../index.html">Ride </a>
-      </strong>my way</h1>
-    <nav id="nav">
+  <div id="perspective" class="perspective effect-laydown">
+    <div class="container">
+      <div class="wrapper">
+        <div class="top clearfix nav-other">
+          <span id="head"> Ride MY Way</span>
+          <span class="right">
+            <div class="hamburger" id="showMenu">
+              <span class="line"></span>
+              <span class="line"></span>
+              <span class="line"></span>
+            </div>
+        </div>
+        <div class="main-other clearfix">
 
-      <ul>
-        
-          
-          <li> <a href="./search.html" class="btn-nav">find a ride</a></li>
-          <li>
-          <a href="./index.html">All rides</a>
-        </li>
-       
-        <li>
-          <div href="#" class="dropdown">
-            <img src="../assets/images/img.png" alt="" class="navimage"  height="50" width="50">
-            <div class="dropdown-content">
-                <ul id="drop">
-                    <li><a href="../users/profile.html">profile</a> </li>
-                    <li><a href="../../index.html">sign out</a> </li>
-                </ul>
+          <h2 class="text-center">Ride requests</h2>
+
+          <div class="right" id="container">
+            <div class="inner-container">
+              <div class="toggle">
+                <p>Sent Requests</p>
+              </div>
+              <div class="toggle">
+                <p>Recieved requests</p>
               </div>
             </div>
-          
-        </li>
-        
-      </ul>
-    </nav>
-
-  </header>
-  <div class="backimage">
-    <div class="content ">
-
-      <div class="right" id="container">
-        <div class="inner-container">
-          <div class="toggle">
-            <p>By rides</p>
+            <div class="inner-container" id='toggle-container'>
+              <div class="toggle">
+                <p>Sent Requests</p>
+              </div>
+              <div class="toggle">
+                <p>Recieved requests</p>
+              </div>
+            </div>
           </div>
-          <div class="toggle">
-            <p>All</p>
+
+          <br>
+          <br>
+          <br>
+
+
+          <div id="all" class="unhide">
+            <div class="box">
+              <h3>Emeka Linus</h3>
+              <p>Ride expresso</p>
+              <div class="text-center">
+                <a href="#" class="button btn-green"> Accept</a>
+                <a href="#" class="button btn-red"> Reject</a>
+              </div>
+            </div>
+
+            <div class="box">
+              <h3>Emeka Linus</h3>
+              <p>Ride expresso</p>
+              <div class="text-center">
+                <a href="#" class="button btn-green"> Accept</a>
+                <a href="#" class="button btn-red"> Reject</a>
+              </div>
+            </div>
+            <div class="box">
+              <h3>Emeka Linus</h3>
+              <p>Ride expresso</p>
+              <div class="text-center">
+                <a href="#" class="button btn-green"> Accept</a>
+                <a href="#" class="button btn-red"> Reject</a>
+              </div>
+            </div>
+
           </div>
+
+          <div id="byride" class="hide">
+            <div class="box">
+              <h3>Ride expresso</h3>
+              <h4>Status:
+                <small class="text-green">Accepted</small>
+              </h4>
+            </div>
+
+
+          </div>
+
+
         </div>
-        <div class="inner-container" id='toggle-container'>
-          <div class="toggle">
-            <p>By rides</p>
-          </div>
-          <div class="toggle">
-            <p>All</p>
-          </div>
-        </div>
-      </div>
-      <br><br>
-      
-
-      <div id="all" class="unhide">
-          <div class="fit-box">
-              <h5>Emeka Linus
-                <div class="bad">
-                  <a href="#" class="button btn-green"> Accept</a>
-                  <a href="#" class="button btn-red"> Reject</a>
-                </div>
-              </h5>
-              <p>by 5:00 pm </p>
-              <h6 class="right">ride expresso</h6>
-              <br>
-            </div>
-            <div class="fit-box">
-              <h5>Emeka Linus
-                <div class="bad">
-                  <a href="#" class="button btn-green"> Accept</a>
-                  <a href="#" class="button btn-red"> Reject</a>
-                </div>
-              </h5>
-              <p>by 5:00 pm </p>
-              <h6 class="right">ride expresso</h6>
-              <br>
-            </div>
-            <div class="fit-box">
-              <h5>Emeka Linus
-                <div class="bad">
-                  <a href="#" class="button btn-green"> Accept</a>
-                  <a href="#" class="button btn-red"> Reject</a>
-                </div>
-              </h5>
-              <p>by 5:00 pm </p>
-              <h6 class="right">ride expresso</h6>
-              <br>
-            </div>
-            <div class="fit-box">
-              <h5>Emeka Linus
-                <div class="bad">
-                  <a href="#" class="button btn-green"> Accept</a>
-                  <a href="#" class="button btn-red"> Reject</a>
-                </div>
-              </h5>
-              <p>by 5:00 pm </p>
-              <h6 class="right">ride expresso</h6>
-              <br>
-            </div>
-            <div class="fit-box">
-              <h5>Emeka Linus
-                <div class="bad">
-                  <a href="#" class="button btn-green"> Accept</a>
-                  <a href="#" class="button btn-red"> Reject</a>
-                </div>
-              </h5>
-              <p>by 5:00 pm </p>
-              <h6 class="right">ride expresso</h6>
-              <br>
-            </div>
-            <div class="fit-box">
-              <h5>Emeka Linus
-                <div class="bad">
-                  <a href="#" class="button btn-green"> Accept</a>
-                  <a href="#" class="button btn-red"> Reject</a>
-                </div>
-              </h5>
-              <p>by 5:00 pm </p>
-              <h6 class="right">ride expresso</h6>
-              <br>
-            </div>
-            <div class="fit-box">
-              <h5>Emeka Linus
-                <div class="bad">
-                  <a href="#" class="button btn-green"> Accept</a>
-                  <a href="#" class="button btn-red"> Reject</a>
-                </div>
-              </h5>
-              <p>by 5:00 pm </p>
-              <h6 class="right">ride expresso</h6>
-              <br>
-            </div>
 
       </div>
-
-      <div id="byride" class="hide">
-          <div class="aride">
-            <h2 class="text-white"> ride expresso</h2>
-              <div class="fit-box">
-                  <h5>Emeka Linu
-                    <div class="bad">
-                      <a href="#" class="button btn-green"> Accept</a>
-                      <a href="#" class="button btn-red"> Reject</a>
-                    </div>
-                  </h5>
-                  <p>by 5:00 pm </p>
-                  <h6 class="right">ride expresso</h6>
-                  <br>
-                </div>
-                <div class="fit-box">
-                  <h5>Emeka Linus
-                    <div class="bad">
-                      <a href="#" class="button btn-green"> Accept</a>
-                      <a href="#" class="button btn-red"> Reject</a>
-                    </div>
-                  </h5>
-                  <p>by 5:00 pm </p>
-                  <h6 class="right">ride expresso</h6>
-                  <br>
-                </div>
-          </div>
-
-          <h2 class="text-white"> ride expresso 2</h2>
-              <div class="fit-box">
-                  <h5>Emeka Linu
-                    <div class="bad">
-                      <a href="#" class="button btn-green"> Accept</a>
-                      <a href="#" class="button btn-red"> Reject</a>
-                    </div>
-                  </h5>
-                  <p>by 5:00 pm </p>
-                  <h6 class="right">ride expresso</h6>
-                  <br>
-                </div>
-                <div class="fit-box">
-                  <h5>Emeka Linus
-                    <div class="bad">
-                      <a href="#" class="button btn-green"> Accept</a>
-                      <a href="#" class="button btn-red"> Reject</a>
-                    </div>
-                  </h5>
-                  <p>by 5:00 pm </p>
-                  <h6 class="right">ride expresso</h6>
-                  <br>
-                </div>
-          </div>
-
-      </div>
-
     </div>
-  </div> 
-  
-  <!--js script-->
-  <script src="../assets/scripts/toggle.js"></script>
 
+  </div>
+  </div>
+
+  <nav class="outer-nav top horizontal">
+    <a href="../../index.html" class="">Home</a>
+    <a href="./index.html" class="btn-nav">All ride</a>
+    <a href="../users/profile.html">profile</a>
+    <a href="../../index.html">sign out</a>
+  </nav>
+  </div>
+
+
+  <script src="../assets/scripts/classie.js"></script>
+  <script src="../assets/scripts/menu.js"></script>
+  <script src="../assets/scripts/toggle.js"></script>
+  <script src="../assets/scripts/actions.js"></script>
 </body>
 
 </html>

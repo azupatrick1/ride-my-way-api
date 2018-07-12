@@ -2,35 +2,109 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Ride my way</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ride my way</title>
 
-  <link rel="stylesheet" href="./UI/assets/styles/design.css">
+	<link rel="stylesheet" href="./UI/assets/styles/design.css">
+	<link rel="stylesheet" href="./UI/assets/styles/normalize.css">
+	<link rel="stylesheet" href="./UI/assets/styles/component.css">
+	<script src="./UI/assets/scripts/modernizr.custom.25376.js"></script>
 </head>
 
-<body class="landing">
-  <header id="header" class="alt">
-    <h1> <strong> <a href="#">Ride </a></strong>my way</h1>
-    <nav id="nav">
+<body onload="typeWriter()">
 
-      <ul>
-        <li><a href="./UI/rides/about.html">About</a></li>
-        <li><a href="./UI/users/signup.html">Sign up</a></li>
-        <li><a href="./UI/users/signin.html">Sign in</a></li>
-      </ul>
-    </nav>
+	<div id="perspective" class="perspective effect-laydown">
+		<div class="container">
+			<div class="wrapper">
+				<div class="top clearfix">
+					<span class="right">
+						<div class="hamburger" id="showMenu">
+							<span class="line"></span>
+							<span class="line"></span>
+							<span class="line"></span>
+						</div>
+				</div>
 
-  </header>
+				<nav id="nav" class="visible-lg">
 
-  <section id="banner">
-      <h2>Ride my way</h2>
-      <p>could not get a ride, public or from friends <br /> worry no more we got your back.</p>
-      <ul class="actions">
-        <li><a href="./UI/users/signup.html" class="button btn-blue">Get Started</a></li>
-      </ul>
-   </section>
-  
+					<ul>
+						<li>
+							<a href="../rides/about.html">About</a>
+						</li>
+						<li>
+							<a href="./signup.html">Sign up</a>
+						</li>
+						<li>
+							<a href="./signin.html">Sign in</a>
+						</li>
+					</ul>
+				</nav>
 
+				<header class="header">
+
+					<div class="inhead">
+						<h1 id="type"></h1>
+						<span>Have a free fun drive today. </span>
+						<a href="./UI/users/signup.html" class="button btn-action top-50">Find a ride</a>
+					</div>
+				</header>
+				<div class="main clearfix">
+
+					<div class="column">
+						<img src="./UI/assets/images/navigation.png" alt="easy way around" width="150">
+						<h3> Easiest way around </h3>
+
+						<p>
+							One tap and you locate a ride near you. Hop in your driver is your friend. And when you get there, just say a big thank you!
+						</p>
+
+					</div>
+					<div class="column">
+						<img src="./UI/assets/images/alarm-clock.png" alt="anytime" width="150">
+						<h3> Anytime </h3>
+						<p>
+							Early morning flight. Late night drinks. Wherever you’re headed, count on Ride my way for a ride. just make a request!
+						</p>
+
+					</div>
+					<div class="column">
+						<img src="./UI/assets/images/nocost.png" alt="no cost" width="150">
+
+						<h3> Just free as you see </h3>
+
+						<p>
+							For special occasions, no occasion at all, or when you just a need a bit more room, make a request and you could have a ride
+							in a limo for free.
+						</p>
+					</div>
+					<div class="column">
+							<a href="./UI/users/signup.html" class="button btn-action top-50">Find a ride</a>
+
+					</div>
+
+					<div class="related">
+						<hr>
+						<p>Ride my way @2018 (jojitoon)</p>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<nav class="outer-nav top horizontal">
+			<a href="./index.html" class="">Home</a>
+			<a href="./UI/rides/about.html" class="">About</a>
+			<a href="./UI/users/signup.html" class="">Sign up</a>
+			<a href="./UI/users/signin.html" class="">Sign in</a>
+		</nav>
+	</div>
+
+
+	<script src="./UI/assets/scripts/classie.js"></script>
+	<script src="./UI/assets/scripts/menu.js"></script>
+	<script src="./UI/assets/scripts/action.js"></script>
+	<script src="./UI/assets/scripts/type.js"></script>
 </body>
 
 </html>

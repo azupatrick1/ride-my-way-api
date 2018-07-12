@@ -3,78 +3,152 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Profile . Ride my way</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title> Log in to Ride my way</title>
 
   <link rel="stylesheet" href="../assets/styles/design.css">
+  <link rel="stylesheet" href="../assets/styles/component.css">
+  <link rel="stylesheet" href="../assets/styles/normalize.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <script src="../assets/scripts/modernizr.custom.25376.js"></script>
 </head>
 
 <body>
-    <header id="header">
-        <h1>
-          <strong>
-            <a href="../../index.html">Ride </a>
-          </strong>my way</h1>
-        <nav id="nav">
-    
-          <ul>
-            <li>
-              <a href="../rides/index.html">All rides</a>
-            </li>
-            <li>
-              <a href="../rides/offers.html">ride request</a>
-            </li>
-            <li>
-              <a href="../../index.html">Sign out</a>
-            </li>
-          </ul>
-        </nav>
-    
-      </header>
-      <div class="backimage more-30">
-  <div class="content ">
-    <h2 class="text-white">User Profile</h2> <a href="../rides/new.html" class="right button btn-green">Create Ride</a>
-  <div class="boxes">
-    <div class="box">
-      <div>
-        <img src="../assets/images/img.png" alt="profile pic" height="200" width="200" class="image"> 
+  <div id="perspective" class="perspective effect-laydown">
+    <div class="container">
+      <div class="wrapper">
+        <div class="top clearfix nav-other">
+          <span id="head"> Ride MY Way</span>
+          <span class="right">
+            <div class="hamburger" id="showMenu">
+              <span class="line"></span>
+              <span class="line"></span>
+              <span class="line"></span>
+            </div>
+        </div>
+        <div class="main-other clearfix">
 
-        <h2 class="text-white"> Emkeka Linus</h2>
-        <h3>driver</h3>
-        <p class="text-white">emekalinus@gmail.com</p>
-      </div>
-
-    </div>
-    <div class="box boxes boc">
-      <div class="boxc space">
-          <h2 class="text-blue pad-top-10"><strong class="text-blue">5</strong> Rides Given</h2>
-          <hr>
-          <div>
-              <h3> <a href="../rides/show.html" class="text-white"> Rider on th run always </a> </h3>
-              <h3> <a href="../rides/show.html" class="text-white"> Ride Express</a> </h3>
-              <h3> <a href="../rides/show.html" class="text-white"> Ride Express</a> </h3>
-              <h3> <a href="../rides/show.html" class="text-white"> Ride Express</a> </h3>
+          <!-- <h2 class="text-center"> Profile</h2> -->
+          <div class="column">
+            <h3 id="title">Peter Hamser</h3>
+            <h5 id="subtitle">peterhamser@gmail.com</h5>
 
           </div>
-      </div>
-      
-      <div class="boxc">
-        <hr class="text-center">
-          <h2 class="text-blue"><strong class="text-blue">5</strong> Rides Taken</h2>
-           <hr>
-          <div>
-              <h2> <a href="../rides/show.html" class="text-white"> Ride Express</a> </h3>
-              <h3> <a href="../rides/show.html" class="text-white"> Ride Express</a> </h3>
-              <h3> <a href="../rides/show.html" class="text-white"> Ride  Express</a> </h3>
-              <h3> <a href="../rides/show.html" class="text-white"> Ride Express</a> </h3>
+          <div class="tabset">
+            <!-- Tab 1 -->
+            <input type="radio" name="tabset" id="tab1" aria-controls="ride-given" checked>
+            <label for="tab1">Rides Given (5)</label>
+            <!-- Tab 2 -->
+            <input type="radio" name="tabset" id="tab2" aria-controls="ride-taken">
+            <label for="tab2">Rides Taken (5)</label>
 
+            <div class="tab-panels">
+              <section id="ride-given" class="tab-panel">
+                <ul class="ride-list">
+                  <li>
+                    <a href="../rides/show.html">
+                      <h4>Ride expresso</h4>
+                      <span class="right fa fa-arrow-right"></span>
+                      <small id="passengers">passengers: 5</small>
+                      <small id="status">status: completed</small>
+                    </a>
+
+                  </li>
+                  <li>
+                    <a href="../rides/show.html">
+                      <h4>Ride expresso</h4>
+                      <span class="right fa fa-arrow-right"></span>
+                      <small id="passengers">passengers: 5</small>
+                      <small id="status">status: completed</small>
+                    </a>
+
+                  </li>
+                  <li>
+                    <a href="../rides/show.html">
+                      <h4>Ride expresso</h4>
+                      <span class="right fa fa-arrow-right"></span>
+                      <small id="passengers">passengers: 5</small>
+                      <small id="status">status: completed</small>
+                    </a>
+
+                  </li>
+
+                  <li>
+                    <a href="../rides/show.html">
+                      <h4>Ride expresso</h4>
+                      <span class="right fa fa-arrow-right"></span>
+                      <small id="passengers">passengers: 5</small>
+                      <small id="status">status: completed</small>
+                    </a>
+
+                  </li>
+
+                </ul>
+              </section>
+              <section id="ride-taken" class="tab-panel">
+                <ul class="ride-list">
+                  <li>
+                    <a href="../rides/show.html">
+                      <h4>Ride expresso</h4>
+                      <span class="right fa fa-arrow-right"></span>
+                      <small>driver: emeka</small>
+                    </a>
+
+                  </li>
+                  <li>
+                    <a href="../rides/show.html">
+                      <h4>Ride expresso</h4>
+                      <span class="right fa fa-arrow-right"></span>
+                      <small>driver: emeka</small>
+                    </a>
+
+                  </li>
+                  <li>
+                    <a href="../rides/show.html">
+                      <h4>Ride expresso</h4>
+                      <span class="right fa fa-arrow-right"></span>
+                      <small>driver: emeka</small>
+                    </a>
+
+                  </li>
+
+                </ul>
+              </section>
+
+
+            </div>
           </div>
+        </div>
+          
       </div>
     </div>
+
+
+
+
+      <nav class="outer-nav top horizontal">
+        <a href="../../index.html" class="">Home</a>
+        <a href="../rides/index.html" class="">Rides </a>
+        <a href="../rides/index.html" class="">Rides request </a>
+        <a href="../../index.html" class="">Sign Out</a>
+      </nav>
+
   </div>
-      
-  
+
+  <a href="../rides/new.html" class="fab" id="fab">
+    <i class="fa fa-plus fab-icon"></i>
+  </a>
+
+  <div class="label-container">
+    <div class="label-text">New Ride</div>
+    <i class="fa fa-play label-arrow"></i>
   </div>
-  </div>
+
+  <script src="../assets/scripts/classie.js"></script>
+  <script src="../assets/scripts/menu.js"></script>
+  <script src="../assets/scripts/action.js"></script>
+  <script src="../assets/scripts/actions.js"></script>
 </body>
-</html>
+
 </html>
