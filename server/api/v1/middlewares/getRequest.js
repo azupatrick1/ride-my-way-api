@@ -1,7 +1,7 @@
 import pool from '../config/pgpool';
 
 const getRequest = (req, res, next) => {
-  if (typeof req.params.requestId !== 'number') {
+  if (typeof Number(req.params.requestId) !== 'number') {
     res.status(400).jsend.fail({ message: 'wrong format of requestId supplied at the url ' });
   } else {
     const sql = 'SELECT * FROM requests WHERE id = $1';

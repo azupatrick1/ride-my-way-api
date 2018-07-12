@@ -85,11 +85,11 @@ class RideRequest {
       const sql = 'UPDATE requests SET status = $1 WHERE id = $2';
 
       pool((err, client, done) => {
-        if (err) res.jsend.error({ message: 'error connecting to database' });
+        if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
 
         client.query(sql, [status, req.request.id], (error) => {
           done();
-          if (error) res.jsend.error({ message: 'could not access request' });
+          if (error) res.status(500).jsend.error({ message: 'could not access request' });
         });
       });
     };
@@ -97,11 +97,11 @@ class RideRequest {
     if (req.body.accept === true) {
       const sql = 'UPDATE rides SET riders = array_append( riders, $1 ) WHERE id = $2';
       pool((err, client, done) => {
-        if (err) res.jsend.error({ message: 'error connecting to database' });
+        if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
 
         client.query(sql, [req.request.rider, req.ride.id], (error, result) => {
           done();
-          if (error) res.jsend.error({ message: error.stack });
+          if (error) res.status(500).jsend.error({ message: 'error updating ride' });
           if (!result || result === undefined) { res.status(404).jsend.fail({ message: 'you have  no request to this ride' }); } else {
             res.jsend.success({ message: 'you have accepted this request' });
             alterRequest('Accepted');
@@ -111,12 +111,12 @@ class RideRequest {
     } else {
       const sql = 'UPDATE rides SET slot = $1 WHERE id = $2';
       pool((err, client, done) => {
-        if (err) return res.jsend.error({ message: 'error connecting to database' });
+        if (err) return res.status(500).jsend.error({ message: 'error connecting to database' });
         client.query(sql, [req.ride.slot + 1, req.ride.id], (error) => {
           done();
-          if (error) res.statssusend.error({ message: error.stack });
-          res.jsend.success({ message: 'you have rejected this request' });
+          if (error) return res.status(500).jsend.error({ message: 'error updating rie slot' });
           alterRequest('Rejected');
+          res.jsend.success({ message: 'you have rejected this request' });
         });
       });
     }

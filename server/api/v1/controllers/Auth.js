@@ -66,7 +66,7 @@ class Auth {
         done();
         if (error) res.status(500).jsend.error({ message: 'error signing in  ' });
 
-        if (!result.rows[0] || result.rows[0] === undefined || result.rows[0] === null || result.rows[0] < 1) { res.status(400).send.fail({ message: 'user not registered' }); } else {
+        if (!result.rows[0] || result.rows[0] === undefined || result.rows[0] === null || result.rows[0] < 1) { res.status(400).jsend.fail({ message: 'user not registered' }); } else {
           user = result.rows;
 
           bcrypt.compare(req.body.password, user[0].password, (errs, re) => {
