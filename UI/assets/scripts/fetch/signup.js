@@ -1,0 +1,1 @@
+const url = 'http://ride-my-way-api.herokuapp.com/api/v1/auth/signup';
