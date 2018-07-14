@@ -23,13 +23,13 @@ const jwtverify = (req, res, next) => {
       pool((errors, client, done) => {
         const sql = 'SELECT * FROM users WHERE id = $1';
 
-        if (errors) res.jsend.error({ message: errors });
+        if (errors) res.status(500).jsend.error({ message: 'error connecting to the database' });
 
         client.query(sql, [result.id], (error, results) => {
           done();
-          if (error) res.jsend.error({ message: error.stack });
+          if (error) res.status(400).jsend.error({ message: 'Bad parameter parsed' });
 
-          if (results.rows === null || results.rows.length < 1 || results.rows === undefined) { res.jsend.fail({ message: 'user not found for the token' }); } else {
+          if (results.rows === null || results.rows.length < 1 || results.rows === undefined) { res.status(404).jsend.fail({ message: 'user not found for the token' }); } else {
             const user = results.rows[0];
             req.currentUser = user;
             next();

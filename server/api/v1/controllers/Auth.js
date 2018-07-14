@@ -13,20 +13,20 @@ class Auth {
     const data = [uuid(), req.body.username, hash, req.body.email];
     let user;
     pool((err, client, done) => {
-      if (err) return res.jsend.error({ error: err });
+      if (err) return res.status(500).jsend.error({ message: 'internal server error' });
 
       client.query(sql, data, (error, result) => {
         done();
         if (error && error.message.search('users_username_key') !== -1) {
-          return res.jsend.error({ message: 'username already taken by another user' });
+          return res.status(400).jsend.error({ message: 'username already taken by another user' });
         }
         if (error && error.message.search('users_email_key') !== 1) {
-          return res.jsend.error({ message: 'email already taken by another user' });
+          return res.status(400).jsend.error({ message: 'email already taken by another user' });
         }
 
         if (result) {
           if (!result.rows[0] || result.rows[0] === undefined || result.rows[0] === null || result.rows[0] < 1) {
-            res.jsend.fail({ message: 'error signing up' });
+            res.status(400).jsend.fail({ message: 'error signing up' });
           } else {
             user = result.rows;
           }
@@ -60,21 +60,21 @@ class Auth {
     }
 
     pool((err, client, done) => {
-      if (err) res.jsend.error({ error: err });
+      if (err) res.status(500).jsend.error({ message: 'internal server error' });
 
       client.query(sql, userdata, (error, result) => {
         done();
-        if (error) res.jsend.error({ error: error.stack });
+        if (error) res.status(500).jsend.error({ message: 'error signing in  ' });
 
-        if (!result.rows[0] || result.rows[0] === undefined || result.rows[0] === null || result.rows[0] < 1) { res.jsend.fail({ message: 'user not registered' }); } else {
+        if (!result.rows[0] || result.rows[0] === undefined || result.rows[0] === null || result.rows[0] < 1) { res.status(400).jsend.fail({ message: 'user not registered' }); } else {
           user = result.rows;
 
           bcrypt.compare(req.body.password, user[0].password, (errs, re) => {
-            if (!re) return res.status(404).jsend.fail({ message: 'username or password not correct' });
+            if (!re) return res.status(401).jsend.fail({ message: 'username or password not correct' });
 
-            
+
             const token = jwt.sign({ id: user[0].id }, process.env.SECRET_KEY, {
-              expiresIn: 86400, 
+              expiresIn: 86400,
             });
 
             res.jsend.success({ message: 'user is signed in successfully', token });

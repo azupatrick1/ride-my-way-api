@@ -3,11 +3,11 @@ import pool from '../config/pgpool';
 const checkRide = (req, res, next) => {
   const sql = 'SELECT * FROM rides WHERE status = $1 AND user_id = $2';
   pool((err, client, done) => {
-    if (err) res.jsend.error({ message: err });
+    if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
 
     client.query(sql, ['pending', req.currentUser.id], (error, result) => {
       done();
-      if (error) res.jsend.error({ message: error.stack });
+      if (error) res.status(500).jsend.error({ message: 'error  fetching data from database' });
 
 
       if (!result.rows[0] || result.rows[0] === null || result.rows[0] === undefined

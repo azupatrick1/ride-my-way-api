@@ -245,6 +245,17 @@ describe('Put request for all rides request', () => {
         done(err);
       });
   });
+  it('should return response', (done) => {
+    request
+      .put('/api/v1/rides/1/requests/abc')
+      .set('x-token-access', token1)
+      .send({ accept: true })
+      .expect(400)
+      .end((err, res) => {
+        expect(res.body.status).to.eql('error');
+        done(err);
+      });
+  });
 });
 
 describe('Delete request for rides', () => {
