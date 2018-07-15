@@ -1,4 +1,4 @@
-const url = "http://ride-my-way-api.herokuapp.com/api/v1/";
+const url = "https://ride-my-way-api.herokuapp.com/api/v1/";
 const username = document.getElementById("username");
 const login = document.getElementById("login");
 const email = document.getElementById("email");
