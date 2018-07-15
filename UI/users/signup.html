@@ -30,14 +30,15 @@
             
           <h2 class="text-center"> Sign Up</h2>
           <div class="form-main">
-            <form  action="profile.html">
-              <input type="email" name="email" value="" placeholder="enter your email ..." class="form-input" required>
+            <form>
+              <input type="text" name="email" id="username" value="" placeholder="enter your username ..." class="form-input" required>
+              <input type="email" name="email" id="email" value="" placeholder="enter your email ..." class="form-input" required>
         
-              <input type="password" name="password" value="" placeholder="enter your password ..." class="form-input" minlength="6" required>
+              <input type="password" name="password" id="password" value="" placeholder="enter your password ..." class="form-input" minlength="6" required>
         
-              <input type="password" name="password-verification" value="" placeholder="enter your password again ..." class="form-input" minlength="6" required>
+              <input type="password" name="password-verification" id="password-verification" value="" placeholder="enter your password again ..." class="form-input" minlength="6" required>
               
-              <input type="submit" name="submit" value="Sign Up" class="button btn-full btn-action">
+              <button type="button"  onclick="signup()"  class="button btn-full btn-action"> Sign Up </button>
         
         
             </form>
@@ -62,7 +63,7 @@
 
 <script src="../assets/scripts/classie.js"></script>
 <script src="../assets/scripts/menu.js"></script>
-<script src="../assets/scripts/action.js"></script>
+<script src="../assets/scripts/fetch/signup.js"></script>
 <script src = "../assets/scripts/actions.js"></script>
 </body>
 
