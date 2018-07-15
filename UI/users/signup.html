@@ -12,11 +12,16 @@
   <link rel="stylesheet" href="../assets/styles/normalize.css">
   <script src="../assets/scripts/modernizr.custom.25376.js"></script>
 </head>
-
-<body>
+   
+<body onload="checkToken()">
     <div id="perspective" class="perspective effect-laydown">
       <div class="container">
 				<div class="wrapper">
+          <div id="notify" class="text-center">
+              <span id="close"><a onclick="notifyClose()">X</a></span>
+            <span id="notify-title"></span>
+            <span id="notify-body"></span>
+          </div>
 					<div class="top clearfix nav-other">
             <span id="head"> Ride MY Way</span>
 						<span class="right">
@@ -26,12 +31,13 @@
 								<span class="line"></span>
 							</div>
           </div>
+
          <div class="main-other clearfix">
             
           <h2 class="text-center"> Sign Up</h2>
           <div class="form-main">
-            <form>
-              <input type="text" name="email" id="username" value="" placeholder="enter your username ..." class="form-input" required>
+            <form novalidate>
+              <input type="text" name="username" id="username" value="" placeholder="enter your username ..." class="form-input" minlength="3" required>
               <input type="email" name="email" id="email" value="" placeholder="enter your email ..." class="form-input" required>
         
               <input type="password" name="password" id="password" value="" placeholder="enter your password ..." class="form-input" minlength="6" required>
@@ -63,7 +69,7 @@
 
 <script src="../assets/scripts/classie.js"></script>
 <script src="../assets/scripts/menu.js"></script>
-<script src="../assets/scripts/fetch/signup.js"></script>
+<script src="../assets/scripts/fetch/auth.js"></script>
 <script src = "../assets/scripts/actions.js"></script>
 </body>
 
