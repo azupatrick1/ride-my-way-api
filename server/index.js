@@ -11,10 +11,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: 'http://ride-my-way-api.herokuapp.com',
   optionSuccessStatus: 200,
 };
-app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+app.use('*', cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(jsend.middleware);
