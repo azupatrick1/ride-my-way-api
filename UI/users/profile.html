@@ -14,10 +14,15 @@
   <script src="../assets/scripts/modernizr.custom.25376.js"></script>
 </head>
 
-<body>
+<body onload="profile()">
   <div id="perspective" class="perspective effect-laydown">
     <div class="container">
       <div class="wrapper">
+          <div id="notify" class="text-center">
+              <span id="close"><a onclick="notifyClose()">X</a></span>
+            <span id="notify-title"></span>
+            <span id="notify-body"></span>
+          </div>
         <div class="top clearfix nav-other">
           <span id="head"> Ride MY Way</span>
           <span class="right">
@@ -31,8 +36,8 @@
 
           <!-- <h2 class="text-center"> Profile</h2> -->
           <div class="column">
-            <h3 id="title">Peter Hamser</h3>
-            <h5 id="subtitle">peterhamser@gmail.com</h5>
+            <h3 id="title"></h3>
+          <h5 id="subtitle"></h5>
 
           </div>
           <div class="tabset">
@@ -131,7 +136,7 @@
         <a href="../../index.html" class="">Home</a>
         <a href="../rides/index.html" class="">Rides </a>
         <a href="../rides/index.html" class="">Rides request </a>
-        <a href="../../index.html" class="">Sign Out</a>
+        <a onclick="signout()" class="">Sign Out</a>
       </nav>
 
   </div>
@@ -147,7 +152,7 @@
 
   <script src="../assets/scripts/classie.js"></script>
   <script src="../assets/scripts/menu.js"></script>
-  <script src="../assets/scripts/action.js"></script>
+  <script src="../assets/scripts/fetch/auth.js"></script>
   <script src="../assets/scripts/actions.js"></script>
 </body>
 
