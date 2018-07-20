@@ -7,10 +7,11 @@ import pool from '../config/pgpool';
 config();
 class Auth {
   static signup(req, res) {
+
     const sql = 'INSERT INTO users(id, username, password, email) VALUES($1, $2, $3, $4) RETURNING *';
     let token;
     const hash = bcrypt.hashSync(req.body.password, 10);
-    const data = [uuid(), req.body.username, hash, req.body.email];
+    const data = [uuid(), req.body.username.toLowerCase(), hash, req.body.email];
     let user;
     pool((err, client, done) => {
       if (err) return res.status(500).jsend.error({ message: 'internal server error' });
@@ -42,9 +43,8 @@ class Auth {
   }
 
   static verifyUser(req, res) {
-    const user = req.currentUser;
-
-    res.jsend.success({ user });
+    const { currentUser, ridesTaken, ridesGiven } = req;
+    res.jsend.success({ currentUser, ridesGiven, ridesTaken });
   }
 
   static signin(req, res) {
@@ -53,7 +53,7 @@ class Auth {
     let user = '';
     if (req.body.username) {
       sql = 'SELECT * FROM users WHERE username = $1';
-      userdata = [req.body.username.trim()];
+      userdata = [req.body.username.trim().toLowerCase()];
     } else if (req.body.email) {
       sql = 'SELECT * FROM users WHERE email = $1';
       userdata = [req.body.email.trim()];

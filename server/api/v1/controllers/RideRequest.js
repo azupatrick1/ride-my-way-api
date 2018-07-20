@@ -36,9 +36,9 @@ class RideRequest {
 
   static createRequest(req, res) {
     const { ride } = req;
-    const data = [req.currentUser.username, req.currentUser.id, ride.id];
+    const data = [req.currentUser.username, req.currentUser.id, ride.user_id, ride.id, ride.name];
     const { slot } = req.ride;
-    const sql = 'INSERT INTO requests(rider, user_id, ride_id) VALUES($1, $2, $3) RETURNING *';
+    const sql = 'INSERT INTO requests(rider, user_id, driver_id, ride_id, ride_name) VALUES($1, $2, $3, $4, $5) RETURNING *';
 
     const alterRide = (lot) => {
       const sqlr = 'UPDATE rides SET slot = $1 WHERE id = $2';
@@ -120,6 +120,12 @@ class RideRequest {
         });
       });
     }
+  }
+
+  static getAllEverRequests(req, res) {
+    const { requestRecieve, requestSent } = req;
+
+    res.jsend.success({ requestRecieve, requestSent });
   }
 }
 

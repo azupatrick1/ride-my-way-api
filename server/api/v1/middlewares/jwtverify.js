@@ -19,7 +19,7 @@ const jwtverify = (req, res, next) => {
   if (!tokengen) { res.jsend.fail({ token: 'no token provided' }); } else {
     jwt.verify(tokengen, process.env.SECRET_KEY, (err, result) => {
       if (err) res.jsend.error({ message: 'Failed to authenticate token' });
-
+      
       pool((errors, client, done) => {
         const sql = 'SELECT * FROM users WHERE id = $1';
 
