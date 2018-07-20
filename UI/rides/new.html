@@ -45,6 +45,9 @@
     
                 <input type="text" id="destination" value="" placeholder="enter the Destination ..." class="form-input" minlength="3" required>
                 <input type="time" id="time" min="05:00" max="21:00" value="" placeholder="enter the departure time ..." class="form-input" required>
+                <input type="date" id="takeOffDate" min="2018-07-01" max="2020-01-01" value="" placeholder="enter the departure date..." class="form-input" required>
+                <input type="text" id="carModel" value="" placeholder="enter the car Model(vehicle type) ..." class="form-input" minlength="3" required>
+
                 <input type="number"  id="slot" step="1" min="1" value="" placeholder="Available seat ..." class="form-input" required>
     
                 <input type="button" onclick="createRide()" name="submit" value="Create Ride" class="button btn-action btn-full">

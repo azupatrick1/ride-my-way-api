@@ -149,6 +149,7 @@ const oneRide = () => {
           }
           if (result.status === "success") {
             const ride = result.data.ride;
+            const date = new Date(Date.parse(ride.takeoffdate.split("T")[0]));
             oneRide.innerHTML = `
             <h2> ${ride.name}</h2>
             <h4>Departure Location :
@@ -158,57 +159,53 @@ const oneRide = () => {
                 <small>${ride.destination}</small>
             </h4>
             <h4>Departure Time :
-                <small>${timeConvert(ride.location)}</small>
+                <small>${timeConvert(ride.time)}</small>
             </h4>
+            <h4>Departure Time :
+            <small>${date.toDateString().split(' ').join(' ')}</small>
+                        </h4>
             <h4>Avalaible slot :
                 <small>${ride.slot}</small>
             </h4>
-            <h4>Vehicle brand:
-                <small>Sienna</small>
-            </h4>
-            <h4>Vehicle type:
-                <small>Bus</small>
-            </h4>
-            <h4>Vehicle License:
-                <small>La-234834</small>
+            <h4>Vehicle:
+                <small>${ride.carmodel}</small>
             </h4>
             <h4>Ride Status:
               <small>${ride.status}</small>            </h4>
             `;
-            if(ride.status === "cancelled") {
+            if (ride.status === "cancelled") {
               rideReqBtn.innerHTML = `
               <h3 id="req-sent" > Ride has been cancelled! </h3>`;
             } else {
-                if (reqstat === 1) {
-              rideReqBtn.innerHTML = `
+              if (reqstat === 1) {
+                rideReqBtn.innerHTML = `
             <a id="join" class="button btn-open" onclick="join()"> Join this ride</a>
                         <h3 id="req-sent" class="text-green disappear">
                             Request sent!
                         </h3>
             `;
-            } else if (reqstat === 2) {
-              rideReqBtn.innerHTML = `
+              } else if (reqstat === 2) {
+                rideReqBtn.innerHTML = `
                         <h3 id="req-sent" class="text-green">
                             Request sent!
                         </h3>
             `;
-            } else if (reqstat === 3) {
-              rideReqBtn.innerHTML = `
+              } else if (reqstat === 3) {
+                rideReqBtn.innerHTML = `
               <a id="cancel" class="button btn-open" onclick="cancelRide()"> Cancel this ride</a>
               <h3 id="req-sent" > No request to this ride </h3>`;
-            } else {
-              let r = `
+              } else {
+                let r = `
               <a id="cancel" class="button btn-open" onclick="cancelRide()"> Cancel this ride</a>
               <h3> ride requests (${riderReq.length})</h3>`;
-              riderReq.forEach(req => {
-                r += `<p> ${req.rider} </p>`;
-              });
-              rideReqBtn.innerHTML = r;
+                riderReq.forEach(req => {
+                  r += `<p> ${req.rider} </p>`;
+                });
+                rideReqBtn.innerHTML = r;
+              }
             }
-          }
             console.log(result);
           }
-        
         })
         .catch(err => console.error(err));
     };
@@ -308,7 +305,7 @@ const getRequest = () => {
   if (!token) {
     window.location = "../users/signin.html";
   } else {
-    fetch(`${baseurl}rides/requests`, {
+    fetch(`${baseurl}requests`, {
       headers: {
         Accept: "application/json",
         "x-token-access": token
@@ -338,6 +335,8 @@ const createRide = () => {
   const location = document.getElementById("location");
   const destination = document.getElementById("destination");
   const time = document.getElementById("time");
+  const date = document.getElementById("takeOffDate");
+  const car = document.getElementById("carModel");
   const slot = document.getElementById("slot");
 
   if (!name.checkValidity()) {
@@ -348,6 +347,10 @@ const createRide = () => {
     callError("Destination", destination.validationMessage);
   } else if (!time.checkValidity()) {
     callError("Time of departure ", time.validationMessage);
+  } else if (!date.checkValidity()) {
+    callError("Date of departure ", date.validationMessage);
+  } else if (!car.checkValidity()) {
+    callError("Date of departure ", car.validationMessage);
   } else if (!slot.checkValidity()) {
     callError("Seat slot ", slot.validationMessage);
   } else {
@@ -363,6 +366,8 @@ const createRide = () => {
         location: location.value,
         destination: destination.value,
         time: time.value,
+        takeOffDate: date.value,
+        carModel: car.value,
         slot: Number(slot.value)
       })
     })

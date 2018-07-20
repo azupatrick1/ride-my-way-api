@@ -165,7 +165,7 @@ const profile = () => {
   }
   fetch(`${url}auth/profile`, {
     headers: {
-      Accept: "application/json",
+      "Accept": "application/json",
       "x-token-access": token
     }
   })
@@ -178,8 +178,8 @@ const profile = () => {
         callError("Verification", result.data.message);
       }
       if (result.status === "success") {
-        title.innerHTML = result.data.user.username;
-        subtitle.innerHTML = result.data.user.email;
+        title.innerHTML = result.data.currentUser.username;
+        subtitle.innerHTML = result.data.currentUser.email;
       }
     })
     .catch(err => callError("connection", "Check your network or contact web admin"));
