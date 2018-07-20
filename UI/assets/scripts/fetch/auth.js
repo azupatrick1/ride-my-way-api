@@ -8,9 +8,9 @@ const notifyTitle = notify.querySelector("#notify-title");
 const notifyBody = notify.querySelector("#notify-body");
 
 const checkToken = () => {
-  const token = window.sessionStorage.getItem("token");
+  const token = localStorage.getItem("token");
   if (token) {
-    window.sessionStorage.setItem("status", "already");
+    localStorage.setItem("status", "already");
     window.location = "profile.html";
   }
 };
@@ -47,7 +47,7 @@ const callSuccess = message => {
   setTimeout(() => {notifyX()}, 3000);
 };
 const signout = () => {
-  window.sessionStorage.clear();
+  localStorage.clear();
   window.location = "../../index.html";
 };
 const signin = () => {
@@ -84,12 +84,12 @@ const signin = () => {
           callError("Sign In", result.data.message);
         }
         if (result.status === "success" && result.data.token) {
-          window.sessionStorage.setItem("token", result.data.token);
-          window.sessionStorage.setItem("status", "signin");
+          localStorage.setItem("token", result.data.token);
+          localStorage.setItem("status", "signin");
           window.location = "profile.html";
         }
       })
-      .catch(err => console.error(err));
+      .catch(err => callError("connection", "Check your network or contact web admin"));
   }
 };
 const signup = () => {
@@ -129,19 +129,19 @@ const signup = () => {
             result.data.message === "user is signed up successfully" &&
             result.data.token
           ) {
-            window.sessionStorage.setItem("token", result.data.token);
-            window.sessionStorage.setItem("status", "signup");
+            localStorage.setItem("token", result.data.token);
+            localStorage.setItem("status", "signup");
             window.location = "profile.html";
           }
         })
-        .catch(err => console.error(err));
+        .catch(err => callError("connection", "Check your network or contact web admin"));
     }
   }
 };
 
 const profile = () => {
-  const signStat = window.sessionStorage.getItem("status");
-  const token = window.sessionStorage.getItem("token");
+  const signStat = localStorage.getItem("status");
+  const token = localStorage.getItem("token");
   const title = document.getElementById("title");
   const subtitle = document.getElementById("subtitle");
   if (!token) {
@@ -149,19 +149,23 @@ const profile = () => {
   }
   if (signStat && signStat == "signup") {
     callSuccess("Welcome! you are signed up successfully.");
-    window.sessionStorage.removeItem("status");
+    localStorage.removeItem("status");
+  }
+  if (signStat && signStat == "ridecreate") {
+    callSuccess("Your ride has been created successfully.");
+    localStorage.removeItem("status");
   }
   if (signStat && signStat == "signin") {
     callSuccess("Welcome! you are signed in successfully.");
-    window.sessionStorage.removeItem("status");
+    localStorage.removeItem("status");
   }
   if (signStat && signStat == "already") {
     callSuccess("you are already signed in !");
-    window.sessionStorage.removeItem("status");
+    localStorage.removeItem("status");
   }
   fetch(`${url}auth/profile`, {
     headers: {
-      Accept: "application/json",
+      "Accept": "application/json",
       "x-token-access": token
     }
   })
@@ -174,9 +178,9 @@ const profile = () => {
         callError("Verification", result.data.message);
       }
       if (result.status === "success") {
-        title.innerHTML = result.data.user.username;
-        subtitle.innerHTML = result.data.user.email;
+        title.innerHTML = result.data.currentUser.username;
+        subtitle.innerHTML = result.data.currentUser.email;
       }
     })
-    .catch(err => console.error(err));
+    .catch(err => callError("connection", "Check your network or contact web admin"));
 };

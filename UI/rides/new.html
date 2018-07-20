@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title> Log in to Ride my way</title>
+  <title> Create ride | Ride my way</title>
 
   <link rel="stylesheet" href="../assets/styles/design.css">
   <link rel="stylesheet" href="../assets/styles/component.css">
@@ -14,31 +14,43 @@
 </head>
 
 <body>
+    <div id="notify" class="text-center">
+        <span id="close"> 
+            <a onclick="notifyClose()">X</a>
+        </span>
+        <span id="notify-title"></span>
+        <span id="notify-body"></span>
+    </div>
+
+    <div class="top clearfix nav-other" id="fixed-nav">
+        <span id="head"> Ride MY Way</span>
+        <span class="right">
+            <div class="hamburger" id="showMenu">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </div>
+    </div>
   <div id="perspective" class="perspective effect-laydown">
     <div class="container">
       <div class="wrapper">
-        <div class="top clearfix nav-other">
-          <span id="head"> Ride MY Way</span>
-          <span class="right">
-            <div class="hamburger" id="showMenu">
-              <span class="line"></span>
-              <span class="line"></span>
-              <span class="line"></span>
-            </div>
-        </div>
+        
         <div class="main-other clearfix">
 
           <h2 class="text-center"> Create a ride</h2>
           <div class="form-main">
-              <form action="../users/profile.html">
-                <input type="text" name="name" value="" placeholder="Enter a name for this ride ..." class="form-input" required>
-                <input type="text" name="location" value="" placeholder="Enter where you are moving from ..." class="form-input" required>
+              <form>
+                <input type="text" id="name" value="" placeholder="Enter a name for this ride ..." class="form-input" minlength="3" required>
+                <input type="text" id="location" value="" placeholder="Enter where you are moving from ..." class="form-input" minlength="3" required>
     
-                <input type="text" name="destination" value="" placeholder="enter the Destination ..." class="form-input" required>
-                <input type="time" name="time" value="" placeholder="enter the departure time ..." class="form-input">
-                <input type="number" name="slot" value="" placeholder="Available seat ..." class="form-input" required>
+                <input type="text" id="destination" value="" placeholder="enter the Destination ..." class="form-input" minlength="3" required>
+                <input type="time" id="time" min="05:00" max="21:00" value="" placeholder="enter the departure time ..." class="form-input" required>
+                <input type="date" id="takeOffDate" min="2018-07-01" max="2020-01-01" value="" placeholder="enter the departure date..." class="form-input" required>
+                <input type="text" id="carModel" value="" placeholder="enter the car Model(vehicle type) ..." class="form-input" minlength="3" required>
+
+                <input type="number"  id="slot" step="1" min="1" value="" placeholder="Available seat ..." class="form-input" required>
     
-                <input type="submit" name="submit" value="Create Ride" class="button btn-action btn-full">
+                <input type="button" onclick="createRide()" name="submit" value="Create Ride" class="button btn-action btn-full">
     
             </form>
     
@@ -55,14 +67,14 @@
       <a href="./index.html">All rides</a>
       <a href="./offers.html">ride request</a>
       <a href="../users/profile.html">profile</a>
-      <a href="../../index.html">sign out</a>
+      <a onclick="signout()" class="">Sign Out</a>
     </nav>
   </div>
 
 
   <script src="../assets/scripts/classie.js"></script>
   <script src="../assets/scripts/menu.js"></script>
-  <script src="../assets/scripts/action.js"></script>
+  <script src="../assets/scripts/fetch/rides.js"></script>
   <script src="../assets/scripts/actions.js"></script>
 </body>
 

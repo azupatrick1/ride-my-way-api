@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title> Log in to Ride my way</title>
+  <title> User profile | Ride my way</title>
 
   <link rel="stylesheet" href="../assets/styles/design.css">
   <link rel="stylesheet" href="../assets/styles/component.css">
@@ -15,23 +15,24 @@
 </head>
 
 <body onload="profile()">
+    <div class="top clearfix nav-other" id="fixed-nav">
+        <span id="head"> Ride MY Way</span>
+        <span class="right">
+            <div class="hamburger" id="showMenu">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </div>
+    </div>
+    <div id="notify" class="text-center">
+        <span id="close"><a onclick="notifyClose()">X</a></span>
+      <span id="notify-title"></span>
+      <span id="notify-body"></span>
+    </div>
   <div id="perspective" class="perspective effect-laydown">
     <div class="container">
       <div class="wrapper">
-          <div id="notify" class="text-center">
-              <span id="close"><a onclick="notifyClose()">X</a></span>
-            <span id="notify-title"></span>
-            <span id="notify-body"></span>
-          </div>
-        <div class="top clearfix nav-other">
-          <span id="head"> Ride MY Way</span>
-          <span class="right">
-            <div class="hamburger" id="showMenu">
-              <span class="line"></span>
-              <span class="line"></span>
-              <span class="line"></span>
-            </div>
-        </div>
+          
         <div class="main-other clearfix">
 
           <!-- <h2 class="text-center"> Profile</h2> -->

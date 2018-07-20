@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title> Log in to Ride my way</title>
+  <title> Find a ride | Ride my way</title>
 
   <link rel="stylesheet" href="../assets/styles/design.css">
   <link rel="stylesheet" href="../assets/styles/component.css">
@@ -14,18 +14,19 @@
 </head>
 
 <body>
+    <div class="top clearfix nav-other" id="fixed-nav">
+        <span id="head"> Ride MY Way</span>
+        <span class="right">
+            <div class="hamburger" id="showMenu">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </div>
+    </div>
   <div id="perspective" class="perspective effect-laydown">
     <div class="container">
       <div class="wrapper">
-        <div class="top clearfix nav-other">
-          <span id="head"> Ride MY Way</span>
-          <span class="right">
-            <div class="hamburger" id="showMenu">
-              <span class="line"></span>
-              <span class="line"></span>
-              <span class="line"></span>
-            </div>
-        </div>
+        
         <div class="main-other clearfix">
 
           <h2 class="text-center"> Find a ride your way</h2>
@@ -52,7 +53,7 @@
       <a href="../../index.html" class="">Home</a>
       <a href="./index.html">All rides</a>
       <a href="../users/profile.html">profile</a>
-      <a href="../../index.html">sign out</a>
+      <a onclick="signout()" class="">Sign Out</a>
     </nav>
   </div>
 
@@ -60,6 +61,7 @@
   <script src="../assets/scripts/classie.js"></script>
   <script src="../assets/scripts/menu.js"></script>
   <script src="../assets/scripts/action.js"></script>
+  <script src="../assets/scripts/fetch/rides.js"></script>
   <script src="../assets/scripts/actions.js"></script>
 </body>
 
