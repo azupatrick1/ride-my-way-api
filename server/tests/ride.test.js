@@ -60,8 +60,8 @@ describe('Testing to get current user', () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.status).to.eql('success');
-        expect(res.body.data).have.property('user');
-        expect(res.body.data.user.username).to.eql('supertest');
+        expect(res.body.data).have.property('currentUser');
+        expect(res.body.data.currentUser.username).to.eql('supertest');
         done();
       });
   });
@@ -103,6 +103,8 @@ describe('Post requests for rides', () => {
         location: 'abuja',
         slot: 3,
         time: '4:00',
+        carModel: 'mocha drivebus',
+        takeOffDate: '2018-03-04',
       })
       .expect(200)
       .end((err, res) => {

@@ -21,11 +21,11 @@ class Ride {
 
   static createRide(req, res) {
     const data = [req.body.name, req.body.location, req.body.destination,
-      Number(req.body.slot), req.body.time, req.currentUser.id];
+      Number(req.body.slot), req.body.time, req.currentUser.id, req.currentUser.username, req.body.carModel, req.body.takeOffDate];
     if (req.checkRide) {
       res.jsend.fail({ message: 'you are denied: you still have a pending ride' });
     } else {
-      const sql = 'INSERT INTO rides(name, location, destination, slot, time, user_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
+      const sql = 'INSERT INTO rides(name, location, destination, slot, time, user_id, driver, carModel, takeOffDate) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
 
       pool((err, client, done) => {
         if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
