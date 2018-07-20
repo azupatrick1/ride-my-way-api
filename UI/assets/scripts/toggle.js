@@ -1,8 +1,8 @@
 const toggle = document.getElementById('container');
 const toggleContainer = document.getElementById('toggle-container');
 
-const all = document.getElementById('all');
-const byride = document.getElementById('byride');
+const all = document.getElementById('my-req');
+const byride = document.getElementById('req-sent');
 
 
 toggle.addEventListener('click', function() {

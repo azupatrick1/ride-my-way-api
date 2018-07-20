@@ -51,7 +51,8 @@
       perspectiveWrapper = document.getElementById("perspective"),
       container = perspectiveWrapper.querySelector(".container"),
       contentWrapper = container.querySelector(".wrapper");
-    fab = document.getElementById("fab");
+    const fab = document.getElementById("fab");
+    const nav = document.getElementById("fixed-nav");
     showMenu.addEventListener(clickevent, function(ev) {
       ev.stopPropagation();
       ev.preventDefault();
@@ -64,6 +65,8 @@
       classie.add(perspectiveWrapper, "modalview");
       if(fab){
       classie.add(fab, "disappear");}
+      if(nav){
+        classie.add(nav, "disappear");}
       // animate..
       setTimeout(function() {
         classie.add(perspectiveWrapper, "animate");
@@ -83,7 +86,8 @@
           classie.remove(perspectiveWrapper, "modalview");
           if(fab){
           classie.remove(fab, "disappear");}
-
+          if(nav){
+            classie.remove(nav, "disappear");}
           // mac chrome issue:
           document.body.scrollTop = document.documentElement.scrollTop = docscroll;
           // change top of contentWrapper
