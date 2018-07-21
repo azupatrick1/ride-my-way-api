@@ -144,6 +144,10 @@ const profile = () => {
   const token = localStorage.getItem("token");
   const title = document.getElementById("title");
   const subtitle = document.getElementById("subtitle");
+const rideGiven =  document.getElementById("ride-given").querySelector(".ride-list");
+const rideTaken =  document.getElementById("ride-taken").querySelector(".ride-list");
+const rideTakenCount =  document.getElementById("rideT-count");
+const rideGivenCount =  document.getElementById("rideG-count");
   if (!token) {
     window.location = "signin.html";
   }
@@ -178,8 +182,58 @@ const profile = () => {
         callError("Verification", result.data.message);
       }
       if (result.status === "success") {
-        title.innerHTML = result.data.currentUser.username;
-        subtitle.innerHTML = result.data.currentUser.email;
+        console.log(result);
+        const user = result.data.currentUser;
+        const Rgiven = result.data.ridesGiven;
+        const RTaken = result.data.ridesTaken;
+        title.innerHTML = user.username;
+        subtitle.innerHTML = user.email;
+        if(Rgiven && Rgiven.length > 0) {
+          let ride = "";
+
+          rideGivenCount.innerHTML =`Rides Given (${Rgiven.length})`;
+          Rgiven.forEach(rg => {
+            ride +=`
+          <li>
+          <a href="../rides/show.html#${rg.id}">
+          <h4>${rg.name}</h4>
+                      <span class="right fa fa-arrow-right"></span>
+                      <small id="passengers">passengers: ${rg.riders.length}</small>
+                      <small id="status">status: ${rg.status}</small>
+                    </a>
+                    </li>
+          `;
+          });
+          
+          rideGiven.innerHTML=ride;
+         } else {
+          rideGiven.innerHTML=`
+            <li> No Rides Given by you yet... </li>
+          `;
+         }
+
+         if(RTaken && RTaken.length > 0) {
+          let ride = "";
+           rideTakenCount.innerHTML =`Rides Given (${RTaken.length})`;
+            RTaken.forEach(rt => {
+              ride +=`
+          <li>
+          <a href="../rides/show.html#${rt.id}">
+          <h4>${rt.name}</h4>
+                      <span class="right fa fa-arrow-right"></span>
+                      <small id="passengers">passengers: ${rt.riders.length}</small>
+                      <small id="status">status: ${rt.status}</small>
+                    </a>
+                    </li>
+          `;
+            });
+          
+          rideTaken.innerHTML=ride;
+         } else {
+          rideTaken.innerHTML=`
+            <li> No Rides Taken by you yet... </li>
+          `;
+         }
       }
     })
     .catch(err => callError("connection", "Check your network or contact web admin"));

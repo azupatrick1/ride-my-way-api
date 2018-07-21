@@ -95,10 +95,8 @@ const allRides = () => {
                     <p>From ${ride.location} to ${ride.destination}</p>
                     <p>${timeConvert(ride.time)} </p>
                     <p><strong>${ride.slot}</strong> slot Available</p>
-                    <p>Ride with <strong >Emeka</strong> (sienna) </p>
-                    <p><small> created on ${ride.created_at.split(
-                      "T"
-                    )[0]} </small></p>
+                    <p>Ride with <strong >${ride.driver}</strong> in ${ride.carmodel} </p>
+                    <p><small> created on ${ride.created_at.split("T")[0]} </small></p>
                     <div class="foot">
                     <a onclick="openRide(${ride.id})" class="button btn-open">View Details</a>
                     </div>
@@ -162,7 +160,7 @@ const oneRide = () => {
                 <small>${timeConvert(ride.time)}</small>
             </h4>
             <h4>Departure Time :
-            <small>${date.toDateString().split(' ').join(' ')}</small>
+            <small>${date.toDateString().split(" ").join(" ")}</small>
                         </h4>
             <h4>Avalaible slot :
                 <small>${ride.slot}</small>
@@ -194,6 +192,18 @@ const oneRide = () => {
                 rideReqBtn.innerHTML = `
               <a id="cancel" class="button btn-open" onclick="cancelRide()"> Cancel this ride</a>
               <h3 id="req-sent" > No request to this ride </h3>`;
+              } else if (reqstat === 5) {
+                rideReqBtn.innerHTML = `
+                        <h3 id="req-sent" class="text-green">
+                            Request Accepted !
+                        </h3>
+            `;
+              } else if (reqstat === 6) {
+                rideReqBtn.innerHTML = `
+                        <h3 id="req-sent" class="text-red">
+                            Request Rejected!
+                        </h3>
+            `;
               } else {
                 let r = `
               <a id="cancel" class="button btn-open" onclick="cancelRide()"> Cancel this ride</a>
@@ -252,7 +262,13 @@ const oneRide = () => {
             reqstat = 4;
             riderReq = result.data.requests;
             fetchride();
-          } else {
+          } else if (result.status === "success" && result.data.request.status === "Accepted" ) {
+             reqstat = 5;
+            fetchride();
+          } else if (result.status === "success" && result.data.request.status === "Rejected" ) {
+            reqstat = 6;
+           fetchride();
+         }else {
             reqstat = 2;
             fetchride();
           }
@@ -293,7 +309,6 @@ const join = () => {
         callSuccess("Your request for this ride has being sent");
 
         location.reload();
-        console.log(result);
       }
     })
     .catch(err =>
@@ -302,6 +317,8 @@ const join = () => {
 };
 
 const getRequest = () => {
+  const MyReq = document.getElementById("my-req");
+  const ReqSent = document.getElementById("req-sent");
   if (!token) {
     window.location = "../users/signin.html";
   } else {
@@ -321,7 +338,61 @@ const getRequest = () => {
           callError("Ride requests", result.data.message);
         }
         if (result.status === "success") {
-          console.log(result);
+          const reqR = result.data.requestRecieve;
+          const reqS = result.data.requestSent;
+          if (reqR && reqR.length > 0) {
+            let ride = "";
+            const check = r => {
+              if (r.status === "pending request") {
+                return `
+                <a onclick="RDecide(true, ${r.ride_id}, ${r.id})" class="button btn-green"> Accept</a>
+                <a onclick="RDecide(false, ${r.ride_id}, ${r.id})" class="button btn-red"> Reject</a>
+                `;
+              } else if (r.status === "Accepted") {
+                return "Accepted";
+              } else if (r.status === "Rejected") {
+                return "Rejected";
+              } else {
+                return "Loading ...";
+              }
+            };
+
+            reqR.forEach(rr => {
+              ride += `
+            <div class="box">
+              <h3>${rr.rider}</h3>
+              <p>${rr.ride_name}</p>
+              <div class="text-center">
+                ${check(rr)}
+              </div>
+            </div>
+            `;
+            });
+
+            MyReq.innerHTML = ride;
+          } else {
+            MyReq.innerHTML = `
+              <li> No request sent to you yet... </li>
+            `;
+          }
+          if (reqS && reqS.length > 0) {
+            let ride = "";
+            reqS.forEach(rs => {
+              ride += `
+            <div class="box">
+              <h3>${rs.ride_name}</h3>
+              <h4>Status:
+                <small class="text-green">${rs.status}</small>
+              </h4>
+            </div>
+            `;
+            });
+            ReqSent.innerHTML = ride;
+          } else {
+            Req.innerHTML = `
+              <li> No request sent by you yet... </li>
+            `;
+          }
         }
       })
       .catch(err =>
@@ -414,6 +485,50 @@ const cancelRide = () => {
       if (result.status === "success") {
         callSuccess("This ride has been cancelled");
         console.log(result);
+        location.reload();
+      }
+    })
+    .catch(err =>
+      callError("connection", "Check your network or contact web admin")
+    );
+};
+
+const RDecide = (status, RId, RqId) => {
+  const MyReq = document.getElementById("my-req").querySelector(".box").querySelector(".text-center");
+
+  fetch(`${baseurl}rides/${RId}/requests/${RqId}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "x-token-access": token,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      accept: status
+    })
+  })
+    .then(response => response.json())
+    .then(result => {
+      if (result.status === "error") {
+        callError("Verification", result.data.message);
+      }
+
+      if (result.status === "fail") {
+        callError("Ride request", result.data.message);
+      }
+
+      if (result.status === "success") {
+        if (result.data.message === "you have accepted this request") {
+          callSuccess(result.data.message);
+          MyReq.innerHTML = "Accepted";
+          console.log(result.data.message);
+        
+          } else {
+          callSuccess(result.data.message);
+          console.log(result.data.message);
+
+          MyReq.innerHTML = "Rejected";
+        }
         location.reload();
       }
     })
