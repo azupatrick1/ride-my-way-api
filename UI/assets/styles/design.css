@@ -165,6 +165,9 @@ transition: all .9s ease-in-out;
 .text-green {
   color: #03ee17;
 }
+.text-red {
+  color: #ee2603;
+}
 .form-input {
   display: block;
   width: 100%;
