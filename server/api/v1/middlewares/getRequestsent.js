@@ -9,12 +9,12 @@ const getRequestSent = (req, res, next) => {
         done();
         if (error) return res.status(400).jsend.error({ message: error });
 
-        if (!result.rows[0] || result.rows[0] === null || result.rows[0] === undefined
-        || result.rows[0].length < 0) {
+        if (!result.rows || result.rows === null || result.rows === undefined
+        || result.rows.length < 0) {
          
           next();
         } else {
-          const request = result.rows[0];
+          const request = result.rows;
           req.requestSent = request;
 
           next();
