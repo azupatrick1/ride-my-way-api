@@ -16,15 +16,15 @@ const getAllRidesTaken = (req, res, next) => {
           .jsend.error({ message: 'wrong input parsed as parameter id' });
 
       if (
-        !result.rows[0] ||
-        result.rows[0] === null ||
-        result.rows[0] === undefined ||
-        result.rows[0].length < 0
+        !result.rows ||
+        result.rows === null ||
+        result.rows === undefined ||
+        result.rows.length < 0
       ) {
        
           next();
       } else {
-        const ride = result.rows[0];
+        const ride = result.rows;
         req.ridesTaken = ride;
         next();
       }
