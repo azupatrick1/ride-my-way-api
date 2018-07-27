@@ -14,6 +14,8 @@ route.post('/api/v1/users/rides', jwtverify, checkRide, validateRide, Ride.creat
 
 route.get('/api/v1/rides/:rideId', jwtverify, getRide, Ride.findOneRide);
 
+route.put('/api/v1/users/rides/:rideId', jwtverify, getRide, validateRide, Ride.editRide);
+
 
 route.delete('/api/v1/rides/:rideId', jwtverify, getRide, Ride.deleteRide);
 
