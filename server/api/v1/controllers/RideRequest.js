@@ -13,7 +13,7 @@ class RideRequest {
         client.query(sql, [req.currentUser.id, ride.id], (error, result) => {
           done();
           if (error) return res.status(400).jsend.error({ error: 'error getting request' });
-          if (!result || result === undefined) { res.status(404).jsend.fail({ message: 'you have sent no request to this ride' }); } else {
+          if (!result.rows[0] || result.rows[0] === undefined || result.rows[0].length < 0) { res.status(404).jsend.fail({ message: 'you have sent no request to this ride' }); } else {
             res.jsend.success({ request: result.rows[0] });
           }
         });
@@ -126,6 +126,32 @@ class RideRequest {
     const { requestRecieve, requestSent } = req;
 
     res.jsend.success({ requestRecieve, requestSent });
+  }
+
+  static deleteRequest(req, res) {
+    if (req.currentUser.id !== req.request.user_id) {
+      res.status(403).jsend.fail({ message: 'you don\'t have the priviledge to access this endpoint ' });
+    }
+    const alterRide = () => {
+      const sql = 'UPDATE rides SET slot = $1 WHERE id = $2';
+      pool((err, client, done) => {
+        if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
+        client.query(sql, [req.ride.slot + 1, req.ride.id], (error) => {
+          done();
+          if (error) res.status(500).jsend.error({ message: 'error updating ride slot' });
+        });
+      });
+    };
+    const sql = 'DELETE FROM requests WHERE id = $1';
+    pool((err, client, done) => {
+      if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
+      client.query(sql, [req.request.id], (error) => {
+        done();
+        if (error) res.status(500).jsend.error({ message: 'error cancelling request' });
+        alterRide();
+        res.jsend.success({ message: 'you have cancelled this request' });
+      });
+    });
   }
 }
 
