@@ -18,4 +18,6 @@ route.post('/api/v1/rides/:rideId/requests', jwtverify, getRide, getReqUser, Rid
 
 route.put('/api/v1/rides/:rideId/requests/:requestId', jwtverify, getRide, getRequest, validateReq, RideRequest.decideRequestOption);
 
+route.delete('/api/v1/rides/:rideId/requests/:requestId', jwtverify, getRide, getRequest, RideRequest.deleteRequest);
+
 export default route;
