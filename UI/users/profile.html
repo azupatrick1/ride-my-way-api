@@ -15,15 +15,23 @@
 </head>
 
 <body onload="profile()">
-    <div class="top clearfix nav-other" id="fixed-nav">
-        <span id="head"> Ride MY Way</span>
-        <span class="right">
-            <div class="hamburger" id="showMenu">
-                <span class="line"></span>
-                <span class="line"></span>
-                <span class="line"></span>
+        <div class="top clearfix nav-other" id="fixed-nav">
+                <span id="head">  <a href="../../index.html"> Ride MY Way</a> </span>
+                    <span class="big-nav visible-lg">
+                            <a href="../../index.html">Home</a>
+                            <a href="../rides/index.html">Rides </a>
+                            <a href="../rides/offers.html">Rides request </a>
+                            <a onclick="signout()">Sign Out</a>
+                    </span>
+                <span class="right visible-sm">
+                      <div class="hamburger" id="showMenu">
+                        <span class="line"></span>
+                        <span class="line"></span>
+                        <span class="line"></span>
+                    </div>
+                    
+                </span>
             </div>
-    </div>
     <div id="notify" class="text-center">
         <span id="close"><a onclick="notifyClose()">X</a></span>
       <span id="notify-title"></span>
