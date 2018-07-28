@@ -29,7 +29,7 @@ const jwtverify = (req, res, next) => {
           done();
           if (error) return res.status(400).jsend.error({ message: 'Bad parameter parsed' });
 
-          if (results.rows[0] === null || results.rows[0].length < 1 || results.rows[0] === undefined) { res.status(404).jsend.fail({ message: 'user not found for the token' }); } else {
+          if (results.rows[0] === null || results.rows[0] === undefined) { res.status(404).jsend.fail({ message: 'user not found for the token' }); } else {
             const user = results.rows[0];
             req.currentUser = user;
             next();
