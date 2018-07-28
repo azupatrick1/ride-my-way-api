@@ -16,7 +16,9 @@ route.get('/api/v1/rides/:rideId', jwtverify, getRide, Ride.findOneRide);
 
 route.put('/api/v1/users/rides/:rideId', jwtverify, getRide, validateRide, Ride.editRide);
 
+route.put('/api/v1/users/rides/:rideId/complete', jwtverify, getRide, Ride.completeRide);
 
-route.delete('/api/v1/rides/:rideId', jwtverify, getRide, Ride.deleteRide);
+
+route.delete('/api/v1/rides/:rideId', jwtverify, getRide, Ride.cancelRide);
 
 export default route;
