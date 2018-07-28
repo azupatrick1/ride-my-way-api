@@ -71,7 +71,46 @@ class Ride {
       });
     }
   }
-  static deleteRide(req, res) {
+
+  static completeRide(req, res) {
+
+    const alterRequest = (status, PStatus) => {
+      const sql2 = 'UPDATE requests SET status = $1 WHERE ride_id = $2 AND status = $3';
+
+      pool((err, client, done) => {
+        if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
+
+        client.query(sql2, [status, req.ride.id, PStatus], (error) => {
+          done();
+          if (error) res.status(500).jsend.error({ message: 'could not access request' });
+
+          res.jsend.success({ message: 'Ride has been marked as completed successfully' });
+        });
+      });
+    };
+
+    const sql = 'UPDATE rides SET status = $1, updated_at = NOW() WHERE id = $2';
+    const data = ['completed', req.ride.id];
+
+    if (req.currentUser.id !== req.ride.user_id) {
+      res.status(403).jsend.fail({ message: 'you can not complete someone else ride' });
+    } else if (req.ride.status === 'cancelled') {
+      res.status(400).jsend.fail({ message: 'ride is already cancelled' });
+    } else if (req.ride.status === 'completed') {
+      res.status(400).jsend.fail({ message: 'ride is already completed' });
+    } else {
+      pool((err, client, done) => {
+        if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
+
+        client.query(sql, data, (error) => {
+          done();
+          if (error) res.status(400).jsend.error({ message: 'error updating ride' });
+          alterRequest('Request cancelled: Ride has been completed', 'pending request');
+        });
+      });
+    }
+  }
+  static cancelRide(req, res) {
     const sql = 'UPDATE rides SET status = $1 WHERE id = $2';
 
     const alterRequest = (status) => {
