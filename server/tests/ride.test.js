@@ -107,7 +107,7 @@ describe('Test cases for creating a ride', () => {
         slot: 3,
         time: '4:00',
         carModel: 'mocha drivebus',
-        takeOffDate: '2018-03-04',
+        takeOffDate: '2020-03-04',
       })
       .expect(200)
       .end((err, res) => {
@@ -142,7 +142,7 @@ describe('Test cases for creating a ride', () => {
         slot: 3,
         time: '12:00',
         carModel: 'mocha drivebus',
-        takeOffDate: '2018-03-04',
+        takeOffDate: '2020-03-04',
       })
       .expect(200)
       .end((err, res) => {
@@ -352,7 +352,6 @@ describe('Test cases for completion of rides', () => {
       .set('x-token-access', token1)
       .expect(400)
       .end((err, res) => {
-        console.log(err);
         expect(res.body.status).to.eql('fail');
         done(err);
       });
