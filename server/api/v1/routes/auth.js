@@ -12,5 +12,6 @@ const route = express.Router();
 route.post('/api/v1/auth/signup', validateUser, Auth.signup);
 route.post('/api/v1/auth/signin', validateUsersign, Auth.signin);
 route.get('/api/v1/auth/profile', jwtverify, getAllRidesGiven, getAllRidesTaken, Auth.verifyUser);
+route.get('/api/v1/users/:username', jwtverify, Auth.getUser);
 
 export default route;
