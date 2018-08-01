@@ -15,12 +15,11 @@ const getRide = (req, res, next) => {
 
         if (!result.rows[0] || result.rows[0] === null || result.rows[0] === undefined
         || result.rows[0].length < 0) {
-          res.status(404).jsend.fail({ message: `rides with id ${req.params.rideId} was not found` });
-        } else {
-          const ride = result.rows[0];
-          req.ride = ride;
-          next();
+          return res.status(404).jsend.fail({ message: `rides with id ${req.params.rideId} was not found` });
         }
+        const ride = result.rows[0];
+        req.ride = ride;
+        next();
       });
     });
   }

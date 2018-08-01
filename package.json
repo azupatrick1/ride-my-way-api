@@ -4,10 +4,10 @@
   "description": "an simple implementation of a ride management API",
   "main": "index.js",
   "scripts": {
-    "test": "npm run create-table-test && npm run insert-table-test && cross-env NODE_ENV=test mocha --require babel-register ./server/tests/ride.test.js --timeout 6000 --exit",
+    "test": "npm run create-table-test && npm run insert-table-test && cross-env NODE_ENV=test mocha --require babel-register ./server/tests/ride.test.js --timeout 9000 --exit",
     "server": "cross-env NODE_ENV=development nodemon ./server/index.js --exec babel-node",
     "clean": "rm -rf build && mkdir build",
-    "coverage": "npm run create-table-test && npm run insert-table-test && cross-env NODE_ENV=test babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/.bin/_mocha --require --timeout 3000 ./server/tests/ride.test.js -- --recursive --check-coverage --exit",
+    "coverage": "npm run create-table-test && npm run insert-table-test && cross-env NODE_ENV=test babel-node ./node_modules/babel-istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --require ./server/tests/ride.test.js  -- --recursive --check-coverage --timeout 9000 --exit",
     "coveralls": "npm run coverage --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build-babel": "babel -d ./build ./server -s ",
     "build": "npm run clean && npm run build-babel",

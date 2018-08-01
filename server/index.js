@@ -18,7 +18,9 @@ const corsOptions = {
 };
 app.options('*', cors(corsOptions));
 app.use('*', cors(corsOptions));
-app.use(morgan('combined'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('combined'));
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(jsend.middleware);
