@@ -82,7 +82,7 @@ class RideRequest {
     }
 
     const alterRequest = (status) => {
-      const sql = 'UPDATE requests SET status = $1 WHERE id = $2';
+      const sql = 'UPDATE requests SET status = $1, updated_at = NOW() WHERE id = $2';
 
       pool((err, client, done) => {
         if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
