@@ -163,6 +163,34 @@ class Auth {
       });
     }
   }
+  static editUser(req, res) {
+    let sql;
+    let data;
+    if (!req.body.newPassword || req.body.password === [null || undefined]) {
+      sql = 'UPDATE users SET username = $1, email = $2 WHERE id = $3 RETURNING *';
+      data = [req.body.username.toLowerCase(), req.body.email, req.currentUser.id];
+    } else {
+      sql = 'UPDATE users SET username = $1, email = $2, password = $3 WHERE id = $4 RETURNING *';
+      data = [req.body.username.toLowerCase(),
+        req.body.email, bcrypt.hashSync(req.body.newPassword, 10), req.currentUser.id];
+    }
+
+    bcrypt.compare(req.body.confirmPassword, req.currentUser.password, (errs, re) => {
+      if (!re) return res.status(401).jsend.fail({ message: 'password not correct' });
+
+
+      pool((err, client, done) => {
+        if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
+
+        return client.query(sql, data, (error, user) => {
+          done();
+          if (error) return res.status(400).jsend.error({ message: 'error updating user' });
+          res.jsend.success({ user: user.rows[0] });
+        });
+      });
+    });
+  }
 }
+
 
 export default Auth;
