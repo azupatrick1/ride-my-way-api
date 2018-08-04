@@ -143,5 +143,36 @@ class Ride {
       });
     }
   }
+  static deleteRide(req, res) {
+    const sql = 'DELETE FROM rides WHERE id = $1';
+
+    const alterRequest = () => {
+      const sql2 = 'DELETE FROM requests WHERE ride_id = $1';
+
+      pool((err, client, done) => {
+        if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
+
+        client.query(sql2, [req.ride.id], (error) => {
+          done();
+          if (error) res.status(500).jsend.error({ message: 'could not access request' });
+        });
+      });
+    };
+
+    if (req.currentUser.id !== req.ride.user_id) {
+      res.status(403).jsend.fail({ message: 'you can not delete someone else ride' });
+    } else {
+      pool((err, client, done) => {
+        if (err) res.status(500).jsend.error({ message: 'error connecting to database' });
+
+        client.query(sql, [req.params.rideId], (error) => {
+          done();
+          if (error) res.status(400).jsend.error({ message: 'error while trying to cancel ride' });
+          alterRequest();
+          res.jsend.success({ message: 'The ride has been deleted' });
+        });
+      });
+    }
+  }
 }
 export default Ride;

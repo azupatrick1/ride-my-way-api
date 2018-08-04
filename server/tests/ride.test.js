@@ -300,7 +300,7 @@ describe('Test cases for deciding on a ride request', () => {
 describe('Test cases for cancellation of rides', () => {
   it('should cancel a ride by owner', (done) => {
     request
-      .delete('/api/v1/rides/1')
+      .put('/api/v1/rides/1/cancel')
       .set('x-token-access', token1)
       .expect(200)
       .end((err, res) => {
@@ -312,7 +312,7 @@ describe('Test cases for cancellation of rides', () => {
 
   it('should not cancel ride and return 404 - Not Found for wrong id', (done) => {
     request
-      .delete('/api/v1/rides/101010')
+      .put('/api/v1/rides/101010/cancel')
       .set('x-token-access', token1)
       .expect(404)
       .end((err, res) => {

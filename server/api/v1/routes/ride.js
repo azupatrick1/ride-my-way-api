@@ -20,6 +20,8 @@ route.put('/api/v1/users/rides/:rideId', jwtverify, checkRideTime, getRide, vali
 route.put('/api/v1/users/rides/:rideId/complete', jwtverify, checkRideTime, getRide, Ride.completeRide);
 
 
-route.delete('/api/v1/rides/:rideId', jwtverify, checkRideTime, getRide, Ride.cancelRide);
+route.put('/api/v1/rides/:rideId/cancel', jwtverify, checkRideTime, getRide, Ride.cancelRide);
+
+route.delete('/api/v1/rides/:rideId', jwtverify, checkRideTime, getRide, Ride.deleteRide);
 
 export default route;
